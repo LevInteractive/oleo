@@ -1,4 +1,4 @@
 óleo
 ====
 
-Óleo is a sleek time tracking Chrome App which uses a public Google Spreadsheet as a storage system.
+óleo is a sleek project-based time tracking Chrome App which can use a public Google Spreadsheet as a storage system.
