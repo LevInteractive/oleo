@@ -1,10 +1,11 @@
 {
   "name": "oleo",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "óleo is a sleek project-based time management Chrome Application that can sync to Google Spreadsheets allowing for collaborative tracking.",
-  "main": "index.js",
+  "author": "Pete Saia",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "grunt"
   },
   "repository": {
     "type": "git",
@@ -13,12 +14,17 @@
   "keywords": [
     "time",
     "tracking",
-    "time",
     "management"
   ],
-  "author": "Pete Saia",
   "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/LevInteractive/oleo/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "grunt-useref": "0.0.16",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-watch": "~0.6.1"
   }
 }
