@@ -1,6 +1,8 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+
+    // Copy everything to dist directory.
     copy: {
       main: {
         files: [
@@ -13,6 +15,8 @@ module.exports = function(grunt) {
         ]
       }
     },
+
+    // Compile scripts & styles together.
     useref: {
       html: "dist/app.html",
       temp: "dist"
@@ -33,6 +37,8 @@ module.exports = function(grunt) {
         '!dist/style/font/*', '!dist/style/img/*'
       ]
     },
+
+    // For dev ease. e.g. grunt watch
     watch: {
       scripts: {
         files: ['src/**/*'], // No need to be too specific.

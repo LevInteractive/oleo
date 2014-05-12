@@ -12,7 +12,7 @@ var load = function(url, cb) {
         if (httpRequest.status === 200) {
           cb(httpRequest.responseText);
         } else {
-          throw new Error("Problem loading content: ", httpRequest);
+          throw new Error("Problem loading content: "+JSON.stringify(httpRequest));
         }
       }
     }
@@ -26,11 +26,13 @@ describe("services", function() {
     var withWorksheet;
     var noWorksheet;
     var $httpBackend;
+    var $injector;
 
     // Below is a live & public spreadsheet key.
     var SAMPLE_KEY = "15lLlaf9DdGr-4SY8n8saxkwB-8Yvd7OcKQhgL5BFaY4";
 
-    beforeEach(inject(function(spreadsheetService, $injector) {
+    beforeEach(inject(function(spreadsheetService, _$injector_) {
+      $injector = _$injector_;
       $httpBackend = $injector.get("$httpBackend");
       spreadsheet = spreadsheetService;
       withWorksheet = "https://docs.google.com/a/lev-interactive.com/spreadsheets/d/15lLlaf9DdGr-4SkwB-8Yvd7OcKQ4/edit#gid=123456";
@@ -43,9 +45,8 @@ describe("services", function() {
     });
 
     it("should properly parse a google spreadsheet url", function() {
-      var justBad = "http://blah";
       var badFunc = function() {
-        spreadsheet.parseUrl(justBad);
+        spreadsheet.parseUrl("http://blah.com");
       };
       var r = expect(badFunc).to.throw(Error, "Invalid url.");
       r = expect(spreadsheet.parseUrl(withWorksheet)).to.deep.equal({
@@ -65,7 +66,8 @@ describe("services", function() {
       load("./dummy/cells.json", function(content) {
         $httpBackend.whenJSONP(url).respond(200, JSON.parse(content));
         spreadsheet.cells(urlObj).then(function(res) {
-          console.log(res);
+          expect(res).to.have.length(3);
+          expect(res[0]).to.have.length(4);
           done();
         }, function(err) {
           throw err;
@@ -73,7 +75,22 @@ describe("services", function() {
         $httpBackend.flush();
       });
     });
-    it("should be able to write to a google spreadsheet", function() {});
+
+    it("should be able to write to a google spreadsheet", function(done) {
+      function onSuccess(xml) {
+        expect(xml).to.have.length.above(20);
+        done();
+      }
+      function onError(err) {
+        throw err;
+      }
+      var url = spreadsheet.feedEndpoint({key:SAMPLE_KEY});
+      $httpBackend.whenPOST(url).respond(200);
+      spreadsheet.append({key:SAMPLE_KEY}, ["foo", "make", "me", "fun"])
+        .then(onSuccess, onError);
+      $httpBackend.flush();
+    });
+
     it("should be able to fetch a specifc row by id", function() {});
     it("should be able fetch the spreadsheet's title", function() {});
   });
