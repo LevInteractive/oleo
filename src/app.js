@@ -3,5 +3,5 @@
 var oleo = angular.module("oleo", []);
 
 // App properties.
-oleo.value('googleAccessToken', null);
+oleo.value('identity', chrome.identity);
 oleo.value('appName', "óleo");

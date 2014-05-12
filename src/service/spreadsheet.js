@@ -1,5 +1,5 @@
 // https://developers.google.com/google-apps/spreadsheets/
-oleo.service('spreadsheetService', ['$http', '$q', '$rootScope', function($http, $q, $rootScope) {
+oleo.service('spreadsheetService', ['$http', '$q', 'identity', 'googleService', function($http, $q, identity, googleAuth) {
 
   // For returning spreadsheet data.
   // GET
@@ -9,11 +9,11 @@ oleo.service('spreadsheetService', ['$http', '$q', '$rootScope', function($http,
         "?alt=json-in-script&callback=JSON_CALLBACK";
   };
 
-  // For updating and inserting a row.
+  // For updating and inserting a row. Requires auth.
   // POST
   this.feedEndpoint = function(urlObj) {
     return "https://spreadsheets.google.com/feeds/list/"+
-        urlObj.key+"/"+urlObj.worksheet+"/public/values";
+        urlObj.key+"/"+urlObj.worksheet+"/private/full";
   };
 
   // Parse a google spreadsheet url and return a "url object".
@@ -45,24 +45,31 @@ oleo.service('spreadsheetService', ['$http', '$q', '$rootScope', function($http,
     if (!data) {
       throw new Error("Data is required to add a row.");
     }
+    if (!googleAuth.accessToken) {
+      throw new Error("Access token required.");
+    }
     var deferred = $q.defer();
-    var promise = deferred.promise;
     var dataXml = '<entry xmlns="http://www.w3.org/2005/Atom" xmlns:gsx="http://schemas.google.com/spreadsheets/2006/extended">' + "\n";
     data.forEach(function(cell) {
       dataXml += '<gsx:'+xmlSafeColumnName(cell)+'>'+xmlSafeValue(cell)+'</gsx:'+xmlSafeColumnName(cell)+'>'+"\n";
     });
     dataXml += '</entry>';
-    
-    function onSuccess(res) {
+    this.request({
+      headers: {
+        "content-type": "application/atom+xml"
+      },
+      url: this.feedEndpoint(urlObj),
+      token: googleAuth.accessToken,
+      data: data,
+      method: "POST"
+    })
+    .success(function(res) {
       deferred.resolve(dataXml);
-    }
-    function onError(err) {
+    })
+    .error(function(err) {
       deferred.reject(new Error("There was an error with adding a row to the spreadsheet: "+JSON.stringify(err)));
-    }
-    $http.post(this.feedEndpoint(urlObj), dataXml, { headers: { "content-type": "application/atom+xml" } })
-      .success(onSuccess).error(onError);
-
-    return promise;
+    });
+    return deferred.promise;
   };
 
   // Request and parse all cell data for a sheet. This will return
@@ -70,7 +77,6 @@ oleo.service('spreadsheetService', ['$http', '$q', '$rootScope', function($http,
   // the spreadsheet.
   this.cells = function(urlObj) {
     var deferred = $q.defer();
-    var promise = deferred.promise;
     var collection = [];
     var onSuccess = function(res, status) {
       var feed = res.feed;
@@ -95,14 +101,35 @@ oleo.service('spreadsheetService', ['$http', '$q', '$rootScope', function($http,
       }
       deferred.resolve(cells);
     };
-    var onError = function(res, status) {
-      deferred.reject(new Error("Invalid response: "+res));
-    };
-    $http({
+    this.request({
       url: this.cellsEndpoint(urlObj),
       method: "JSONP"
-    }).success(onSuccess).error(onError);
-    return promise;
+    })
+    .success(onSuccess)
+    .error(function(res, status) {
+      deferred.reject(new Error("Invalid response: "+res));
+    });
+    return deferred.promise;
+  };
+
+  // Request the api.
+  this.request = function(opts) {
+    var deferred = $q.defer();
+    var config = {
+      url: opts.url,
+      method: opts.method,
+    };
+    if (opts.token) {
+      config.headers = {
+        Authorization: "Bearer "+opts.token
+      };
+    }
+    if (opts.headers) {
+      config.headers = opts.headers;
+    }
+    return $http(config)
+      .success(deferred.resolve)
+      .error(deferred.reject);
   };
 
   // A few helpers for formatting.

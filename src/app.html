@@ -8,13 +8,16 @@
   <link rel="stylesheet" href="style/app.css"/>
   <!-- endbuild -->
 </head>
-<body>
+<body data-ng-controller="MainController">
+
+  {{greeting}}
 
   <!-- build:js app.min.js -->
   <script src="../bower_components/angular/angular.js"></script>
   <script src="app.js"></script>
+  <script src="service/google.js"></script>
   <script src="service/spreadsheet.js"></script>
-  <script src="auth/google.js"></script>
+  <script src="controller/main.js"></script>
   <!-- endbuild -->
 </body>
 </html> 

@@ -21,7 +21,6 @@ var load = function(url, cb) {
 describe("services", function() {
   beforeEach(module('oleo'));
   describe("spreadsheets", function() {
-
     var spreadsheet;
     var withWorksheet;
     var noWorksheet;
@@ -33,6 +32,7 @@ describe("services", function() {
 
     beforeEach(inject(function(spreadsheetService, _$injector_) {
       $injector = _$injector_;
+      $injector.get("googleAuthService").accessToken = 123;
       $httpBackend = $injector.get("$httpBackend");
       spreadsheet = spreadsheetService;
       withWorksheet = "https://docs.google.com/a/lev-interactive.com/spreadsheets/d/15lLlaf9DdGr-4SkwB-8Yvd7OcKQ4/edit#gid=123456";
@@ -94,5 +94,4 @@ describe("services", function() {
     it("should be able to fetch a specifc row by id", function() {});
     it("should be able fetch the spreadsheet's title", function() {});
   });
-
 });
