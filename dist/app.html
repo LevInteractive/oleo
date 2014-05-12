@@ -5,9 +5,25 @@
   <title>óleo</title>
   <link rel="stylesheet" href="style/app.min.css"/>
 </head>
-<body data-ng-controller="MainController">
+<body ng-controller="MainController">
+  
+  <header>
+    <input type="text" ng-change="updateUser()" ng-model="user.name" />
+    <h1></h1>
+    <div class="projects-selector">
+      <a href="">Project <i class="icon-toggle-down"></i></a>
+      <ul class="list" ng-repeat="proj in projects">
+        <project project info="proj"></project>
+      </ul>
+    </div>
+    <h3>{{user.currentProject}}</h3>
+  </header>
 
-  {{greeting}}
+
+  <main>
+    
+  </main>
+  
 
   <script src="app.min.js"></script>
 </body>

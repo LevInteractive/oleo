@@ -1,19 +1,19 @@
 @font-face {
     font-family: 'latobold';
     src: url('./font/lato-bold-webfont.woff') format('woff');
-    font-weight: normal;
+    font-weight: 700;
     font-style: normal;
 }
 @font-face {
     font-family: 'latolight';
     src: url('./font/lato-light-webfont.woff') format('woff');
-    font-weight: normal;
+    font-weight: 300;
     font-style: normal;
 }
 @font-face {
     font-family: 'latolight_italic';
     src: url('./font/lato-lightitalic-webfont.woff') format('woff');
-    font-weight: normal;
+    font-weight: 300;
     font-style: normal;
 }
 @font-face {

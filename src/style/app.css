@@ -1,8 +1,57 @@
+/***************************************
+ * Basic Resets
+ */
+*:focus { outline: 0; }
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+
+/***************************************
+ * Basic Resets
+ */
 body {
   padding: 0;
   margin: 0;
   width: 450px;
   min-height: 500px;
+  background: #101d29;
+  color: #67bfa7;
+  font-family: 'latolight';
+}
+/* Lato..
+ - light: 300
+ - bold: 700
+*/
+
+/***************************************
+ * Header
+ */
+header {
+  height: 117px;
   background: black;
 }
-
+header h1 {
+  float: right;
+  width: 78px;
+  height: 41px;
+  background:url(img/logo.png) no-repeat;
+}
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  header h1 { background:url(img/logo@2x.png) no-repeat; background-size: 78px 41px; }
+}
+header input[type="text"] {
+  float: left;
+  font-size: 30px;
+  font-family: 'latolight';
+  color: #67bfa7;
+  background: transparent;
+  border: none;
+}
