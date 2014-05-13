@@ -15,7 +15,7 @@ textarea {
 
 
 /***************************************
- * Basic Resets
+ * Univerial Flavor
  */
 body {
   padding: 0;
@@ -26,10 +26,8 @@ body {
   color: #67bfa7;
   font-family: 'latolight';
 }
-/* Lato..
- - light: 300
- - bold: 700
-*/
+a { color: #67bfa7; text-decoration: none; }
+button { cursor: pointer; border: none; background: transparent; }
 
 /***************************************
  * Header

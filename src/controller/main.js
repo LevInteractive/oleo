@@ -10,9 +10,9 @@ oleo.controller('MainController', ['$q', '$scope', 'googleService', 'storageServ
 
   // Projects.
   $scope.addProject = function() {
-    console.log(projects);
     projects.push({});
-    storage.set("projects", projects);
+    storage.put("projects", projects);
+    console.log(projects);
   };
 
   // Load all of the data from storage.
@@ -21,9 +21,9 @@ oleo.controller('MainController', ['$q', '$scope', 'googleService', 'storageServ
     storage.get('tasks'),
     storage.get('user')
   ]).then(function(results) {
-    console.log(results);
-    projects = $scope.projects = results[0] || [];
-    tasks = $scope.tasks = results[1];
-    user = $scope.user = results[2];
+    console.log("returned results: ",results);
+    projects = $scope.projects = results[0].projects || [];
+    tasks = $scope.tasks = results[1].tasks || [];
+    user = $scope.user = results[2].user || user;
   });
 }]);

@@ -12,8 +12,8 @@ oleo.factory('storageService', ['storage', '$q', function (storage, $q) {
     put: function (key, data) {
       var deferred = $q.defer();
       var _data = {};
-      data[key] = data;
-      storage.set(data, deferred.resolve);
+      _data[key] = data;
+      storage.set(_data, deferred.resolve);
       return deferred.promise;
     }
   };

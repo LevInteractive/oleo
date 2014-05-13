@@ -32,7 +32,7 @@ describe("services", function() {
 
     beforeEach(inject(function(spreadsheetService, _$injector_) {
       $injector = _$injector_;
-      $injector.get("googleAuthService").accessToken = 123;
+      $injector.get("googleService").accessToken = 123;
       $httpBackend = $injector.get("$httpBackend");
       spreadsheet = spreadsheetService;
       withWorksheet = "https://docs.google.com/a/lev-interactive.com/spreadsheets/d/15lLlaf9DdGr-4SkwB-8Yvd7OcKQ4/edit#gid=123456";
