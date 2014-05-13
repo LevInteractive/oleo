@@ -5,7 +5,7 @@ oleo.factory('storageService', ['storage', '$q', function (storage, $q) {
     get: function (key) {
       var deferred = $q.defer();
       storage.get(key, function(data) {
-        deferred.resolve(data, deferred.resolve);
+        deferred.resolve(data);
       });
       return deferred.promise;
     },

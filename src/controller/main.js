@@ -1,11 +1,19 @@
 oleo.controller('MainController', ['$q', '$scope', 'googleService', 'storageService', function($q, $scope, google, storage) {
+  
+  // Data.
+  var projects = $scope.projects = [];
+  var tasks    = $scope.tasks = [];
+  var user     = $scope.user = {
+    name: "Your Name",
+    currentProject: null
+  };
 
-  // Init user data.
-  $scope.user = {};
-  $scope.user.name = "Unnamed";
-  $scope.user.currentProject = "No project selected.";
-
-
+  // Projects.
+  $scope.addProject = function() {
+    console.log(projects);
+    projects.push({});
+    storage.set("projects", projects);
+  };
 
   // Load all of the data from storage.
   $q.all([
@@ -13,8 +21,9 @@ oleo.controller('MainController', ['$q', '$scope', 'googleService', 'storageServ
     storage.get('tasks'),
     storage.get('user')
   ]).then(function(results) {
-    $scope.projects = results[0];
-    $scope.tasks = results[1];
-    $scope.user = results[2];
+    console.log(results);
+    projects = $scope.projects = results[0] || [];
+    tasks = $scope.tasks = results[1];
+    user = $scope.user = results[2];
   });
 }]);
