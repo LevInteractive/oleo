@@ -1,16 +1,8 @@
-oleo.factory("Project", function() {
+oleo.factory("Project", ['Model', function(Model) {
   function Project(opts) {
-    this.id = opts.id || Math.random().toString(36).substring(10);
-    this.name = opts.name || "";
-    this.weight = opts.weight || 0;
-    this.creationDate = new Date();
-    this.active = false;
+    Model.apply(this, opts);
+    this.set("active", this._args.active || false);
   }
-  Project.prototype.isActive = function() {
-    return this.active;
-  };
-  Project.build = function(obj) {
-    return new Project(obj);
-  };
+  Project.prototype = Object.create(Model.prototype);
   return Project;
-});
+}]);

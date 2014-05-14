@@ -1,16 +1,15 @@
-oleo.factory("Task", function(Project) {
+oleo.factory("Task", ['Model', function(Model) {
   function Task(opts) {
-    this.id = Math.random().toString(36).substring(10);
-    this.projectId = opts.projectId;
-    this.name = opts.name;
-    this.weight = opts.weight || 0;
-    this.running = false;
-    this.creationDate = new Date();
-    this.initialStart = null;
-    this.lastStart = null;
+    Model.apply(this, opts);
+    if (!opts || !this._args.projectId) {
+      throw new Error("A projectId is required to create a task.");
+    }
+    this.set("projectId",  this._args.projectId);
+    this.set("running", this._args.running || false);
+    this.set("initialStart", this._args.initialStart || null);
+    this.set("start", this._args.start || null);
+    this.set("stop", this._args.stop || null);
   }
-  Task.build = function(obj) {
-    return new Task(obj);
-  };
+  Task.prototype = Object.create(Model.prototype);
   return Task;
-});
+}]);
