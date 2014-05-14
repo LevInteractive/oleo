@@ -2,7 +2,7 @@ oleo.directive("project", function() {
   return {
     restrict: "E",
     scope: {
-      info: "=info"
+      project: "="
     },
     templateUrl: "../partial/project.html"
   };

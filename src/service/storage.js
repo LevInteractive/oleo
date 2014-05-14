@@ -1,4 +1,4 @@
-oleo.storage('storageService', ['storage', '$q', function (storage, $q) {
+oleo.service('storageService', ['storage', '$q', function (storage, $q) {
   var STORAGE_ID = '__oleo__';
   this.get = function (key) {
     var deferred = $q.defer();

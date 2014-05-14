@@ -1,6 +1,6 @@
 oleo.factory("Task", ['Model', function(Model) {
   function Task(opts) {
-    Model.apply(this, opts);
+    Model.apply(this, arguments);
     if (!opts || !this._args.projectId) {
       throw new Error("A projectId is required to create a task.");
     }
