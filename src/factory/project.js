@@ -1,8 +1,11 @@
-oleo.factory("Project", ['Model', function(Model) {
-  function Project(opts) {
-    Model.apply(this, arguments);
-    this.set("active", this._args.active || false);
-  }
-  Project.prototype = Object.create(Model.prototype);
-  return Project;
-}]);
+oleo.factory("projectFactory", function() {
+  return function(props) {
+    props = props || {};
+    return {
+      id: props.id || Math.random().toString(36).substr(2, 6),
+      name: props.name || "",
+      weight: props.weight || 0,
+      creationDate: props.creationDate || new Date()
+    };
+  };
+});

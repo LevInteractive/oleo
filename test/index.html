@@ -6,23 +6,27 @@
 </head>
 <body>
   <div id="mocha"></div>
+
   <script src="../bower_components/mocha/mocha.js"></script>
   <script src="../bower_components/chai/chai.js"></script>
+  <script src="../bower_components/mocks/mock.chrome.storage.js"></script>
+
   <script>mocha.setup('bdd')</script>
 
   <script src="../bower_components/angular/angular.js"></script>
   <script src="../bower_components/angular-mocks/angular-mocks.js"></script>
 
   <script src="../src/app.js"></script>
-  <script src="../src/factory/model.js"></script>
   <script src="../src/factory/project.js"></script>
   <script src="../src/factory/task.js"></script>
   <script src="../src/service/storage.js"></script>
   <script src="../src/service/google.js"></script>
+  <script src="../src/service/project.js"></script>
+  <script src="../src/service/task.js"></script>
   <script src="../src/service/spreadsheet.js"></script>
   <script src="../src/controller/main.js"></script>
 
-  <script src="test.services.js"></script>
+  <script src="test.spreadsheets.js"></script>
   <script src="test.project.js"></script>
   <script>
     mocha.checkLeaks();
