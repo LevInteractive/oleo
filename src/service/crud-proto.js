@@ -19,9 +19,8 @@
 
   // Factory & add a project into the collection.
   CRUD.add = function(frag) {
-    frag = frag || {};
     this.collection.push(
-      this.factory(frag)
+      this.factory(frag || {})
     );
     return this.save(); // return promise.
   };
@@ -38,8 +37,8 @@
     });
     if (p[0]) {
       this.collection.splice(index, 1);
-      return this.save(); // return promise.
     }
+    return this.save(); // return promise.
   };
 
   // Save the current collection to storage.

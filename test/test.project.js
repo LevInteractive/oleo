@@ -6,16 +6,19 @@ describe("projects", function() {
   var storageService;
   var projectService;
   var projectFactory;
+  var storage;
   var $rootScope;
 
   beforeEach(function() {
     module('oleo');
     module(function($provide) {
+      $provide.value("storage", null); // The swap.
       $provide.value("storage", window.chromeStorageMock()); // The swap.
     });
   });
 
-  beforeEach(inject(function(storage,_projectFactory_, _projectService_, _storageService_, $q, _$rootScope_) {
+  beforeEach(inject(function(_storage_, _projectFactory_, _projectService_, _storageService_, $q, _$rootScope_) {
+    storage = _storage_;
     projectService = _projectService_;
     projectFactory = _projectFactory_;
     storageService = _storageService_;
@@ -61,6 +64,7 @@ describe("projects", function() {
     var proj = projectFactory({id: "123"});
     var proj2 = projectFactory({id: "1234"});
     projectService.collection.push(proj, proj2);
+
     projectService.save().then(function() {
       projectService.remove(proj).then(checkForDeletion1);
       setTimeout(function() {
@@ -69,10 +73,11 @@ describe("projects", function() {
       }, 10);
     });
     $rootScope.$apply();
+
     function checkForDeletion1() {
-      projectService.load().then(function(projects) {
-        expect(projects).to.have.length(1);
-        expect(projects[0].id).to.equal(proj2.id);
+      projectService.load().then(function() {
+        expect(projectService.collection).to.have.length(1);
+        expect(projectService.collection[0].id).to.equal(proj2.id);
       });
     }
     function checkForDeletion2() {
