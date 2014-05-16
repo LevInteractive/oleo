@@ -44,4 +44,42 @@ describe("projects", function() {
     );
     $rootScope.$apply();
   });
+
+  it("should properly add a new project and save to storage", function(done) {
+    var e = expect(projectService.collection).to.be.empty;
+    projectService.add({}).then(function() {
+      expect(projectService.collection).to.have.length(1);
+      done();
+    },
+    function(err) {
+      throw err;
+    });
+    $rootScope.$apply();
+  });
+
+  it("should delete from storage and collection by id", function(done) {
+    var proj = projectFactory({id: "123"});
+    var proj2 = projectFactory({id: "1234"});
+    projectService.collection.push(proj, proj2);
+    projectService.save().then(function() {
+      projectService.remove(proj).then(checkForDeletion1);
+      setTimeout(function() {
+        projectService.remove(proj2).then(checkForDeletion2);
+        $rootScope.$apply();
+      }, 10);
+    });
+    $rootScope.$apply();
+    function checkForDeletion1() {
+      projectService.load().then(function(projects) {
+        expect(projects).to.have.length(1);
+        expect(projects[0].id).to.equal(proj2.id);
+      });
+    }
+    function checkForDeletion2() {
+      projectService.load().then(function(projects) {
+        var e = expect(projects).to.be.empty;
+        done();
+      });
+    }
+  });
 });

@@ -11,7 +11,7 @@
 <body ng-controller="MainController">
   
   <header>
-    <input type="text" ng-change="updateUser()" ng-model="user.name" />
+    <input type="text" ng-model="user.name" />
     <h1></h1>
     <div class="projects-selector">
       <a href="">Project <i class="icon-toggle-down"></i></a>
@@ -34,8 +34,11 @@
   <script src="app.js"></script>
   <script src="factory/project.js"></script>
   <script src="factory/task.js"></script>
+  <script src="service/crud-proto.js"></script>
   <script src="service/storage.js"></script>
   <script src="service/google.js"></script>
+  <script src="service/project.js"></script>
+  <script src="service/task.js"></script>
   <script src="service/spreadsheet.js"></script>
   <script src="directive/project.js"></script>
   <script src="directive/task.js"></script>

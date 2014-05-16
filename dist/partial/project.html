@@ -1,5 +1,6 @@
 <li>
   <div>
-    <input type="text" ng-model="projectName" ng-change="project.set('name', projectName)" />
+    <input type="text" ng-change="save()" ng-model="project.name" placeholder="Your Name" />
+    <a ng-click="remove(project)">kill me</a>
   </div>
 </li>

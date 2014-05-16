@@ -1,26 +1,45 @@
 (function() {
-  function controller($q, $scope, google, storage, projectService) {
+  function controller($q, $scope, storageService, projectService, taskService) {
+
+    // Projects
+    // -------------------------------------------------
+    $scope.projects     = projectService.collection;
+    $scope.addProject   = projectService.add.bind(projectService);
+    $scope.saveProjects = projectService.save.bind(projectService);
+
+    projectService.load(); // This will populate the collection from storage.
+
+    // Tasks
+    // -------------------------------------------------
+    $scope.tasks = taskService.collection;
+
+    // User
+    // -------------------------------------------------
     
-    var user = $scope.user = {
+    $scope.user = {
       name: "Your Name",
       currentProject: null
     };
 
-    $scope.projects = projectService.collection;
-    $scope.addProject = projectService.add;
-    // $scope.tasks = taskService.collection;
-
     // Populate basic user data.
-    storage.get('user').then(function(result) {
-      user = $scope.user = results.user || user;
+    storageService.get('user').then(function(result) {
+      user = $scope.user = result.user || user;
     });
+
+    // Update user properties in storage.
+    $scope.$watch('user', function() {
+      console.info("User saved.");
+      storageService.put("user", $scope.user);
+    }, true);
   }
+
+  // Init.
   oleo.controller('MainController', [
     '$q',
     '$scope',
-    'googleService',
     'storageService',
     'projectService',
+    'taskService',
     controller
   ]);
 })();
