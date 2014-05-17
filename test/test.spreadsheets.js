@@ -18,7 +18,7 @@ var load = function(url, cb) {
     }
 };
 
-describe("spreadsheets", function() {
+describe("spreadsheet service", function() {
   var spreadsheet;
   var withWorksheet;
   var noWorksheet;

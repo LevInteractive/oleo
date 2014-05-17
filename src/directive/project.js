@@ -1,17 +1,28 @@
 oleo.directive("project", ['projectService', function(projectService) {
   function link(scope, el, attrs) {
-    scope.remove = function(proj) {
-      // Need to make custom confirmation box instead of this...
-      var confirmed = confirm("Are you sure you want to remove this project and all of the tasks associated with it?");
-      if (confirmed) {
-        projectService.remove(proj);
-      }
+
+    // When false confirmation box shows.
+    scope.hideDelete = true;
+
+    // Remove a project.
+    scope.remove = projectService.remove.bind(projectService);
+
+    // On Project select.
+    scope.selectProject = function(proj) {
+      scope.$parent.projects.forEach(function(p) { // Uncurrent previous projects.
+        p.current = false;
+      });
+      proj.current = true;
+      scope.$parent.user.currentProject = proj;
+      scope.save();
     };
+    
+    // Pass in a save function.
     scope.save = projectService.save.bind(projectService);
   }
   return {
     link: link,
-    restrict: "E",
+    restrict: "A",
     scope: {
       project: "="
     },

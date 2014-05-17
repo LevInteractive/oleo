@@ -1,6 +1,15 @@
-<li>
-  <div>
-    <input type="text" ng-change="save()" ng-model="project.name" placeholder="Your Name" />
-    <a ng-click="remove(project)">kill me</a>
-  </div>
-</li>
+<div class="inme">
+  <button ng-class="{selectBtn: true, selected: project.current}" ng-click="selectProject(project)">Select!</button>
+  <input type="text" ng-change="save()" ng-model="project.name" placeholder="Project Name" />
+  <input type="text" ng-change="save()" ng-model="project.spreadsheet" placeholder="Spreadsheet URL" />
+  <label for="rates">Rates</label>
+  <input type="checkbox" ng-change="save()" ng-model="project.rates" />
+  <button ng-click="hideDelete = false">kill me</button>
+  <aside class="modal remove-project" ng-hide="hideDelete">
+    <button class="close" ng-click="hideDelete = true">X</button>
+    <div class="inner">
+      <p>Are you sure you want to remove this project and all of the tasks associated to it?</p>
+      <button ng-click="remove(project)"><span>Yes!</span></button>
+    </div>
+  </aside>
+</div>

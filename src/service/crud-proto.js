@@ -10,7 +10,7 @@
           this.collection.push(
             this.factory(props) // Factory a fresh object.
           );
-        }.bind(this));
+        }, this);
       }
       deferred.resolve(this.collection);
     }.bind(this), deferred.reject);

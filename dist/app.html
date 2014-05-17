@@ -9,22 +9,29 @@
   
   <header>
     <input type="text" ng-model="user.name" />
-    <h1></h1>
+
     <div class="projects-selector">
       <a href="">Project <i class="icon-toggle-down"></i></a>
       <ul class="list" ng-repeat="proj in projects track by $index">
-        <project project="proj"></project>
+        <li project="proj"></li>
       </ul>
       <button ng-click="addProject()"><i class="icon-file2"></i><span>Add Project</span></button>
     </div>
-    <h3>{{user.currentProject}}</h3>
+
+    <h3>{{user.projectName}}</h3>
   </header>
 
 
   <main>
-    
+    <ul class="list" ng-repeat="task in tasks track by $index">
+      <li task="task"></li>
+    </ul>
+    <button ng-click="addTask()" ng-if="user.currentProject"><i class="icon-add"></i> New Task</button>
   </main>
   
+  <footer>
+
+  </footer>
 
   <script src="app.min.js"></script>
 </body>

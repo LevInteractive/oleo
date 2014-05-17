@@ -5,6 +5,9 @@ oleo.factory("projectFactory", function() {
       id: props.id || Math.random().toString(36).substr(2, 6),
       name: props.name || "",
       weight: props.weight || 0,
+      spreadsheet: props.spreadsheet || null,
+      rates: props.rates || false,
+      current: props.current || false,
       creationDate: props.creationDate || new Date()
     };
   };

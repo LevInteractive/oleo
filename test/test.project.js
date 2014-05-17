@@ -1,7 +1,7 @@
 var expect = chai.expect;
 var assert = chai.assert;
 
-describe("projects", function() {
+describe("project service", function() {
 
   var storageService;
   var projectService;
