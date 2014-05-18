@@ -5,7 +5,12 @@ oleo.directive("project", ['projectService', function(projectService) {
     scope.hideDelete = true;
 
     // Remove a project.
-    scope.remove = projectService.remove.bind(projectService);
+    scope.remove = function(proj) {
+      if (proj.current) { // If current, unset user's current.
+        scope.$parent.user.currentProject = null;
+      }
+      projectService.remove(proj);
+    };
 
     // On Project select.
     scope.selectProject = function(proj) {

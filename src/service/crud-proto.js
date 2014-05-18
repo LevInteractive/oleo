@@ -11,6 +11,10 @@
             this.factory(props) // Factory a fresh object.
           );
         }, this);
+        console.info("loaded ", this.storageKey, this.collection);
+        if (this._onLoad) {
+          this._onLoad();
+        }
       }
       deferred.resolve(this.collection);
     }.bind(this), deferred.reject);
@@ -22,6 +26,10 @@
     this.collection.push(
       this.factory(frag || {})
     );
+    console.info("added ", this.storageKey, this.collection[this.collection.length-1]);
+    if (this._onAdd) {
+      this._onAdd(this.collection[this.collection.length-1]);
+    }
     return this.save(); // return promise.
   };
 
@@ -36,13 +44,21 @@
       return false;
     });
     if (p[0]) {
+      console.info("removed ", this.storageKey, p[0]);
       this.collection.splice(index, 1);
+      if (this._onRemove) {
+        this._onRemove(p[0]);
+      }
     }
     return this.save(); // return promise.
   };
 
   // Save the current collection to storage.
   CRUD.save = function() {
+    console.info("saved ", this.storageKey, this.collection);
+    if (this._onSave) {
+      this._onSave();
+    }
     return this.storage.put(this.storageKey, this.collection);
   };
 

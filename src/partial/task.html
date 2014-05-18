@@ -1,13 +1,13 @@
 <div class="inme">
-  <button class="start-btn" ng-click="stopState(task)">
-    <i ng-class="{'icon-play': task.running, 'icon-pause': !task.running}"></i>
+  <button class="start-btn" ng-click="toggleState(task)">
+    <i ng-class="{'icon-play': !task.running, 'icon-pause': task.running}"></i>
   </button>
   <div class="slide">
     <div class="row">
-      <input ng-model="task.name" placeholder="Add Comment" />
+      <input type="text" ng-change="save()" ng-model="task.name" placeholder="Add Comment" />
     </div>
     <div class="row">
-      <input ng-model="task.diff" value="{{task.diff | timeSpan}}" />
+      <input type="text" value="{{ task.seconds | timespan }}" />
     </div>
   </div>
 </div>

@@ -6,7 +6,13 @@ oleo.directive("task", ['taskService', function(taskService) {
     scope.remove = taskService.remove.bind(taskService);
 
     scope.toggleState = function(task) {
-      task.running = !task.running;
+      if (task.running) {
+        taskService.stop(task);
+        task.running = false;
+      } else {
+        taskService.start(task);
+        task.running = true;
+      }
       scope.save();
     };
     
@@ -17,7 +23,7 @@ oleo.directive("task", ['taskService', function(taskService) {
     link: link,
     restrict: "A",
     scope: {
-      project: "="
+      task: "="
     },
     templateUrl: "../partial/task.html"
   };

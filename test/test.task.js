@@ -49,15 +49,6 @@ describe("task service", function() {
 
   beforeEach(populate);
 
-  it("should provide all tasks for a given project", function() {
-    var e = expect(taskService.selectedTasks).to.be.empty;
-    taskService.get(projectService.collection[0]);
-    expect(taskService.selectedTasks).to.have.length(3);
-    taskService.get(projectService.collection[1]);
-    expect(taskService.selectedTasks).to.have.length(2);
-    expect(taskService.get(projectService.collection[3])).to.have.length(3);
-  });
-
   it("should start and timer on a task and set initial start", function() {
     var task = taskService.collection[0];
     expect(task.start).to.equal(null);
@@ -73,23 +64,15 @@ describe("task service", function() {
     taskService.stop(task);
     var e = expect(task.running).to.be.false;
     expect(task.start).to.be.closeTo(Date.now(), 5);
-    expect(task.initialStart).to.be.closeTo(Date.now(), 5);
     expect(task.stop).to.be.closeTo(Date.now(), 5);
   });
 
-  it("should properly get the difference between stopped and started", function() {
+  it("should properly add and remove internal Tickers", function() {
     var task = taskService.collection[0];
-
-    task.start = task.initialStart = new Date(2014, 0, 20, 01).getTime();
-    task.stop = new Date(2014, 0, 20, 02).getTime(); // One hour later.
-    expect(taskService.setDiff(task)).to.equal("01:00:00");
-
-    task.start = task.stop = null;
-    expect(taskService.setDiff(task)).to.equal("00:00:00");
-
-    task.start = task.initialStart = new Date(2014, 0, 20, 01).getTime();
-    task.stop = new Date(2014, 0, 20, 02, 5, 23).getTime(); // One hour and 5 minutes and 20 seconds later.
-    expect(taskService.setDiff(task)).to.equal("01:05:23");
+    taskService.start(task);
+    var e = expect(taskService._tickerMap[task.id]).to.exist;
+    taskService.remove(task);
+    e = expect(taskService._tickerMap[task.id]).to.not.exist;
   });
 });
 

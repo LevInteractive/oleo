@@ -3,11 +3,15 @@
 
     // Tasks
     // -------------------------------------------------
-    $scope.tasks   = taskService.selectedTasks;
-    $scope.addTask = taskService.add.bind(taskService);
+    $scope.tasks = taskService.collection;
 
-    // Watch currentProject for a change.
-    $scope.$watchCollection("user.currentProject", taskService.get.bind(taskService));
+    $scope.addTask = function() {
+      if ($scope.user.currentProject) {
+        taskService.add({
+          projectId: $scope.user.currentProject.id
+        });
+      }
+    };
 
     // Projects
     // -------------------------------------------------
@@ -18,9 +22,10 @@
     // User
     // -------------------------------------------------
     $scope.user = { // Defaults.
-      name: "Your Name",
+      name: "",
       currentProject: null,
-      projectName: "No project selected."
+      projectName: "No project selected.", // Used for title.
+      projectId: 0                         // Used for filtering tasks.
     };
 
     // Populate basic user data.
@@ -32,9 +37,13 @@
 
     // Update user properties in storage.
     $scope.$watch('user', function() {
-      console.log('user updated', $scope.user);
+      console.info('user updated', $scope.user);
       if ($scope.user.currentProject) {
         $scope.user.projectName = $scope.user.currentProject.name;
+        $scope.user.projectId = $scope.user.currentProject.id;
+      } else {
+        $scope.user.projectName = "No project selected.";
+        $scope.user.projectId = 0;
       }
       storageService.put("user", $scope.user);
     }, true);

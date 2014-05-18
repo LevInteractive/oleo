@@ -11,7 +11,7 @@
 <body ng-controller="MainController">
   
   <header>
-    <input type="text" ng-model="user.name" />
+    <input type="text" ng-model="user.name" placeholder="Your Name" />
 
     <div class="projects-selector">
       <a href="">Project <i class="icon-toggle-down"></i></a>
@@ -24,9 +24,8 @@
     <h3>{{user.projectName}}</h3>
   </header>
 
-
   <main>
-    <ul class="list" ng-repeat="task in tasks track by $index">
+    <ul class="list" ng-repeat="task in tasks | filter:{projectId:user.projectId}">
       <li task="task"></li>
     </ul>
     <button ng-click="addTask()" ng-if="user.currentProject"><i class="icon-add"></i> New Task</button>

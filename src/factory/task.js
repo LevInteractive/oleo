@@ -11,11 +11,9 @@ oleo.factory("taskFactory", function() {
       projectId: props.projectId,
       rate: props.rate || 0,
       running: props.running || false,
-      initialStart: props.initialStart || null,
       start: props.start || null,
       stop: props.stop || null,
-      diff: props.diff || 0,
-      life: props.life || 0
+      seconds: props.seconds || 0
     };
   };
 });

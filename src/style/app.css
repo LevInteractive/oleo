@@ -33,7 +33,7 @@ button { cursor: pointer; border: none; background: transparent; }
  * Header
  */
 header {
-  height: 117px;
+  /* height: 117px; */
   background: black;
 }
 header h1 {
