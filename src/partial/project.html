@@ -1,10 +1,18 @@
 <div class="inme">
-  <button ng-class="{selectBtn: true, selected: project.current}" ng-click="selectProject(project)">Select!</button>
+  <button ng-class="{selectBtn: true, selected: project.current}" ng-click="select(project)">Select!</button>
+
   <input type="text" ng-change="save()" ng-model="project.name" placeholder="Project Name" />
+
   <input type="text" ng-change="save()" ng-model="project.spreadsheet" placeholder="Spreadsheet URL" />
+
   <label for="rates">Rates</label>
+
   <input type="checkbox" ng-change="save()" ng-model="project.rates" />
-  <button ng-click="hideDelete = false">kill me</button>
+
+  <input type="number" ng-change="save()" ng-model="project.rate" ng-hide="!project.rates" />
+
+  <button ng-click="hideDelete = false">Delete Project</button>
+
   <aside class="modal remove-project" ng-hide="hideDelete">
     <button class="close" ng-click="hideDelete = true">X</button>
     <div class="inner">

@@ -4,25 +4,9 @@ oleo.directive("project", ['projectService', function(projectService) {
     // When false confirmation box shows.
     scope.hideDelete = true;
 
-    // Remove a project.
-    scope.remove = function(proj) {
-      if (proj.current) { // If current, unset user's current.
-        scope.$parent.user.currentProject = null;
-      }
-      projectService.remove(proj);
-    };
-
-    // On Project select.
-    scope.selectProject = function(proj) {
-      scope.$parent.projects.forEach(function(p) { // Uncurrent previous projects.
-        p.current = false;
-      });
-      proj.current = true;
-      scope.$parent.user.currentProject = proj;
-      scope.save();
-    };
-    
-    // Pass in a save function.
+    // Bind methods from service.
+    scope.remove = projectService.remove.bind(projectService);
+    scope.select = projectService.select.bind(projectService);    
     scope.save = projectService.save.bind(projectService);
   }
   return {

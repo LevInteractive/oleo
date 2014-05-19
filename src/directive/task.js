@@ -1,6 +1,9 @@
 oleo.directive("task", ['taskService', function(taskService) {
   function link(scope, el, attrs) {
 
+    // Parent project for task.
+    scope.project = scope.$parent.current;
+
     // When false confirmation box shows.
     scope.hideDelete = true;
     scope.remove = taskService.remove.bind(taskService);
@@ -14,6 +17,14 @@ oleo.directive("task", ['taskService', function(taskService) {
         task.running = true;
       }
       scope.save();
+    };
+
+    scope.timeFocus = function(task) {
+    
+    };
+
+    scope.timeBlur = function(task) {
+      
     };
     
     // Pass in a save function.

@@ -7,7 +7,13 @@
       <input type="text" ng-change="save()" ng-model="task.name" placeholder="Add Comment" />
     </div>
     <div class="row">
-      <input type="text" value="{{ task.seconds | timespan }}" />
+      <input type="text" ng-focus="timeFocus(task)" ng-blur="timeBlur(task)" value="{{ task.seconds | timespan }}" />
+    </div>
+    <div class="row">
+      <input type="text" value="{{ task | lifespan }}" />
+    </div>
+    <div class="row" ng-hide="!project.rates">
+      <span class="total">{{ task.seconds | rate:project.rate | currency:$ }}</span>
     </div>
   </div>
 </div>

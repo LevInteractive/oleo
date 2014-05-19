@@ -27,7 +27,7 @@ describe("filters", function() {
     var lifeSpan;
 
     beforeEach(inject(function($filter) {
-      lifeSpan = $filter("lifeSpan");
+      lifeSpan = $filter("lifespan");
     }));
 
     it("should take a date array and display the date(s)", function(){

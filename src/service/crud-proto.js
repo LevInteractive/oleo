@@ -47,7 +47,7 @@
       console.info("removed ", this.storageKey, p[0]);
       this.collection.splice(index, 1);
       if (this._onRemove) {
-        this._onRemove(p[0]);
+        this._onRemove(p[0], index);
       }
     }
     return this.save(); // return promise.

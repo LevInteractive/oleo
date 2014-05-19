@@ -6,6 +6,7 @@ oleo.factory("projectFactory", function() {
       name: props.name || "New Project",
       weight: props.weight || 0,
       spreadsheet: props.spreadsheet || null,
+      rate: props.rate || 0,
       rates: props.rates || false,
       current: props.current || false,
       creationDate: props.creationDate || Date.now()

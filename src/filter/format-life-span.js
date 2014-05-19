@@ -1,6 +1,5 @@
-oleo.filter('lifeSpan', function() {
-  return function(life) {
+oleo.filter('lifespan', function() {
+  return function(task) {
     return "need TODO";
   };
 });
-

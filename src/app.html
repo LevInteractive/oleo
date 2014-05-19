@@ -1,10 +1,11 @@
 <!doctype html>
-<html lang="en" ng-app="oleo">
+<html lang="en" ng-app="oleo" ng-csp="">
 <head>
   <meta charset="utf-8">
   <title>óleo</title>
   <!-- build:css style/app.min.css -->
   <link rel="stylesheet" href="style/fonts.css"/>
+  <link rel="stylesheet" href="../bower_components/angular/angular-csp.css"/>
   <link rel="stylesheet" href="style/app.css"/>
   <!-- endbuild -->
 </head>
@@ -15,20 +16,21 @@
 
     <div class="projects-selector">
       <a href="">Project <i class="icon-toggle-down"></i></a>
-      <ul class="list" ng-repeat="proj in projects track by $index">
+      <ul class="list" ng-repeat="proj in projects | orderBy:weight">
         <li project="proj"></li>
       </ul>
       <button ng-click="addProject()"><i class="icon-file2"></i><span>Add Project</span></button>
     </div>
 
-    <h3>{{user.projectName}}</h3>
+    <h3 ng-if="current.project">{{ current.project.name }}</h3>
+    <h3 ng-if="!current.project">No project selected!</h3>
   </header>
 
-  <main>
-    <ul class="list" ng-repeat="task in tasks | filter:{projectId:user.projectId}">
+  <main class="task-list-container" ng-if="current.project">
+    <ul class="list" ng-repeat="task in tasks | filter:{projectId:current.project.id} | orderBy:weight">
       <li task="task"></li>
     </ul>
-    <button ng-click="addTask()" ng-if="user.currentProject"><i class="icon-add"></i> New Task</button>
+    <button ng-click="addTask()" ng-if="current.project"><i class="icon-add"></i> New Task</button>
   </main>
   
   <footer>
@@ -47,6 +49,7 @@
   <script src="service/task.js"></script>
   <script src="service/spreadsheet.js"></script>
   <script src="filter/format-life-span.js"></script>
+  <script src="filter/format-rate.js"></script>
   <script src="filter/format-time-span.js"></script>
   <script src="directive/project.js"></script>
   <script src="directive/task.js"></script>

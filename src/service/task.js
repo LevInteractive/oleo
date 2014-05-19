@@ -1,4 +1,8 @@
 (function() {
+  
+  // A Ticker is created for every class. This handles the internal
+  // progression of time. The constructor is private but instances
+  // are maintained in the Service.
   function Ticker(task, interval, save) {
     if (!task || !interval) {
       throw new Error("Both a task and interval method are required for Ticker!");
@@ -23,10 +27,12 @@
   };
   Ticker.prototype._tick = function() {
     this.task.seconds++;
+    this.task.secondsFragment++;
     this.save();
     return this;
   };
 
+  // The Angular service.
   function Service(storageService, $q, taskFactory, $interval) {
     this.collection = [];
     this.storage = storageService;
@@ -46,7 +52,13 @@
   Service.prototype._onLoad = function() {
     this.collection.forEach(function(task) {
       if (task.running) {
-        this.start(task);
+        
+        // If this was a running task the difference needs to be added
+        // on from the time started and now.
+        task.seconds = task.startSeconds; // Reset seconds to starting point.
+        task.seconds = task.seconds + Math.floor(Math.abs(task.start - Date.now()) / 1000); // Get total span.
+
+        this.start(task, true); // Passing true so task.start isn't set.
       }
     }, this);
   };
@@ -60,19 +72,24 @@
   };
 
   // Start a timer.
-  Service.prototype.start = function(task) {
+  // @param resuming  this is set to true when the tasks are loaded from
+  //                  from storage and picking up where left off.
+  Service.prototype.start = function(task, resuming) {
     if (!task) {
       throw new Error("A task is needed to start a timer.");
     }
 
-    // Set to running and set start if first time.
-    task.running = true;
-
-    if (!task.start) {
+    if (!resuming) { // Start was manually pressed.
+      console.log("not resuming, new start set");
       task.start = Date.now();
+      task.startSeconds = task.seconds; // Used for resuming from an idle state.
+      task.seconds++; // Do first tick for instant satisfaction.
+      task.running = true;
     }
-  
-    task.seconds++; // Do first tick for instant satisfaction.
+
+    if (!task.initialStart) {
+      task.initialStart = Date.now(); // First time ever.
+    }
 
     // Init Ticker.
     if (this._tickerMap[task.id]) {
