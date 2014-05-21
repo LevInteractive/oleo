@@ -29,19 +29,12 @@ oleo.factory("taskFactory", function() {
       // Set the first time the timer is ever started.
       initialStart: props.initialStart || null,
 
-      // Epoch time when start is clicked.
-      start: props.start || null,
-
-      // Epoch time when pause is clicked.
-      stop: props.stop || null,
+      // A Unix timestamp for every increment. How we can find our placement
+      // in time and space.
+      secondsEpoch: props.secondsEpoch || null,
 
       // Total amount of seconds a timer has been run.
-      seconds: props.seconds || 0,
-
-      // Set to the amount of seconds there are when start is clicked.
-      // Used to reset the time and re-calculate when coming back from
-      // an idle state.
-      startSeconds: props.startSeconds || 0
+      seconds: props.seconds || 0
     };
   };
 });

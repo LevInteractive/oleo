@@ -7,13 +7,27 @@
       <input type="text" ng-change="save()" ng-model="task.name" placeholder="Add Comment" />
     </div>
     <div class="row">
-      <input type="text" ng-focus="timeFocus(task)" ng-blur="timeBlur(task)" value="{{ task.seconds | timespan }}" />
+      <input type="text" 
+        ng-pattern="/^[0-9]{1,4}:[0-9]{1,2}:[0-9]{1,2}$/"
+        ng-focus="timeFocus(task)"
+        ng-blur="timeBlur(task)"
+        ng-change="timeChange(task)"
+        ng-model="formattedTime"
+        ng-keydown="enterBlur($event)" />
     </div>
     <div class="row">
-      <input type="text" value="{{ task | lifespan }}" />
+      <span class="lifespan">{{ task.initialStart | lifespan:task.secondsEpoch }}</span>
     </div>
     <div class="row" ng-hide="!project.rates">
       <span class="total">{{ task.seconds | rate:project.rate | currency:$ }}</span>
     </div>
+    <button class="remove" ng-click="hideDelete = false"><i class="icon-cancel"></i></button>
   </div>
+  <aside class="modal remove-task" ng-hide="hideDelete">
+    <button class="close" ng-click="hideDelete = true">X</button>
+    <div class="inner">
+      <p>Are you sure you want to delete this task?</p>
+      <button ng-click="remove(task)"><span>Yes!</span></button>
+    </div>
+  </aside>
 </div>

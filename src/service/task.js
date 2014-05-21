@@ -27,7 +27,7 @@
   };
   Ticker.prototype._tick = function() {
     this.task.seconds++;
-    this.task.secondsFragment++;
+    thsi.task.secondsEpoch = Date.now();
     this.save();
     return this;
   };
@@ -54,10 +54,8 @@
       if (task.running) {
         
         // If this was a running task the difference needs to be added
-        // on from the time started and now.
-        task.seconds = task.startSeconds; // Reset seconds to starting point.
-        task.seconds = task.seconds + Math.floor(Math.abs(task.start - Date.now()) / 1000); // Get total span.
-
+        // from the last epoch timestamp and now.
+        task.seconds = task.seconds + Math.floor(Math.abs(task.secondsEpoch - Date.now()) / 1000); // Get total span.
         this.start(task, true); // Passing true so task.start isn't set.
       }
     }, this);
@@ -80,11 +78,9 @@
     }
 
     if (!resuming) { // Start was manually pressed.
-      console.log("not resuming, new start set");
-      task.start = Date.now();
-      task.startSeconds = task.seconds; // Used for resuming from an idle state.
-      task.seconds++; // Do first tick for instant satisfaction.
       task.running = true;
+      task.secondsEpoch = Date.now(); // Used for resuming from an idle state.
+      task.seconds++; // Do first tick for instant satisfaction.
     }
 
     if (!task.initialStart) {
@@ -106,7 +102,6 @@
     if (!task) {
       throw new Error("A task is needed to stop a timer.");
     }
-    task.stop = Date.now();
     task.running = false;
     
     // Stop the Ticker.
