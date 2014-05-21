@@ -9,9 +9,12 @@ oleo.service('googleService', ['$http', '$q', 'identity', function($http, $q, id
         if (token) {
           this.accessToken = token;
           deferred.resolve(token);
+        } else {
+          this.accessToken = null;
         }
       }.bind(this));
     } catch(e) {
+      this.accessToken = null;
       deferred.reject(e);
     }
     return promise;

@@ -1,6 +1,6 @@
 oleo.filter('timespan', function() {
   return function(span) {
-    var hours = parseInt(span / 3600 ) % 24;
+    var hours = parseInt(span / 3600 );
     var minutes = parseInt(span / 60 ) % 60;
     var seconds = span % 60;
 

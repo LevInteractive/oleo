@@ -20,9 +20,6 @@ oleo.factory("taskFactory", function() {
       // The projectID to which this task belongs to.
       projectId: props.projectId,
 
-      // An optional currency rate.
-      rate: props.rate || 0,
-
       // Boolean for when the timer is running or not.
       running: props.running || false,
 

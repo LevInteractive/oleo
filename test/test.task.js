@@ -49,22 +49,14 @@ describe("task service", function() {
 
   beforeEach(populate);
 
-  it("should start and timer on a task and set initial start", function() {
-    var task = taskService.collection[0];
-    expect(task.start).to.equal(null);
-    taskService.start(task);
-    var e = expect(task.running).to.be.true;
-    expect(task.start).to.be.closeTo(Date.now(), 5);
-  });
-
   it("should stop timer on a task", function() {
     var task = taskService.collection[0];
-    expect(task.start).to.equal(null);
+    expect(task.secondsEpoch).to.equal(null);
     taskService.start(task);
     taskService.stop(task);
     var e = expect(task.running).to.be.false;
-    expect(task.start).to.be.closeTo(Date.now(), 5);
-    expect(task.stop).to.be.closeTo(Date.now(), 5);
+    expect(task.secondsEpoch).to.be.closeTo(Date.now(), 5);
+    expect(task.secondsEpoch).to.be.closeTo(Date.now(), 5);
   });
 
   it("should properly add and remove internal Tickers", function() {

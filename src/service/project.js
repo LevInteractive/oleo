@@ -1,9 +1,10 @@
 (function() {
-  function Service(storageService, $q, projectFactory) {
+  function Service(storageService, $q, projectFactory, google, spreadsheet) {
     this.collection = [];
     this.storage = storageService;
     this.factory = projectFactory;
     this.storageKey = "projects";
+    this.google = google;
     this.$q = $q;
     this.current = {};
   }
@@ -37,7 +38,27 @@
     this.unselectAll();
     this.current.project = proj;
     proj.current = true;
+    this.getSpreadsheetToken();
+    
     return this.save();
+  };
+
+  // If the project has a properly formatted spreadsheet assigned to it
+  // then attempt to get the token.
+  Service.prototype.getSpreadsheetToken = function() {
+    var urlObj;
+    try {
+      urlObj = this.spreadsheet.parseUrl(project.spreadsheet);
+    } catch(e) {
+      // console.error("Problem parsing spreadsheet URL.", e);
+      return;
+    }
+    this.google.auth(true).then(function() {
+      console.log(this.google.accessToken);
+    }.bind(this),
+    function(err) {
+      console.error('fail', err);
+    });
   };
 
   Service.prototype.unselectAll = function() {
@@ -48,5 +69,12 @@
     return this.save();
   };
 
-  oleo.service('projectService', ['storageService', '$q', 'projectFactory', Service]);
+  oleo.service('projectService', [
+    'storageService', 
+    '$q',
+    'projectFactory',
+    'googleService',
+    'spreadsheetService', 
+    Service
+  ]);
 })();

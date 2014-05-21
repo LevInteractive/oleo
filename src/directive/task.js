@@ -30,6 +30,9 @@ oleo.directive("task", ['taskService', '$filter', function(taskService, $filter)
     // Parent project for task.
     scope.project = scope.$parent.current.project;
 
+    // Expose adjustTime to the API.
+    scope.adjustTime = adjustTime;
+
     // When false confirmation box shows.
     scope.hideDelete = true;
     scope.remove = taskService.remove.bind(taskService);
