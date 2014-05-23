@@ -11,9 +11,9 @@
     "https://docs.google.com/feeds/"
   ],
   "oauth2": {
-    "client_id": "353834450643-v74s1mh6voujqvr3h70sv1u58omsogap.apps.googleusercontent.com",
+    "client_id": "788739110271-0djpt8qbtq7f0prefrk8slmm87lnl6q9.apps.googleusercontent.com",
     "scopes": [
-      "https://www.googleapis.com/auth/drive"
+      "https://spreadsheets.google.com/feeds"
     ]
   },
   "browser_action": {
@@ -24,7 +24,6 @@
      },
      "default_popup": "app.html"
   },
-  "manifest_version": 2,
-  "content_security_policy": "script-src 'self'; object-src 'self'"
+  "manifest_version": 2
 }
 

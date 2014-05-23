@@ -1,9 +1,8 @@
-oleo.service('googleService', ['$http', '$q', 'identity', function($http, $q, identity) {
+oleo.service('authService', ['$http', '$q', 'identity', function($http, $q, identity) {
   this.accessToken = null;
 
-  this.auth = function(interactive) {
+  this.authorize = function(interactive) {
     var deferred = $q.defer();
-    var promise = deferred.promise;
     try {
       identity.getAuthToken({interactive: interactive}, function(token) {
         if (token) {
@@ -17,12 +16,11 @@ oleo.service('googleService', ['$http', '$q', 'identity', function($http, $q, id
       this.accessToken = null;
       deferred.reject(e);
     }
-    return promise;
+    return deferred.promise;
   };
 
   this.revokeToken = function() {
     var deferred = $q.defer();
-    var promise = deferred.promise;
     var token = this.accessToken;
     if (token) {
       var xhr = new XMLHttpRequest();
@@ -35,6 +33,6 @@ oleo.service('googleService', ['$http', '$q', 'identity', function($http, $q, id
         deferred.resolve(token);
       });
     }
-    return promise;
+    return deferred.promise;
   };
 }]);

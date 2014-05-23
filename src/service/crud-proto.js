@@ -1,3 +1,9 @@
+
+// This is an abstract object for tasks and projects containing
+// basic CRUD methods which interface the storage system.
+// This actually gets assigned to a value instead of a service
+// since it's just an object that will be extended by services.
+
 (function(CRUD) {
 
   // Load objects from storage.
@@ -11,7 +17,7 @@
             this.factory(props) // Factory a fresh object.
           );
         }, this);
-        console.info("loaded ", this.storageKey, this.collection);
+        // console.info("loaded ", this.storageKey, this.collection);
         if (this._onLoad) {
           this._onLoad();
         }
@@ -26,7 +32,7 @@
     this.collection.push(
       this.factory(frag || {})
     );
-    console.info("added ", this.storageKey, this.collection[this.collection.length-1]);
+    // console.info("added ", this.storageKey, this.collection[this.collection.length-1]);
     if (this._onAdd) {
       this._onAdd(this.collection[this.collection.length-1]);
     }
@@ -44,7 +50,7 @@
       return false;
     });
     if (p[0]) {
-      console.info("removed ", this.storageKey, p[0]);
+      // console.info("removed ", this.storageKey, p[0]);
       this.collection.splice(index, 1);
       if (this._onRemove) {
         this._onRemove(p[0], index);
@@ -55,7 +61,7 @@
 
   // Save the current collection to storage.
   CRUD.save = function() {
-    console.info("saved ", this.storageKey, this.collection);
+    // console.info("saved ", this.storageKey, this.collection);
     if (this._onSave) {
       this._onSave();
     }

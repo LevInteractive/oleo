@@ -8,6 +8,7 @@ oleo.factory("projectFactory", function() {
       spreadsheet: props.spreadsheet || null,
       rate: props.rate || 0,
       rates: props.rates || false,
+      connected: props.connected || null,
       current: props.current || false,
       creationDate: props.creationDate || Date.now()
     };

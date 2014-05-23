@@ -33,13 +33,18 @@
   };
 
   // The Angular service.
-  function Service(storageService, $q, taskFactory, $interval) {
+  function Service(storageService, $q, taskFactory, $interval, $timeout, auth, projectService, spreadsheetService) {
     this.collection = [];
     this.storage = storageService;
     this.storageKey = "tasks";
     this.factory = taskFactory;
     this.$q = $q;
+    this.auth = auth;
     this.$interval = $interval;
+    this.$timeout = $timeout;
+    this.spreadsheet = spreadsheetService;
+    this.projectService = projectService;
+    this._saveToSpreadsheet();
   }
   Service.prototype = Object.create(angular.injector(['oleo']).get("crudProto"));
   Service.prototype.constructor = Service;
@@ -108,5 +113,39 @@
     this._tickerMap[task.id].stop();
   };
 
-  oleo.service('taskService', ['storageService', '$q', 'taskFactory', '$interval', Service]);
+  // Occasional spreadsheet saving.
+  Service.prototype._saveToSpreadsheet = function() {
+    var url = "https://docs.google.com/a/lev-interactive.com/spreadsheets/d/15lLlaf9DdGr-4SY8n8saxkwB-8Yvd7OcKQhgL5BFaY4/edit#gid=1823457416";
+    this.spreadsheet.retrieve(url).then(function(res) {
+      console.log(res);
+    });
+    // this.spreadsheet.put(url, [
+    //   [{content:'i'},{content:'am'}],
+    //   [{content:'dynamic'}],
+    //   [{content:'dynamic'}, {content:'fuck'}, {content:'yea'}],
+    //   [{content:'dynamic'}, {content:'fuck'}, {content:'yea'}],
+    //   [{content:'dynamic'}, {content:'fuck'}, {content:'i am first mother fucker', col: 1, row: 1}],
+    //   [{content:'dynamic'}, {content:'fuck'}, {content:'yea'}],
+    //   [{content:'dynamic'}, {content:'fuck'}, {content:'yea'}],
+    //   [{content:'dynamic'}, {content:'fuck'}, {content:'yea'}],
+    //   [{content:'dynamic'}, {content:'fuck'}, {content:'yea'}],
+    //   [{content:'dynamic'}, {content:'fuck'}, {content:'yea'}],
+    //   [{content:'dynamic'}, {content:'fuck'}, {content:'yea'}],
+    //   [{content:'dynamic'}, {content:'fuck'}, {content:'yea'}, {content:'im last'}]
+    // ]).then(function(res) {
+    //   console.log(res);
+    // });
+  };
+
+  oleo.service('taskService', [
+    'storageService',
+    '$q',
+    'taskFactory',
+    '$interval',
+    '$timeout',
+    'authService',
+    'projectService',
+    'spreadsheetService',
+    Service
+  ]);
 })();

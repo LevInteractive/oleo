@@ -1,12 +1,13 @@
 (function() {
-  function Service(storageService, $q, projectFactory, google, spreadsheet) {
+  function Service(storageService, $q, projectFactory, auth, spreadsheet) {
     this.collection = [];
     this.storage = storageService;
     this.factory = projectFactory;
     this.storageKey = "projects";
-    this.google = google;
+    this.auth = auth;
+    this.spreadsheet = spreadsheet;
     this.$q = $q;
-    this.current = {};
+    this.current = {}; // The currently selected project. e.g. { project: {} }
   }
   
   Service.prototype = Object.create(angular.injector(['oleo']).get("crudProto"));
@@ -38,27 +39,9 @@
     this.unselectAll();
     this.current.project = proj;
     proj.current = true;
-    this.getSpreadsheetToken();
+    this.connectToGoogle();
     
     return this.save();
-  };
-
-  // If the project has a properly formatted spreadsheet assigned to it
-  // then attempt to get the token.
-  Service.prototype.getSpreadsheetToken = function() {
-    var urlObj;
-    try {
-      urlObj = this.spreadsheet.parseUrl(project.spreadsheet);
-    } catch(e) {
-      // console.error("Problem parsing spreadsheet URL.", e);
-      return;
-    }
-    this.google.auth(true).then(function() {
-      console.log(this.google.accessToken);
-    }.bind(this),
-    function(err) {
-      console.error('fail', err);
-    });
   };
 
   Service.prototype.unselectAll = function() {
@@ -69,11 +52,40 @@
     return this.save();
   };
 
+  Service.prototype.getById = function(id) {
+    var project = null;
+    this.collection.forEach(function(proj) {
+      if (proj.id === id) {
+        project = proj;
+        return false;
+      }
+    });
+    return project;
+  };
+
+  // If the project has a properly formatted spreadsheet assigned to it
+  // then attempt to get the token.
+  Service.prototype.connectToGoogle = function(action) {
+    var deferred = this.$q.defer();
+    var urlObj;
+    try {
+      urlObj = this.spreadsheet.parseUrl(this.current.project.spreadsheet);
+    } catch(e) {
+      deferred.reject();
+      return;
+    }
+    this.auth.authorize(true);
+    return deferred.promise;
+  };
+
+  Service.prototype.reverseSync = function(){};
+  Service.prototype.sync = function(){};
+
   oleo.service('projectService', [
     'storageService', 
     '$q',
     'projectFactory',
-    'googleService',
+    'authService',
     'spreadsheetService', 
     Service
   ]);

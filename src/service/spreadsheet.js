@@ -1,20 +1,56 @@
 // https://developers.google.com/google-apps/spreadsheets/
-oleo.service('spreadsheetService', ['$http', '$q', 'identity', 'googleService', function($http, $q, identity, googleAuth) {
+oleo.service('spreadsheetService', ['$http', '$q', 'identity', 'authService', function($http, $q, identity, auth) {
+  var xml = this.xml = {
+    feedWrap: function(key, worksheet, entries) {
+      var xml = "";
+      xml += '<feed xmlns="http://www.w3.org/2005/Atom" ';
+      xml += 'xmlns:batch="http://schemas.google.com/gdata/batch" xmlns:gs="http://schemas.google.com/spreadsheets/2006">' + "\n";
+      xml += '  <id>https://spreadsheets.google.com/feeds/cells/'+key+'/'+worksheet+'/private/full</id>' + "\n";
+      xml += entries;
+      xml += '</feed>';
+      return xml;
+    },
+    batchEntry: function(key, worksheet, row, col, data) {
+      var xml = "";
+      xml += '  <entry>' + "\n";
+      xml += '    <batch:id>'+uid()+'</batch:id>' + "\n";
+      xml += '    <batch:operation type="update"/>' + "\n";
+      xml += '    <id>https://spreadsheets.google.com/feeds/cells/'+key+'/'+worksheet+'/private/full/R'+row+'C'+col+'</id>' + "\n";
+      xml += '    <link rel="edit" type="application/atom+xml" ';
+      xml += 'href="https://spreadsheets.google.com/feeds/cells/'+key+'/'+worksheet+'/private/full/R'+row+'C'+col+'"/>' + "\n";
+      xml += '    <gs:cell row="'+row+'" col="'+col+'" inputValue="'+data+'"/>' + "\n";
+      xml += '  </entry>' + "\n";
+      return xml;
+    }
+  };
 
   // For returning spreadsheet data.
   // GET
-  this.cellsEndpoint = function(urlObj) {
+  var cellsEndpoint = this.cellsEndpoint = function(urlObj) {
     return "https://spreadsheets.google.com/feeds/cells/"+
-        urlObj.key+"/"+urlObj.worksheet+"/public/basic"+
-        "?alt=json-in-script&callback=JSON_CALLBACK";
+        urlObj.key+"/"+urlObj.worksheet+"/private/full"
+    ;
   };
 
   // For updating and inserting a row. Requires auth.
   // POST
   this.feedEndpoint = function(urlObj) {
     return "https://spreadsheets.google.com/feeds/list/"+
-        urlObj.key+"/"+urlObj.worksheet+"/private/full";
+        urlObj.key+"/"+urlObj.worksheet+"/private/full"
+    ;
   };
+
+  // For generating a unique id for every entry.
+  var uid = this.uid = (function() {
+    var id = 0;
+    return function() {
+      if (arguments[0] === 0) {
+        id = 0;
+      }
+      return id++;
+    };
+  })();
+
 
   // Parse a google spreadsheet url and return a "url object".
   // Returns false if not a propery spreadsheet url.
@@ -39,113 +75,154 @@ oleo.service('spreadsheetService', ['$http', '$q', 'identity', 'googleService', 
     return urlObj;
   };
 
-  // Append row to spreadsheet.
-  // https://developers.google.com/google-apps/spreadsheets/#adding_a_list_row
-  this.append = function(urlObj, data) {
-    if (!data) {
-      throw new Error("Data is required to add a row.");
-    }
-    if (!googleAuth.accessToken) {
-      throw new Error("Access token required.");
-    }
+  // Retrieve a spreadsheet via the cells endpoint.
+  this.retrieve = function(urlObj) {
     var deferred = $q.defer();
-    var dataXml = '<entry xmlns="http://www.w3.org/2005/Atom" xmlns:gsx="http://schemas.google.com/spreadsheets/2006/extended">' + "\n";
-    data.forEach(function(cell) {
-      dataXml += '<gsx:'+xmlSafeColumnName(cell)+'>'+xmlSafeValue(cell)+'</gsx:'+xmlSafeColumnName(cell)+'>'+"\n";
-    });
-    dataXml += '</entry>';
-    this.request({
-      headers: {
-        "content-type": "application/atom+xml"
-      },
-      url: this.feedEndpoint(urlObj),
-      token: googleAuth.accessToken,
-      data: data,
-      method: "POST"
-    })
-    .success(function(res) {
-      deferred.resolve(dataXml);
-    })
-    .error(function(err) {
-      deferred.reject(new Error("There was an error with adding a row to the spreadsheet: "+JSON.stringify(err)));
-    });
+    auth.authorize(false).then(
+      function() {
+        if ("string" === typeof urlObj) {
+          urlObj = this.parseUrl(urlObj);
+        }
+        this.request({
+          token: auth.accessToken,
+          method: "GET",
+          url: cellsEndpoint(urlObj) + "?alt=json"
+        }).then(
+          function(res) {
+            var cells;
+            try {
+              cells = this.cells(res.feed);
+              deferred.resolve(cells);
+            } catch(e) {
+              deferred.reject(e);
+            }
+          }.bind(this),
+          deferred.reject
+        );
+      }.bind(this),
+      deferred.reject
+    );
     return deferred.promise;
   };
 
-  // Request and parse all cell data for a sheet. This will return
-  // a promise that will resove a collection of arrays which represents
-  // the spreadsheet.
-  this.cells = function(urlObj) {
+  // Cells are an array of objects specifiying their positions. If the object doesn't
+  // contain a row & col property then it will be placed in its matrix position.
+  //
+  // [
+  //   [{ content: 'will be overridden' }, { content: 'i am second col first row' }],
+  //   [{ content: 'second row' }, { content: 'rule breaker, first cell', row: 1, col: 1 }]
+  // ]
+  this.put = function(urlObj, cells) {
     var deferred = $q.defer();
-    var collection = [];
-    var onSuccess = function(res, status) {
-      var feed = res.feed;
-      var entries = feed.entry || [];
-      var entry = null;
-      var cells = [];
-      var row = null;
-      var col = null;
-      var pRow = null;
-      for (var i = 0; i < entries.length; ++i) {
-        entry = entries[i];
-        row = parseInt(entry.title.$t.replace(/[a-z]*/i, ''), 10) - 1;
-        col = entry.title.$t.replace(/[0-9]*/i);
-        if (pRow !== row) {
-          cells[row] = [];
+    auth.authorize(false).then(
+      function() {
+        if ("string" === typeof urlObj) {
+          urlObj = this.parseUrl(urlObj);
         }
-        cells[row].push({
-          pos: entry.title.$t,
-          content: entry.content.$t
-        });
-        pRow = row;
-      }
-      deferred.resolve(cells);
-    };
-    this.request({
-      url: this.cellsEndpoint(urlObj),
-      method: "JSONP"
-    })
-    .success(onSuccess)
-    .error(function(res, status) {
-      deferred.reject(new Error("Invalid response: "+res));
-    });
+        var feed = "";
+        var entries = "";
+        var rowIndex = 1;
+        var colIndex;
+        for (var row in cells) {
+          colIndex = 1;
+          for (var col in cells[row]) {
+            entries += xml.batchEntry(
+              urlObj.key,
+              urlObj.worksheet,
+              cells[row][col].row || rowIndex,
+              cells[row][col].col || colIndex,
+              cells[row][col].content
+            );
+            colIndex++;
+          }
+          rowIndex++;
+        }
+        feed += xml.feedWrap(urlObj.key, urlObj.worksheet, entries);
+        this.request({
+          token: auth.accessToken,
+          method: "POST",
+          url: cellsEndpoint(urlObj) + "/batch",
+          content: feed,
+          headers: {
+            'Content-Type': 'application/atom+xml'
+          }
+        }).then(
+          function(res) {
+            if (res.toLowerCase().indexOf("reason='success'") > 0) {
+              deferred.resolve(res);
+            } else {
+              deferred.reject(res);
+            }
+          },
+          deferred.reject
+        );
+      }.bind(this),
+      deferred.reject
+    );
     return deferred.promise;
+  };
+
+  this.cells = function(feed) {
+    var entries = feed.entry || [];
+    var entry = null;
+    var cells = [];
+    var row = null;
+    var col = null;
+    var pRow = null;
+    for (var i = 0; i < entries.length; ++i) {
+      entry = entries[i];
+      row = parseInt(entry.title.$t.replace(/[a-z]*/i, ''), 10) - 1;
+      col = entry.title.$t.replace(/[0-9]*/i);
+      if (pRow !== row) {
+        cells[row] = [];
+      }
+      cells[row].push({
+        pos: entry.title.$t,
+        content: entry.content.$t
+      });
+      pRow = row;
+    }
+    return cells;
   };
 
   // Request the api.
   this.request = function(opts) {
     var deferred = $q.defer();
-    var config = {
-      url: opts.url,
-      method: opts.method,
+    if (!opts.url || !opts.method || !opts.token) {
+      throw new Error("Url, Method, and Token are required for request.");
+    }
+    var xhr = new XMLHttpRequest();
+    var config = {};
+    config.url = opts.url;
+    config.method = opts.method;
+    config.headers = {
+      'GData-Version': '3.0',
+      'If-Match': '*'
     };
     if (opts.token) {
-      config.headers = {
-        Authorization: "Bearer "+opts.token
-      };
+      config.headers.Authorization = "Bearer "+opts.token;
     }
-    if (opts.headers) {
-      config.headers = opts.headers;
+    config.headers = angular.extend(config.headers, opts.headers || {});
+    xhr.open(config.method, config.url, true);
+    for (var header in config.headers) {
+      xhr.setRequestHeader(header, config.headers[header]);
     }
-    return $http(config)
-      .success(deferred.resolve)
-      .error(deferred.reject);
+    xhr.send(opts.content || null);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          var res;
+          try {
+            res = JSON.parse(xhr.responseText);
+          } catch(e) {
+            res = xhr.responseText;
+          }
+          deferred.resolve(res);
+        } else {
+          deferred.reject(xhr);
+        }
+      }
+    };
+    return deferred.promise;
   };
-
-  // A few helpers for formatting.
-  function xmlSafeValue(val){
-    if (!val) {
-      return '';
-    }
-    return String(val).replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  }
-  function xmlSafeColumnName(val){
-    if (!val) {
-      return '';
-    }
-    return String(val).replace(/\s+/g, '').toLowerCase();
-  }
 }]);

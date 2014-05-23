@@ -10,10 +10,8 @@
   <!-- endbuild -->
 </head>
 <body ng-controller="MainController">
-  
   <header>
     <input type="text" ng-model="user.name" placeholder="Your Name" />
-
     <div class="projects-selector">
       <a href="">Project <i class="icon-toggle-down"></i></a>
       <ul class="list" ng-repeat="proj in projects | orderBy:weight">
@@ -21,7 +19,6 @@
       </ul>
       <button ng-click="addProject()"><i class="icon-file2"></i><span>Add Project</span></button>
     </div>
-
     <h3 ng-if="current.project">{{ current.project.name }}</h3>
     <h3 ng-if="!current.project">No project selected!</h3>
   </header>
@@ -32,9 +29,17 @@
     </ul>
     <button ng-click="addTask()" ng-if="current.project"><i class="icon-add"></i> New Task</button>
   </main>
-  
-  <footer>
 
+  <footer>
+    <div class="connected-status">
+      <i class="icon-google-drive"></i>
+      &nbsp;
+      <span ng-if="current.project">Connected to blah</span>
+      <span ng-if="!current.project">Not Connected</span> 
+    </div>
+    <div class="shout-out">
+      <span>by <a href="http://lev-interactive.com/?r=oleo" target="_blank">Lev Interactive</a></span>
+    </div>
   </footer>
 
   <!-- build:js app.min.js -->
@@ -44,7 +49,7 @@
   <script src="factory/task.js"></script>
   <script src="service/crud-proto.js"></script>
   <script src="service/storage.js"></script>
-  <script src="service/google.js"></script>
+  <script src="service/auth.js"></script>
   <script src="service/project.js"></script>
   <script src="service/task.js"></script>
   <script src="service/spreadsheet.js"></script>
