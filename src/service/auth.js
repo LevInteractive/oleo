@@ -10,6 +10,7 @@ oleo.service('authService', ['$http', '$q', 'identity', function($http, $q, iden
           deferred.resolve(token);
         } else {
           this.accessToken = null;
+          deferred.reject("No token.");
         }
       }.bind(this));
     } catch(e) {

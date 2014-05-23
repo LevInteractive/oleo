@@ -8,6 +8,7 @@
     this.spreadsheet = spreadsheet;
     this.$q = $q;
     this.taskService = taskService;
+    this.connectedToGoogle = false;
     this.current = {}; // The currently selected project. e.g. { project: {} }
   }
   
@@ -40,8 +41,11 @@
     this.unselectAll();
     this.current.project = proj;
     proj.current = true;
-    this.connectToGoogle();
-    
+
+    this.connectToGoogle(true).then(function() {
+      this.downsync(); // Sync from google.
+    }.bind(this));
+
     return this.save();
   };
 
@@ -55,8 +59,9 @@
 
   // If the project has a properly formatted spreadsheet assigned to it
   // then attempt to get the token.
-  Service.prototype.connectToGoogle = function(action) {
+  Service.prototype.connectToGoogle = function(interactive) {
     var deferred = this.$q.defer();
+    this.connectedToGoogle = false;
     var urlObj;
     try {
       urlObj = this.spreadsheet.parseUrl(this.current.project.spreadsheet);
@@ -64,21 +69,33 @@
       deferred.reject();
       return;
     }
-    this.auth.authorize(true);
+    this.auth.authorize(interactive).then(
+      function() {
+        this.connectedToGoogle = true;
+        deferred.resolve();
+      }.bind(this),
+      deferred.reject
+    );
     return deferred.promise;
   };
 
   // Sync from Google to local. This only happens once.
   Service.prototype.downsync = function() {
-    var url = "https://docs.google.com/a/lev-interactive.com/spreadsheets/d/15lLlaf9DdGr-4SY8n8saxkwB-8Yvd7OcKQhgL5BFaY4/edit#gid=1823457416";
+    var url = this.current.project.spreadsheet;
+    var taskService = this.taskService;
+    var idTest = /^#[0-9a-z]{1,20}$/i; // Good enough.
+    var proj = this.current.project;
+    var matches;
     this.spreadsheet.retrieve(url).then(function(cells) {
-      console.log(res);
       var updateMap = cells.map(function(cell) {
-        if (1 === cell.col) {
-          
+        if (1 === cell.col && idTest.test(cell.content)) { // If first column and looks like an ID.
+          return taskService.collection.reduce(function(task) { // Make sure the task belongs to this project.
+            return task.projectId === proj.id && cell.content === task.id;
+          }).length;
         }
       });
     });
+    // var url = "https://docs.google.com/a/lev-interactive.com/spreadsheets/d/15lLlaf9DdGr-4SY8n8saxkwB-8Yvd7OcKQhgL5BFaY4/edit#gid=0";
     // this.spreadsheet.put(url, [
     //   [{content:'i'},{content:'am'}],
     //   [{content:'dynamic'}],
@@ -93,7 +110,7 @@
     //   [{content:'dynamic'}, {content:'fuck'}, {content:'yea'}],
     //   [{content:'dynamic'}, {content:'fuck'}, {content:'yea'}, {content:'im last'}]
     // ]).then(function(res) {
-    //   console.log(res);
+    //   console.log('down synced.');
     // });
   };
 

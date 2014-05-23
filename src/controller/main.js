@@ -38,6 +38,19 @@
       storageService.put("user", $scope.user);
     }, true);
 
+
+    // Application
+    // -------------------------------------------------
+    $scope.connected = "Not Connected";
+    $scope.$watch(
+      function() {
+        return projectService.connected;
+      },
+      function() {
+        $scope.connected = projectService.connected;
+      }
+    );
+
     // Load in from storage
     // -------------------------------------------------
     // Loading tasks first so they can watch the projects.
