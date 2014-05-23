@@ -43,6 +43,23 @@ describe("spreadsheet service", function() {
     $httpBackend.verifyNoOutstandingRequest();
   });
 
+  it("should convert a spreadsheet title to a proper column and row", function() {
+    var coords = spreadsheet.titleCoord("A1");
+    expect(coords.col).to.equal(1);
+    expect(coords.row).to.equal(1);
+    coords = spreadsheet.titleCoord("G6");
+    expect(coords.col).to.equal(7);
+    expect(coords.row).to.equal(6);
+    coords = spreadsheet.titleCoord("GG66");
+    expect(coords.col).to.equal(33);
+    expect(coords.row).to.equal(66);
+    coords = spreadsheet.titleCoord("AA66");
+    expect(coords.col).to.equal(27);
+    expect(coords.row).to.equal(66);
+    coords = spreadsheet.titleCoord("AAA6600");
+    expect(coords.col).to.equal(53);
+    expect(coords.row).to.equal(6600);
+  });
 
   // it("should properly parse a google spreadsheet url", function() {
   //   var badFunc = function() {
@@ -91,7 +108,4 @@ describe("spreadsheet service", function() {
   //   $httpbackend.flush();
   // });
 
-
-  it("should be able to fetch a specifc row by id", function() {});
-  it("should be able fetch the spreadsheet's title", function() {});
 });

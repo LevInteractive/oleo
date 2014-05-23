@@ -1,5 +1,7 @@
 // https://developers.google.com/google-apps/spreadsheets/
 oleo.service('spreadsheetService', ['$http', '$q', 'identity', 'authService', function($http, $q, identity, auth) {
+
+  // Basic XML templates for sending data to Google.
   var xml = this.xml = {
     feedWrap: function(key, worksheet, entries) {
       var xml = "";
@@ -24,18 +26,9 @@ oleo.service('spreadsheetService', ['$http', '$q', 'identity', 'authService', fu
     }
   };
 
-  // For returning spreadsheet data.
-  // GET
+  // The endpoint used to interact with the spreadsheet.
   var cellsEndpoint = this.cellsEndpoint = function(urlObj) {
     return "https://spreadsheets.google.com/feeds/cells/"+
-        urlObj.key+"/"+urlObj.worksheet+"/private/full"
-    ;
-  };
-
-  // For updating and inserting a row. Requires auth.
-  // POST
-  this.feedEndpoint = function(urlObj) {
-    return "https://spreadsheets.google.com/feeds/list/"+
         urlObj.key+"/"+urlObj.worksheet+"/private/full"
     ;
   };
@@ -51,6 +44,20 @@ oleo.service('spreadsheetService', ['$http', '$q', 'identity', 'authService', fu
     };
   })();
 
+  // Transforms a spreadsheet position to real row/col coords.
+  // e.g. B4 => { col: 2, row: 4 }
+  // e.g. AA4 => { col: 27, row 4 }
+  var titleCoord = this.titleCoord = function(title) {
+    var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var revs = title.replace(/[0-9]/g, "").length - 1;
+    var alpha = title[0];
+    var col = (alphabet.indexOf(alpha) + 1) + (revs * alphabet.length);
+    var row = parseInt(title.replace(/[a-z]/gi, ""), 10);
+    return {
+      row: row,
+      col: col
+    };
+  };
 
   // Parse a google spreadsheet url and return a "url object".
   // Returns false if not a propery spreadsheet url.
@@ -162,25 +169,23 @@ oleo.service('spreadsheetService', ['$http', '$q', 'identity', 'authService', fu
     return deferred.promise;
   };
 
+  // This will take the cells response and format them properly with
+  // their corresponding row and col. This will create a flat array
+  // rather than a matrix because `put` can support that which leads
+  // to slightly better performance.
   this.cells = function(feed) {
     var entries = feed.entry || [];
     var entry = null;
     var cells = [];
-    var row = null;
-    var col = null;
-    var pRow = null;
+    var coords = null;
     for (var i = 0; i < entries.length; ++i) {
       entry = entries[i];
-      row = parseInt(entry.title.$t.replace(/[a-z]*/i, ''), 10) - 1;
-      col = entry.title.$t.replace(/[0-9]*/i);
-      if (pRow !== row) {
-        cells[row] = [];
-      }
-      cells[row].push({
-        pos: entry.title.$t,
-        content: entry.content.$t
+      coords = titleCoord(entry.title.$t);
+      cells.push({
+        content: entry.content.$t,
+        row: coords.row,
+        col: coords.col
       });
-      pRow = row;
     }
     return cells;
   };

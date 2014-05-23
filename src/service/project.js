@@ -1,5 +1,5 @@
 (function() {
-  function Service(storageService, $q, projectFactory, auth, spreadsheet) {
+  function Service(storageService, $q, projectFactory, auth, spreadsheet, taskService) {
     this.collection = [];
     this.storage = storageService;
     this.factory = projectFactory;
@@ -7,6 +7,7 @@
     this.auth = auth;
     this.spreadsheet = spreadsheet;
     this.$q = $q;
+    this.taskService = taskService;
     this.current = {}; // The currently selected project. e.g. { project: {} }
   }
   
@@ -52,17 +53,6 @@
     return this.save();
   };
 
-  Service.prototype.getById = function(id) {
-    var project = null;
-    this.collection.forEach(function(proj) {
-      if (proj.id === id) {
-        project = proj;
-        return false;
-      }
-    });
-    return project;
-  };
-
   // If the project has a properly formatted spreadsheet assigned to it
   // then attempt to get the token.
   Service.prototype.connectToGoogle = function(action) {
@@ -78,8 +68,35 @@
     return deferred.promise;
   };
 
-  Service.prototype.reverseSync = function(){};
-  Service.prototype.sync = function(){};
+  // Sync from Google to local. This only happens once.
+  Service.prototype.downsync = function() {
+    var url = "https://docs.google.com/a/lev-interactive.com/spreadsheets/d/15lLlaf9DdGr-4SY8n8saxkwB-8Yvd7OcKQhgL5BFaY4/edit#gid=1823457416";
+    this.spreadsheet.retrieve(url).then(function(cells) {
+      console.log(res);
+      var updateMap = cells.map(function(cell) {
+        if (1 === cell.col) {
+          
+        }
+      });
+    });
+    // this.spreadsheet.put(url, [
+    //   [{content:'i'},{content:'am'}],
+    //   [{content:'dynamic'}],
+    //   [{content:'dynamic'}, {content:'fuck'}, {content:'yea'}],
+    //   [{content:'dynamic'}, {content:'fuck'}, {content:'yea'}],
+    //   [{content:'dynamic'}, {content:'fuck'}, {content:'i am first mother fucker', col: 1, row: 1}],
+    //   [{content:'dynamic'}, {content:'fuck'}, {content:'yea'}],
+    //   [{content:'dynamic'}, {content:'fuck'}, {content:'yea'}],
+    //   [{content:'dynamic'}, {content:'fuck'}, {content:'yea'}],
+    //   [{content:'dynamic'}, {content:'fuck'}, {content:'yea'}],
+    //   [{content:'dynamic'}, {content:'fuck'}, {content:'yea'}],
+    //   [{content:'dynamic'}, {content:'fuck'}, {content:'yea'}],
+    //   [{content:'dynamic'}, {content:'fuck'}, {content:'yea'}, {content:'im last'}]
+    // ]).then(function(res) {
+    //   console.log(res);
+    // });
+  };
+
 
   oleo.service('projectService', [
     'storageService', 
@@ -87,6 +104,7 @@
     'projectFactory',
     'authService',
     'spreadsheetService', 
+    'taskService',
     Service
   ]);
 })();
