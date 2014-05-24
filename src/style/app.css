@@ -71,7 +71,7 @@ a:hover { color: #d2f5ec; }
 .infobar .my-projects-btn { clear:both; display:block; font-size: 12px; padding: 0; margin: 10px 0 2px; text-transform: uppercase; }
 .infobar .my-projects-btn i { font-size: 15px; position: relative; bottom: -2px; }
 
-.infobar h3 { cursor: default; color: #549b88; }
+.infobar h3 { cursor: default; color: #dedede; }
 
 /***************************************
  * My Projects
@@ -118,6 +118,7 @@ a:hover { color: #d2f5ec; }
 /***************************************
  * Task List
  */
+.task-list-container { min-height: 300px; }
 .task-list { list-style: none; margin: 0; padding: 0; }
 .task-list .inme { padding: 23px; background: #101d29; }
 
