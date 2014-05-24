@@ -1,4 +1,4 @@
-oleo.directive("project", ['projectService', function(projectService) {
+oleo.directive("project", ['projectService', '$rootScope', function(projectService, $rootScope) {
   function link(scope, el, attrs) {
 
     // When false confirmation box shows.
@@ -8,6 +8,12 @@ oleo.directive("project", ['projectService', function(projectService) {
     scope.remove = projectService.remove.bind(projectService);
     scope.select = projectService.select.bind(projectService);    
     scope.save = projectService.save.bind(projectService);
+
+    // When the rate is changed update the user's default rate for future projects.
+    scope.$watch("project.rate", function() {
+      $rootScope.user.rate = scope.project.rate;
+      scope.$parent.saveUser();
+    });
   }
   return {
     link: link,

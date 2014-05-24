@@ -11,7 +11,7 @@
 </head>
 <body ng-controller="MainController">
   <header>
-    <input type="text" ng-model="user.name" placeholder="Your Name" />
+    <input type="text" ng-model="user.name" ng-change="saveUser()" placeholder="Your Name" />
     <div class="projects-selector">
       <a href="">Project <i class="icon-toggle-down"></i></a>
       <ul class="list" ng-repeat="proj in projects | orderBy:weight">
@@ -19,22 +19,22 @@
       </ul>
       <button ng-click="addProject()"><i class="icon-file2"></i><span>Add Project</span></button>
     </div>
-    <h3 ng-if="current.project">{{ current.project.name }}</h3>
-    <h3 ng-if="!current.project">No project selected!</h3>
+    <h3 ng-if="currentProject">{{ currentProject.name }}</h3>
+    <h3 ng-if="!currentProject">No project selected!</h3>
   </header>
 
-  <main class="task-list-container" ng-if="current.project">
-    <ul class="list" ng-repeat="task in tasks | filter:{projectId:current.project.id} | orderBy:weight">
+  <main class="task-list-container" ng-if="currentProject">
+    <ul class="list" ng-repeat="task in tasks | filter:{projectId:currentProject.id} | orderBy:weight">
       <li task="task"></li>
     </ul>
-    <button ng-click="addTask()" ng-if="current.project"><i class="icon-add"></i> New Task</button>
+    <button ng-click="addTask()" ng-if="currentProject"><i class="icon-add"></i> New Task</button>
   </main>
 
   <footer>
     <div class="connected-status">
       <i class="icon-google-drive"></i>
       &nbsp;
-      <span>{{ connectedStatus }}</span>
+      <span>{{ $root.connectionStatus }}</span>
     </div>
     <div class="shout-out">
       <span>by <a href="http://lev-interactive.com/?r=oleo" target="_blank">Lev Interactive</a></span>
@@ -43,15 +43,18 @@
 
   <!-- build:js app.min.js -->
   <script src="../bower_components/angular/angular.js"></script>
-  <script src="app.js"></script>
-  <script src="factory/project.js"></script>
-  <script src="factory/task.js"></script>
-  <script src="service/crud-proto.js"></script>
-  <script src="service/storage.js"></script>
-  <script src="service/auth.js"></script>
-  <script src="service/project.js"></script>
-  <script src="service/task.js"></script>
-  <script src="service/spreadsheet.js"></script>
+  <script src="oleo.js"></script>
+  <script src="provider/value/storage.js"></script>
+  <script src="provider/value/identity.js"></script>
+  <script src="provider/value/crud-proto.js"></script>
+  <script src="provider/factory/project.js"></script>
+  <script src="provider/factory/task.js"></script>
+  <script src="provider/factory/ticker.js"></script>
+  <script src="provider/service/storage.js"></script>
+  <script src="provider/service/auth.js"></script>
+  <script src="provider/service/project.js"></script>
+  <script src="provider/service/task.js"></script>
+  <script src="provider/service/spreadsheet.js"></script>
   <script src="filter/format-life-span.js"></script>
   <script src="filter/format-rate.js"></script>
   <script src="filter/format-time-span.js"></script>

@@ -3,6 +3,13 @@
 // basic CRUD methods which interface the storage system.
 // This actually gets assigned to a value instead of a service
 // since it's just an object that will be extended by services.
+//
+// Dependency Injection:
+//  - storageKey
+//  - storage
+//  - collection
+//  - factory
+//
 
 (function(CRUD) {
 
@@ -50,7 +57,6 @@
       return false;
     });
     if (p[0]) {
-      // console.info("removed ", this.storageKey, p[0]);
       this.collection.splice(index, 1);
       if (this._onRemove) {
         this._onRemove(p[0], index);
@@ -61,11 +67,24 @@
 
   // Save the current collection to storage.
   CRUD.save = function() {
-    // console.info("saved ", this.storageKey, this.collection);
     if (this._onSave) {
       this._onSave();
     }
     return this.storage.put(this.storageKey, this.collection);
+  };
+
+  // Get by ID.
+  // @TODO - memoize this.
+  CRUD.byId = function(id) {
+    var col = this.collection;
+    var model = null;
+    for (var i = 0, len = col.length; i < len; i++) {
+      if (id === col[i].id) {
+        model = col[i];
+        break;
+      }
+    }
+    return model;
   };
 
   oleo.value('crudProto', CRUD);

@@ -18,8 +18,9 @@
     <div class="row">
       <span class="lifespan">{{ task.initialStart | lifespan:task.secondsEpoch }}</span>
     </div>
-    <div class="row" ng-hide="!project.rates">
-      <span class="total">{{ task.seconds | rate:project.rate | currency:$ }}</span>
+    <div class="row" ng-show="$parent.currentProject.rate">
+      fuck
+      <span class="total">{{ task.seconds | rate:$parent.currentProject.rate | currency:$ }}</span>
     </div>
     <button class="remove" ng-click="hideDelete = false"><i class="icon-cancel"></i></button>
   </div>

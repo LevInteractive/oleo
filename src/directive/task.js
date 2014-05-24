@@ -27,9 +27,6 @@ oleo.directive("task", ['taskService', '$filter', function(taskService, $filter)
     // If true then the timer will continue running on input blur.
     var continueAfterEdit = false;
 
-    // Parent project for task.
-    scope.project = scope.$parent.current.project;
-
     // Expose adjustTime to the API.
     scope.adjustTime = adjustTime;
 

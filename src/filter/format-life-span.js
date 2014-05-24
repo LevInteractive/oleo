@@ -12,10 +12,10 @@ oleo.filter('lifespan', ['$filter', function($filter) {
     }
     startDate = start;
     endDate = last;
-    if (date(startDate, FORMAT) === date(endDate, FORMAT)) {
+    if (!last || date(startDate, FORMAT) === date(endDate, FORMAT)) {
       str += date(startDate, FORMAT);
     } else {
-      str += date(startDate, FORMAT_SINGLE) + date(startDate, FROMAT);
+      str += date(startDate, FORMAT_SINGLE) + date(endDate, FORMAT);
     }
     return str;
   };

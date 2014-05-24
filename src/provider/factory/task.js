@@ -6,7 +6,7 @@ oleo.factory("taskFactory", function() {
     return {
 
       // Unique ID for task.
-      id: props.id || Math.random().toString(36).substr(2, 6),
+      id: props.id || "#"+Math.random().toString(36).substr(2, 9).toUpperCase(),
 
       // Name/comment for task.
       name: props.name || "",

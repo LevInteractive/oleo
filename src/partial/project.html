@@ -5,11 +5,9 @@
 
   <input type="text" ng-change="save()" ng-model="project.spreadsheet" placeholder="Spreadsheet URL" />
 
-  <label for="rates">Rates</label>
+  <label for="rate">Hourly Rate</label>
 
-  <input type="checkbox" ng-change="save()" ng-model="project.rates" />
-
-  <input type="number" ng-change="save()" ng-model="project.rate" ng-hide="!project.rates" />
+  <input type="number" min="0" ng-change="save()" ng-model="project.rate" />
 
   <button ng-click="hideDelete = false">Delete Project</button>
 
