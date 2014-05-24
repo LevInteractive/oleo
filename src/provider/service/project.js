@@ -17,7 +17,7 @@
       if (this.currentProject && this.currentProject.spreadsheet) {
         this.upsync(this.currentProject);
       }
-    }.bind(this), 55000);
+    }.bind(this), 5000);
   }
   
   Service.prototype = Object.create(angular.injector(['oleo']).get("crudProto"));
@@ -107,7 +107,7 @@
       { content: task.name || "Task "+task.id },
       { content: timespan(task.seconds) },
       { content: lifespan(task.initialStart, task.timeEpoch) },
-      { content: currency(rate(task.seconds, project.rates)) }
+      { content: currency(rate(task.seconds, project.rate), "$") }
     ].map(function(obj) {
       obj.row = row;
       obj.col = ++col;

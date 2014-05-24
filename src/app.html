@@ -10,6 +10,7 @@
   <!-- endbuild -->
 </head>
 <body ng-controller="MainController">
+  <input type="text" style="opacity:0;display:block;height:0;overflow:hidden;" /><!-- no-focus hack -->
   <header>
     <input type="text" ng-model="user.name" ng-change="saveUser()" placeholder="Your Name" />
     <div class="projects-selector">
@@ -24,7 +25,7 @@
   </header>
 
   <main class="task-list-container" ng-if="currentProject">
-    <ul class="list" ng-repeat="task in tasks | filter:{projectId:currentProject.id} | orderBy:weight">
+    <ul class="list" ng-repeat="task in tasks | filter:{projectId:currentProject.id} | orderBy:creationDate">
       <li task="task"></li>
     </ul>
     <button ng-click="addTask()" ng-if="currentProject"><i class="icon-add"></i> New Task</button>
@@ -46,6 +47,7 @@
   <script src="oleo.js"></script>
   <script src="provider/value/storage.js"></script>
   <script src="provider/value/identity.js"></script>
+  <script src="provider/value/browser-action.js"></script>
   <script src="provider/value/crud-proto.js"></script>
   <script src="provider/factory/project.js"></script>
   <script src="provider/factory/task.js"></script>

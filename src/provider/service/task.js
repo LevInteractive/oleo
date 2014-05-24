@@ -1,12 +1,13 @@
 (function() {
   
   // The Angular service.
-  function Service(storageService, $q, taskFactory, tickerFactory) {
+  function Service(storageService, $q, taskFactory, tickerFactory, browserAction) {
     this.collection = [];
     this.storage = storageService;
     this.storageKey = "tasks";
     this.factory = taskFactory;
     this.tickerFactory = tickerFactory;
+    this.browserAction = browserAction;
     this.$q = $q;
   }
   Service.prototype = Object.create(angular.injector(['oleo']).get("crudProto"));
@@ -45,6 +46,17 @@
       throw new Error("A task is needed to start a timer.");
     }
 
+    // Set browser icon to active.
+    this.browserAction.setIcon({
+      path:'style/img/icon-active19.png'
+    });
+    this.browserAction.setTitle({
+      title: "óleo | There are tasks running."
+    });
+    this.browserAction.setBadgeText({
+      text: "ON"
+    });
+
     if (!task.initialStart) {
       task.initialStart = Date.now(); // First time ever.
     }
@@ -68,6 +80,25 @@
     
     // Stop the Ticker.
     this._tickerMap[task.id].stop();
+
+    // If no other timers are running, remove active icon.
+    var setToDefault = true;
+    this.collection.forEach(function(task) {
+      if (task.running) {
+        setToDefault = false;
+      }
+    }, this);
+    if (setToDefault) {
+      this.browserAction.setBadgeText({
+        text: ""
+      });
+      this.browserAction.setTitle({
+        title: "óleo | All tasks are paused."
+      });
+      this.browserAction.setIcon({
+        path: 'style/img/icon19.png'
+      });
+    }
   };
 
   oleo.service('taskService', [
@@ -75,6 +106,7 @@
     '$q',
     'taskFactory',
     'tickerFactory',
+    'browserAction',
     Service
   ]);
 })();
