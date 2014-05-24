@@ -1,5 +1,5 @@
 (function() {
-  function controller($q, $scope, $rootScope, storageService, projectService, taskService) {
+  function controller($q, $scope, $rootScope, storageService, projectService, taskService, i18n) {
 
     // Tasks
     // -------------------------------------------------
@@ -13,10 +13,14 @@
 
     // Projects
     // -------------------------------------------------
-    $scope.projects       = projectService.collection;
-    $scope.addProject     = projectService.add.bind(projectService);
-    $scope.saveProjects   = projectService.save.bind(projectService);
-    $scope.currentProject = null;
+    $scope.displayProjects = false;
+    $scope.projects        = projectService.collection;
+    $scope.addProject      = projectService.add.bind(projectService);
+    $scope.saveProjects    = projectService.save.bind(projectService);
+    $scope.currentProject  = null;
+    $scope.hideProjects = function() {
+      $scope.displayProjects = false;
+    };
     $scope.$watch(
       function() {
         return projectService.currentProject;
@@ -53,8 +57,9 @@
     $rootScope.BAD_CONNECTION = "Problem Connecting";
     $rootScope.NO_SPREADSHEET = "No Spreadsheet";
     $rootScope.ATTEMPTING_TO_CONNECT = "Connecting";
-
     $rootScope.connectionStatus = $rootScope.NO_SPREADSHEET;
+
+    $rootScope.i18n = i18n;
 
 
     // Load in from storage
@@ -75,6 +80,7 @@
     'storageService',
     'projectService',
     'taskService',
+    'i18n',
     controller
   ]);
 })();

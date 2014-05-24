@@ -1,0 +1,65 @@
+{
+  "currency": {
+    "message": "$",
+    "description": ""
+  },
+  "hour": {
+    "message": "/hr",
+    "description": ""
+  },
+  "addProject": {
+    "message": "Add Project",
+    "description": ""
+  },
+  "addTask": {
+    "message": "Add Task",
+    "description": ""
+  },
+  "addComment": {
+    "message": "addComment",
+    "description": ""
+  },
+  "myProjectsBtn": {
+    "message": "My Projects",
+    "description": ""
+  },
+  "searchProjects": {
+    "message": "Search for a project.",
+    "description": ""
+  },
+
+  "namePlaceholder": {
+    "message": "Your Name",
+    "description": ""
+  },
+  "projectPlaceholder": {
+    "message": "Project Name",
+    "description": "Displayed in the add a new project box."
+  },
+  "spreadsheetPlaceholder": {
+    "message": "Spreadsheet URL",
+    "description": ""
+  },
+
+  "noProjectSelected": {
+    "message": "No projected selected!",
+    "description": ""
+  },
+
+  "deleteProjectConfirmDescription": {
+    "message": "Are you sure you want to remove this project and all of the tasks associated to it?",
+    "description": ""
+  },
+  "deleteProjectConfirmYes": {
+    "message": "Yes, I'm sure.",
+    "description": ""
+  },
+  "deleteProjectConfirmCancel": {
+    "message": "Actually, nevermind.",
+    "description": ""
+  },
+  "deleteProject": {
+    "message": "Delete Project",
+    "description": ""
+  }
+}

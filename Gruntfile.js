@@ -31,6 +31,7 @@ module.exports = function(grunt) {
         '!dist/app.html',
         '!dist/manifest.json',
         '!dist/app.min.js',
+        '!dist/_locales', '!dist/_locales/**/*',
         '!dist/partial', '!dist/partial/**/*',
         '!dist/style', '!dist/style/app.min.css',
         '!dist/style/font', '!dist/style/img',

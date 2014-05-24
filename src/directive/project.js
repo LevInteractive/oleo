@@ -6,7 +6,10 @@ oleo.directive("project", ['projectService', '$rootScope', function(projectServi
 
     // Bind methods from service.
     scope.remove = projectService.remove.bind(projectService);
-    scope.select = projectService.select.bind(projectService);    
+    scope.select = function(project) {
+      projectService.select(project);
+      scope.$parent.hideProjects();
+    };
     scope.save = projectService.save.bind(projectService);
 
     // When the rate is changed update the user's default rate for future projects.

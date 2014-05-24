@@ -6,29 +6,25 @@
   <link rel="stylesheet" href="style/app.min.css"/>
 </head>
 <body ng-controller="MainController">
-  <input type="text" style="opacity:0;display:block;height:0;overflow:hidden;" /><!-- no-focus hack -->
-  <header>
-    <input type="text" ng-model="user.name" ng-change="saveUser()" placeholder="Your Name" />
-    <div class="projects-selector">
-      <a href="">Project <i class="icon-toggle-down"></i></a>
-      <ul class="list" ng-repeat="proj in projects | orderBy:weight">
-        <li project="proj"></li>
-      </ul>
-      <button ng-click="addProject()"><i class="icon-file2"></i><span>Add Project</span></button>
-    </div>
+  <input type="text" style="opacity:0;display:block;position:absolute;top:-100px;" /><!-- no-focus hack -->
+
+  <header class="infobar">
+    <h1>óleo</h1>
+    <input type="text" ng-model="user.name" ng-change="saveUser()" placeholder="{{ $root.i18n.getMessage('namePlaceholder') }}" />
+    <button class="my-projects-btn" ng-click="displayProjects = true">{{ $root.i18n.getMessage('myProjectsBtn') }} <i class="icon-popout"></i></button>
     <h3 ng-if="currentProject">{{ currentProject.name }}</h3>
-    <h3 ng-if="!currentProject">No project selected!</h3>
+    <h3 ng-if="!currentProject">{{ $root.i18n.getMessage('noProjectSelected') }}</h3>
   </header>
 
   <main class="task-list-container" ng-if="currentProject">
-    <ul class="list" ng-repeat="task in tasks | filter:{projectId:currentProject.id} | orderBy:creationDate">
+    <ul class="task-list" ng-repeat="task in tasks | filter:{projectId:currentProject.id} | orderBy:creationDate">
       <li task="task"></li>
     </ul>
-    <button ng-click="addTask()" ng-if="currentProject"><i class="icon-add"></i> New Task</button>
+    <button ng-click="addTask()" ng-if="currentProject"><i class="icon-add"></i> {{ $root.i18n.getMessage("addTask") }}</button>
   </main>
 
-  <footer>
-    <div class="connected-status">
+  <footer class="footer">
+    <div class="connection-status">
       <i class="icon-google-drive"></i>
       &nbsp;
       <span>{{ $root.connectionStatus }}</span>
@@ -37,6 +33,19 @@
       <span>by <a href="http://lev-interactive.com/?r=oleo" target="_blank">Lev Interactive</a></span>
     </div>
   </footer>
+
+  <section class="my-projects" ng-show="displayProjects">
+    <div class="projects-container">
+      <header>
+        <input type="text" class="search-projects" ng-model="search" placeholder="{{ $root.i18n.getMessage('searchProjects') }}" />
+        <button class="close" ng-click="displayProjects = false"><i class="icon-error"></i></button>
+      </header>
+        <ul class="list" ng-repeat="proj in projects | orderBy:creationDate | filter:search">
+          <li project="proj"></li>
+        </ul>
+      <button class="add-project-btn" ng-click="addProject()"><i class="icon-file2"></i><span>{{ $root.i18n.getMessage("addProject") }}</span></button>
+    </div>
+  </section>
 
   <script src="app.min.js"></script>
 </body>

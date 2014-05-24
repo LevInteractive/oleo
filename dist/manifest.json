@@ -2,6 +2,7 @@
   "name": "óleo",
   "version": "1.0",
   "description": "óleo is a sleek project-based time management Chrome Application that can sync to Google Spreadsheets allowing for collaborative tracking.",
+  "default_locale": "en",
   "permissions": [
     "identity",
     "storage",

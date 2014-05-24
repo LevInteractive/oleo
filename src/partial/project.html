@@ -1,21 +1,23 @@
 <div class="inme">
-  <button ng-class="{selectBtn: true, selected: project.current}" ng-click="select(project)">Select!</button>
+  <input type="text" class="project-title" ng-change="save()" ng-model="project.name" placeholder="{{ $root.i18n.getMessage('projectPlaceholder') }}" />
+  <div class="info">
+    <span class="rate-wrap">
+      <label class="currency">{{ $root.i18n.getMessage('currency') }}</label>
+      <input type="number" class="num" min="0" ng-change="save()" ng-model="project.rate" />
+      <label class="hr">{{ $root.i18n.getMessage('hour') }}</label>
+    </span>
+    <input type="text" ng-change="save()" ng-model="project.spreadsheet" class="spreadsheet" placeholder="{{ $root.i18n.getMessage('spreadsheetPlaceholder') }}" />
+    <button ng-click="hideDelete = false" ng-show="hideDelete" class="deleteBtn">{{ $root.i18n.getMessage('deleteProject') }}</button>
+    <button ng-class="{selectBtn: true, selected: project.current, 'open-btn': true}" ng-click="select(project)">
+      <i class="icon-chevron-right"></i>
+    </button>
+  </div>
 
-  <input type="text" ng-change="save()" ng-model="project.name" placeholder="Project Name" />
-
-  <input type="text" ng-change="save()" ng-model="project.spreadsheet" placeholder="Spreadsheet URL" />
-
-  <label for="rate">Hourly Rate</label>
-
-  <input type="number" min="0" ng-change="save()" ng-model="project.rate" />
-
-  <button ng-click="hideDelete = false">Delete Project</button>
-
-  <aside class="modal remove-project" ng-hide="hideDelete">
-    <button class="close" ng-click="hideDelete = true">X</button>
+  <aside class="pane remove-project" ng-hide="hideDelete">
     <div class="inner">
-      <p>Are you sure you want to remove this project and all of the tasks associated to it?</p>
-      <button ng-click="remove(project)"><span>Yes!</span></button>
+      <p>{{ $root.i18n.getMessage('deleteProjectConfirmDescription') }}</p>
+      <button class="yes" ng-click="remove(project)"><span>{{ $root.i18n.getMessage('deleteProjectConfirmYes') }}</span></button>
+      <button class="close" ng-click="hideDelete = true">{{ $root.i18n.getMessage('deleteProjectConfirmCancel') }}</button>
     </div>
   </aside>
 </div>
