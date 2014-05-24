@@ -32,6 +32,7 @@
   };
 
   Service.prototype._onAdd = function(proj) {
+    proj.rate = this.$rootScope.user.rate; // Inject the project with the user's default rate.
     this.select(proj);
   };
 
