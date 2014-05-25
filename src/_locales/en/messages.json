@@ -1,4 +1,16 @@
 {
+  "appDesc": {
+    "message": "óleo é um app de gerenciamento de tempo que pode se sincronizar  com planilhas google (Google Spreadsheets) possibilitando o acompanhamento colaborativo."
+  },
+  "spreadsheetConnected": {
+    "message": "Conectado com a Planilha"
+  },
+  "spreadsheetProblem": {
+    "message": "Problema ao Conectar"
+  },
+  "spreadsheetNone": {
+    "message": "Sem Planilha"
+  },
   "currency": {
     "message": "$"
   },

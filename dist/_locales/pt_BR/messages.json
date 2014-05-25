@@ -68,15 +68,12 @@
     "description": ""
   },
   "deleteProjectConfirmYes": {
-    "message": "Tenho certeza.",
-    "description": ""
+    "message": "Tenho certeza."
   },
   "deleteProjectConfirmCancel": {
-    "message": "Deixa pra lá.",
-    "description": ""
+    "message": "Deixa pra lá."
   },
   "deleteProject": {
-    "message": "Deletar Projeto",
-    "description": ""
+    "message": "Deletar Projeto"
   }
 }
