@@ -17,7 +17,7 @@
       if (this.currentProject && this.currentProject.spreadsheet) {
         this.upsync(this.currentProject);
       }
-    }.bind(this), 5000);
+    }.bind(this), 50000);
   }
   
   Service.prototype = Object.create(angular.injector(['oleo']).get("crudProto"));
@@ -38,12 +38,20 @@
 
   Service.prototype._onRemove = function(proj, index) {
     this.unselectAll();
+
+    // Select the next project in line.
     index = index > 0 ? --index : index; // Select the next project.
     if (this.collection[index]) {
       return this.select(this.collection[index]);
     } else {
       return this.unselectAll();
     }
+
+    // Should remove associated tasks.
+    this.taskService.collection = this.taskService.collection.filter(function(task) {
+      return proj !== task.projectId;
+    });
+    this.taskService.save();
   };
 
   Service.prototype.select = function(proj) {
@@ -137,7 +145,7 @@
     this.taskService.collection.forEach(function(task) { // Loop through all tasks.
       if (taskRowMap[task.id]) {
         spread.push(this.formatTaskRow(task, project, taskRowMap[task.id]));
-      } else {
+      } else if (task.projectId === project.id) {
         spread.push(this.formatTaskRow(task, project, ++lastRow));
       }
     }, this);
@@ -158,8 +166,12 @@
 
         var onRetrieve = function(cells) {
           var spread = this.createSpread(cells, project);
-          if (spread) {
+          if (spread && spread.length) {
             this.spreadsheetService.put(project.spreadsheet, spread).then(onPut, bad);
+          } else {
+            // Must not be any tasks yet but all seems well.
+            this.$rootScope.connectionStatus = this.$rootScope.GOOD_CONNECTION;
+            console.log('no spread', spread);
           }
         }.bind(this);
 

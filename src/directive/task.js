@@ -32,7 +32,10 @@ oleo.directive("task", ['taskService', '$filter', function(taskService, $filter)
 
     // When false confirmation box shows.
     scope.hideDelete = true;
-    scope.remove = taskService.remove.bind(taskService);
+    scope.remove = function(task) {
+      taskService.remove(task);
+      scope.$parent.checkIfTasks();
+    };
 
     // The click event for pause/play button.
     scope.toggleState = function(task) {

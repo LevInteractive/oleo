@@ -12,6 +12,11 @@ oleo.directive("project", ['projectService', '$rootScope', function(projectServi
     };
     scope.save = projectService.save.bind(projectService);
 
+    // Called when spreadsheet is blurred.
+    scope.updateSpreadsheet = function() {
+      projectService.connectToGoogle(true);
+    };
+
     // When the rate is changed update the user's default rate for future projects.
     scope.$watch("project.rate", function() {
       $rootScope.user.rate = scope.project.rate;

@@ -1,0 +1,82 @@
+{
+  "currency": {
+    "message": "$",
+    "description": ""
+  },
+  "hour": {
+    "message": "/hr",
+    "description": ""
+  },
+  "addProject": {
+    "message": "Add Projeto",
+    "description": ""
+  },
+  "addTask": {
+    "message": "Add Tarefa",
+    "description": ""
+  },
+  "addComment": {
+    "message": "Add Comentário",
+    "description": ""
+  },
+  "myProjectsBtn": {
+    "message": "Meus Projetos",
+    "description": ""
+  },
+  "searchProjects": {
+    "message": "Pesquisar projecto.",
+    "description": ""
+  },
+  "namePlaceholder": {
+    "message": "Seu Nome",
+    "description": ""
+  },
+  "projectPlaceholder": {
+    "message": "Nome do Projecto",
+    "description": ""
+  },
+  "spreadsheetPlaceholder": {
+    "message": "URL da Planilha",
+    "description": ""
+  },
+  "noTasks": {
+    "message": "Não há tarefas aqui.",
+    "description": ""
+  },
+  "noProjects": {
+    "message": "Nenhum projeto foi criado...ainda.",
+    "description": ""
+  },
+  "deleteTaskConfirmDescription": {
+    "message": "Você tem certeza que quer deletar essa tarefa?",
+    "description": ""
+  },
+  "deleteTaskConfirmYes": {
+    "message": "Tenho certeza.",
+    "description": ""
+  },
+  "deleteTaskConfirmCancel": {
+    "message": "Deixa pra lá.",
+    "description": ""
+  },
+  "noProjectSelected": {
+    "message": "Nenhum projeto selecionado!",
+    "description": ""
+  },
+  "deleteProjectConfirmDescription": {
+    "message": "Tem certeza que quer deletar esse projeto e todos as tarefas associadas com ele?",
+    "description": ""
+  },
+  "deleteProjectConfirmYes": {
+    "message": "Tenho certeza.",
+    "description": ""
+  },
+  "deleteProjectConfirmCancel": {
+    "message": "Deixa pra lá.",
+    "description": ""
+  },
+  "deleteProject": {
+    "message": "Deletar Projeto",
+    "description": ""
+  }
+}

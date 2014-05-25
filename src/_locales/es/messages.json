@@ -1,0 +1,82 @@
+{
+  "currency": {
+    "message": "$",
+    "description": ""
+  },
+  "hour": {
+    "message": "/hr",
+    "description": ""
+  },
+  "addProject": {
+    "message": "Add Project",
+    "description": ""
+  },
+  "addTask": {
+    "message": "Add Task",
+    "description": ""
+  },
+  "addComment": {
+    "message": "Add Title",
+    "description": ""
+  },
+  "myProjectsBtn": {
+    "message": "My Projects",
+    "description": ""
+  },
+  "searchProjects": {
+    "message": "Search for a project.",
+    "description": ""
+  },
+  "namePlaceholder": {
+    "message": "Your Name",
+    "description": ""
+  },
+  "projectPlaceholder": {
+    "message": "Project Name",
+    "description": ""
+  },
+  "spreadsheetPlaceholder": {
+    "message": "Spreadsheet URL",
+    "description": ""
+  },
+  "noTasks": {
+    "message": "There are no tasks here.. yet.",
+    "description": ""
+  },
+  "noProjects": {
+    "message": "No projects have been created.. yet.",
+    "description": ""
+  },
+  "deleteTaskConfirmDescription": {
+    "message": "Are you sure you want to delete this task?",
+    "description": ""
+  },
+  "deleteTaskConfirmYes": {
+    "message": "I'm sure.",
+    "description": ""
+  },
+  "deleteTaskConfirmCancel": {
+    "message": "Nevermind!",
+    "description": ""
+  },
+  "noProjectSelected": {
+    "message": "No project selected!",
+    "description": ""
+  },
+  "deleteProjectConfirmDescription": {
+    "message": "Are you sure you want to remove this project and all of the tasks associated with it?",
+    "description": ""
+  },
+  "deleteProjectConfirmYes": {
+    "message": "Yes, I'm sure.",
+    "description": ""
+  },
+  "deleteProjectConfirmCancel": {
+    "message": "Actually, nevermind.",
+    "description": ""
+  },
+  "deleteProject": {
+    "message": "Delete Project",
+    "description": ""
+  }
+}

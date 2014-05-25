@@ -4,10 +4,22 @@
     // Tasks
     // -------------------------------------------------
     $scope.tasks = taskService.collection;
+    $scope.noTasks = true;
 
     $scope.addTask = function() {
       taskService.add({
         projectId: projectService.currentProject.id
+      });
+      $scope.checkIfTasks();
+    };
+
+    // Determine if there any tasks for the noTasks flag.
+    $scope.checkIfTasks = function() {
+      $scope.noTasks = true;
+      taskService.collection.forEach(function(task) {
+        if ($scope.currentProject && task.projectId === $scope.currentProject.id) {
+          $scope.noTasks = false;
+        }
       });
     };
 
@@ -27,6 +39,7 @@
       },
       function() {
         $scope.currentProject = projectService.currentProject;
+        $scope.checkIfTasks();
       }
     );
 

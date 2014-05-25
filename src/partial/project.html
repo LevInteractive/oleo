@@ -6,18 +6,17 @@
       <input type="number" class="num" min="0" ng-change="save()" ng-model="project.rate" />
       <label class="hr">{{ $root.i18n.getMessage('hour') }}</label>
     </span>
-    <input type="text" ng-change="save()" ng-model="project.spreadsheet" class="spreadsheet" placeholder="{{ $root.i18n.getMessage('spreadsheetPlaceholder') }}" />
+    <input type="text" ng-change="save()" ng-blur="updateSpreadsheet()" ng-model="project.spreadsheet" class="spreadsheet" placeholder="{{ $root.i18n.getMessage('spreadsheetPlaceholder') }}" />
     <button ng-click="hideDelete = false" ng-show="hideDelete" class="deleteBtn">{{ $root.i18n.getMessage('deleteProject') }}</button>
     <button ng-class="{selectBtn: true, selected: project.current, 'open-btn': true}" ng-click="select(project)">
       <i class="icon-chevron-right"></i>
     </button>
   </div>
-
   <aside class="pane remove-project" ng-hide="hideDelete">
     <div class="inner">
       <p>{{ $root.i18n.getMessage('deleteProjectConfirmDescription') }}</p>
-      <button class="yes" ng-click="remove(project)"><span>{{ $root.i18n.getMessage('deleteProjectConfirmYes') }}</span></button>
-      <button class="close" ng-click="hideDelete = true">{{ $root.i18n.getMessage('deleteProjectConfirmCancel') }}</button>
+      <button class="yes remove-btn" ng-click="remove(project)"><span>{{ $root.i18n.getMessage('deleteProjectConfirmYes') }}</span></button>
+      <button class="close action-btn" ng-click="hideDelete = true">{{ $root.i18n.getMessage('deleteProjectConfirmCancel') }}</button>
     </div>
   </aside>
 </div>
