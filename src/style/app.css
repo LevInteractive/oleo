@@ -32,6 +32,8 @@ input[type="text"], input[type="number"] {
   border: none;
 }
 
+::-webkit-input-placeholder { color: #777; }
+
 a { color: #67bfa7; text-decoration: none; }
 
 button { cursor: pointer; border: none; padding: 0; background: transparent; }
@@ -80,7 +82,7 @@ a:hover { color: #d2f5ec; }
   z-index: 5;
   position: absolute;
   top: 0; bottom: 0; left: 0; right: 0;
-  background: rgba(34, 34, 34, .95);
+  background: rgba(24, 24, 24, .90);
   overflow: scroll;
 }
 .my-projects .projects-container { padding: 0 23px; }
@@ -118,9 +120,28 @@ a:hover { color: #d2f5ec; }
 /***************************************
  * Task List
  */
-.task-list-container { min-height: 300px; }
+@-webkit-keyframes pulsate {
+  0% { background: #101d29; }
+  50% { background: #651c00; }
+  100% { background: #101d29; }
+}
+.task-list-container { min-height: 300px; background: black; }
 .task-list { list-style: none; margin: 0; padding: 0; }
-.task-list .inme { padding: 23px; background: #101d29; }
+.task-list li { margin: 0 0 2px; }
+.task-list .inme:before,
+.task-list .inme:after { content: " "; display: table; }
+.task-list .inme:after { clear: both; }
+.task-list .inme { background: #101d29; position: relative; }
+.task-list .inme.running { -webkit-animation: pulsate 2s ease-in; -webkit-animation-iteration-count: infinite; }
+.task-list .start-btn { position:absolute; top: 0; bottom: 0; left: 0; width: 72px; background: black; font-size: 30px; }
+.task-list .slide { margin-left: 80px; padding: 15px 0; }
+.task-list .remove { position: absolute; top: 10px; right: 10px; }
+.task-list .row { margin-bottom: 5px; }
+.task-list .row:last-child { margin-bottom: 0; }
+.task-list .row i { display:inline-block; font-style: normal; width: 26px; text-align: center; }
+.task-list .row span { cursor: default; }
+.task-list .row .dollar { }
+
 
 /***************************************
  * Footer

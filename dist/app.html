@@ -20,7 +20,7 @@
     <ul class="task-list" ng-if="currentProject" ng-repeat="task in tasks | filter:{projectId:currentProject.id} | orderBy:creationDate">
       <li task="task"></li>
     </ul>
-    <button ng-click="addTask()" ng-if="currentProject"><i class="icon-add"></i> {{ $root.i18n.getMessage("addTask") }}</button>
+    <button class="add-task-btn" ng-click="addTask()" ng-if="currentProject"><i class="icon-file2"></i> {{ $root.i18n.getMessage("addTask") }}</button>
   </main>
 
   <footer class="footer">

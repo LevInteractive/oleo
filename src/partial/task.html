@@ -1,12 +1,15 @@
-<div class="inme">
+
+<div class="inme" ng-class="{'running': task.running}">
   <button class="start-btn" ng-click="toggleState(task)">
     <i ng-class="{'icon-play': !task.running, 'icon-pause': task.running}"></i>
   </button>
   <div class="slide">
     <div class="row">
+      <i class="icon-bubble"></i>
       <input type="text" ng-change="save()" ng-model="task.name" placeholder="{{ $root.i18n.getMessage('addComment') }}" />
     </div>
     <div class="row">
+      <i class="icon-time"></i>
       <input type="text" 
         ng-pattern="/^[0-9]{1,4}:[0-9]{1,2}:[0-9]{1,2}$/"
         ng-focus="timeFocus(task)"
@@ -16,9 +19,11 @@
         ng-keydown="enterBlur($event)" />
     </div>
     <div class="row">
+      <i class="icon-calendar2"></i>
       <span class="lifespan">{{ task.initialStart | lifespan:task.secondsEpoch }}</span>
     </div>
     <div class="row" ng-show="$parent.currentProject.rate">
+      <i class="dollar">$</i>
       <span class="total">{{ task.seconds | rate:$parent.currentProject.rate | currency:$root.i18n.getMessage('currency') }}</span>
     </div>
     <button class="remove" ng-click="hideDelete = false"><i class="icon-cancel"></i></button>
