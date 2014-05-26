@@ -66,9 +66,9 @@
 
     // Application
     // -------------------------------------------------
-    $rootScope.GOOD_CONNECTION = "Connected";
-    $rootScope.BAD_CONNECTION = "Problem Connecting";
-    $rootScope.NO_SPREADSHEET = "No Spreadsheet";
+    $rootScope.GOOD_CONNECTION       = i18n.getMessage('spreadsheetConnected');
+    $rootScope.BAD_CONNECTION        = i18n.getMessage('spreadsheetProblem');
+    $rootScope.NO_SPREADSHEET        = i18n.getMessage('spreadsheetNone');
     $rootScope.ATTEMPTING_TO_CONNECT = "Connecting";
     $rootScope.connectionStatus = $rootScope.NO_SPREADSHEET;
 
