@@ -3,7 +3,7 @@
     "message": "óleo, зто тайм-менеджмент Апп для проектов который может подключиться к Гоогл Спредшитс для совместной работы."
   },
   "spreadsheetConnected": {
-    "message": "Подключён к спредшиту"
+    "message": "Подключeн к спредшиту"
   },
   "spreadsheetProblem": {
     "message": "Проблема с подключением"
@@ -54,28 +54,28 @@
     "message": "Здесь нет задач.. пока ещё."
   },
   "noProjects": {
-    "message": "Не каких проектов не сделано... пока ещё."
+    "message": "Проекты не созданы... пока ещё."
   },
   "deleteTaskConfirmDescription": {
     "message": "Вы уверены что хотите уничтожить эту задачу?"
   },
   "deleteTaskConfirmYes": {
-    "message": "Я Уверен/а."
+    "message": "Я yверен/а."
   },
   "deleteTaskConfirmCancel": {
-    "message": "Nevermind!"
+    "message": "Я  передумал/а!"
   },
   "noProjectSelected": {
     "message": "Нету выбраного проекта!"
   },
   "deleteProjectConfirmDescription": {
-    "message": "Вы уверены что вы хотите убрать этот проект и все под соединенные задачи?"
+    "message": "Вы уверены что хотите убрать этот проект и все подключeнные задачи?"
   },
   "deleteProjectConfirmYes": {
-    "message": "Я Уверен/а."
+    "message": "Я yверен/а."
   },
   "deleteProjectConfirmCancel": {
-    "message": "Actually, nevermind."
+    "message": "Я передумал/а."
   },
   "deleteProject": {
     "message": "Уничтожить Проект."
