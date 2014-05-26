@@ -1,2 +1,2 @@
 // The óleo module.
-var oleo = angular.module("oleo", []);
+var oleo = angular.module("oleo", ["tmh.dynamicLocale"]);

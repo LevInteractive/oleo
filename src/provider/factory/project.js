@@ -1,9 +1,9 @@
-oleo.factory("projectFactory", function() {
+oleo.factory("projectFactory", ['i18n', function(i18n) {
   return function(props) {
     props = props || {};
     return {
       id: props.id || "#"+Math.random().toString(36).substr(2, 9).toUpperCase(),
-      name: props.name || "New Project",
+      name: props.name || i18n.getMessage('newProject'),
       weight: props.weight || 0,
       spreadsheet: props.spreadsheet || null,
       rate: props.rate || 0,
@@ -11,4 +11,4 @@ oleo.factory("projectFactory", function() {
       creationDate: props.creationDate || Date.now()
     };
   };
-});
+}]);

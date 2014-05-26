@@ -14,7 +14,8 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.2.16"
+    "angular": "~1.2.16",
+    "angular-dynamic-locale": "~0.1.9"
   },
   "devDependencies": {
     "mocks": "https://github.com/LevInteractive/mocks.git",

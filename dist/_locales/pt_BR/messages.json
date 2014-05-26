@@ -26,6 +26,14 @@
     "message": "Add Projeto",
     "description": ""
   },
+  "newProject": {
+    "message": "Projeto Novo",
+    "description": ""
+  },
+  "newTask": {
+    "message": "Tarefa Novo",
+    "description": ""
+  },
   "addTask": {
     "message": "Add Tarefa",
     "description": ""

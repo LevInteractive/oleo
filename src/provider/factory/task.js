@@ -1,4 +1,4 @@
-oleo.factory("taskFactory", function() {
+oleo.factory("taskFactory", ['i18n', function(i18n) {
   return function(props) {
     if (!props || !props.projectId) {
       throw new Error("A projectId is required to create a task.");
@@ -9,7 +9,7 @@ oleo.factory("taskFactory", function() {
       id: props.id || "#"+Math.random().toString(36).substr(2, 9).toUpperCase(),
 
       // Name/comment for task.
-      name: props.name || "",
+      name: props.name || i18n.getMessage('newTask'),
 
       // Order of task.
       weight: props.weight || 0,
@@ -34,4 +34,4 @@ oleo.factory("taskFactory", function() {
       seconds: props.seconds || 0
     };
   };
-});
+}]);

@@ -1,5 +1,10 @@
 (function() {
-  function controller($q, $scope, $rootScope, storageService, projectService, taskService, i18n) {
+  function controller($q, $scope, $rootScope, storageService, projectService, taskService, i18n, dynamicLocale) {
+
+    
+    // Internationalization
+    // -------------------------------------------------
+    dynamicLocale.set(i18n.getMessage("@@ui_locale").toLowerCase().replace('_', '-'));
 
     // Tasks
     // -------------------------------------------------
@@ -69,7 +74,7 @@
     $rootScope.GOOD_CONNECTION       = i18n.getMessage('spreadsheetConnected');
     $rootScope.BAD_CONNECTION        = i18n.getMessage('spreadsheetProblem');
     $rootScope.NO_SPREADSHEET        = i18n.getMessage('spreadsheetNone');
-    $rootScope.ATTEMPTING_TO_CONNECT = "Connecting";
+    $rootScope.ATTEMPTING_TO_CONNECT = i18n.getMessage('spreadsheetAttempting');
     $rootScope.connectionStatus = $rootScope.NO_SPREADSHEET;
 
     $rootScope.i18n = i18n;
@@ -94,6 +99,7 @@
     'projectService',
     'taskService',
     'i18n',
+    'tmhDynamicLocale',
     controller
   ]);
 })();
