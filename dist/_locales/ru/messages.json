@@ -1,83 +1,83 @@
 {
   "appDesc": {
-    "message": "óleo is project-based time management app that can sync to Google Spreadsheets allowing for collaborative tracking."
+    "message": "óleo, зто тайм-менеджмент Апп для проектов который может подключиться к Гоогл Спредшитс для совместной работы."
   },
   "spreadsheetConnected": {
-    "message": "Connected to Spreadsheet"
+    "message": "Подключён к спредшиту"
   },
   "spreadsheetProblem": {
-    "message": "Problem Connecting"
+    "message": "Проблема с подключением"
   },
   "spreadsheetNone": {
-    "message": "No Spreadsheet"
+    "message": "Нет Cпредшита"
   },
   "spreadsheetAttempting": {
-    "message": "Connecting..."
-  },
-  "newProject": {
-    "message": "New Project"
-  },
-  "newTask": {
-    "message": "New Task"
+    "message": "Подключаетса..."
   },
   "currency": {
     "message": "$"
   },
+  "newProject": {
+    "message": "Новый Проект"
+  },
+  "newTask": {
+    "message": "Новaя Задача"
+  },
   "hour": {
-    "message": "/hr"
+    "message": "/час"
   },
   "addProject": {
-    "message": "Add Project"
+    "message": "Добавить Проект"
   },
   "addTask": {
-    "message": "Add Task"
+    "message": "Добавить Задачy "
   },
   "addComment": {
-    "message": "Add Title"
+    "message": "Добавить Название"
   },
   "myProjectsBtn": {
-    "message": "My Projects"
+    "message": "Мои Проекты"
   },
   "searchProjects": {
-    "message": "Search for a project."
+    "message": "Искать Проект."
   },
   "namePlaceholder": {
-    "message": "Your Name"
+    "message": "Вашe Имя"
   },
   "projectPlaceholder": {
-    "message": "Project Name"
+    "message": "Название Проекта"
   },
   "spreadsheetPlaceholder": {
-    "message": "Spreadsheet URL"
+    "message": "Cпредшит URL"
   },
   "noTasks": {
-    "message": "There are no tasks here.. yet."
+    "message": "Здесь нет задач.. пока ещё."
   },
   "noProjects": {
-    "message": "No projects have been created.. yet."
+    "message": "Не каких проектов не сделано... пока ещё."
   },
   "deleteTaskConfirmDescription": {
-    "message": "Are you sure you want to delete this task?"
+    "message": "Вы уверены что хотите уничтожить эту задачу?"
   },
   "deleteTaskConfirmYes": {
-    "message": "I'm sure."
+    "message": "Я Уверен/а."
   },
   "deleteTaskConfirmCancel": {
     "message": "Nevermind!"
   },
   "noProjectSelected": {
-    "message": "No project selected!"
+    "message": "Нету выбраного проекта!"
   },
   "deleteProjectConfirmDescription": {
-    "message": "Are you sure you want to remove this project and all of the tasks associated with it?"
+    "message": "Вы уверены что вы хотите убрать этот проект и все под соединенные задачи?"
   },
   "deleteProjectConfirmYes": {
-    "message": "Yes, I'm sure."
+    "message": "Я Уверен/а."
   },
   "deleteProjectConfirmCancel": {
     "message": "Actually, nevermind."
   },
   "deleteProject": {
-    "message": "Delete Project"
+    "message": "Уничтожить Проект."
   }
 }
