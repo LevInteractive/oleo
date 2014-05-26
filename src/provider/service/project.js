@@ -49,7 +49,7 @@
 
     // Should remove associated tasks.
     this.taskService.collection = this.taskService.collection.filter(function(task) {
-      return proj !== task.projectId;
+      return proj.id !== task.projectId;
     });
     this.taskService.save();
   };
