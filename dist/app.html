@@ -9,9 +9,8 @@
   <input type="text" style="opacity:0;display:block;position:absolute;top:-100px;" /><!-- no-focus hack -->
 
   <header class="infobar">
-    <input type="text" ng-model="user.name" ng-change="saveUser()" placeholder="{{ $root.i18n.getMessage('namePlaceholder') }}" />
-    <h1>óleo</h1>
     <button class="my-projects-btn" ng-click="displayProjects = true">{{ $root.i18n.getMessage('myProjectsBtn') }} <i class="icon-popout"></i></button>
+    <input type="text" ng-model="user.name" ng-change="saveUser()" placeholder="{{ $root.i18n.getMessage('namePlaceholder') }}" />
     <h3 ng-if="currentProject">{{ currentProject.name }}</h3>
     <h3 ng-if="!currentProject">{{ $root.i18n.getMessage('noProjectSelected') }}</h3>
   </header>

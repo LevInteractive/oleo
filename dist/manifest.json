@@ -1,6 +1,6 @@
 {
   "name": "óleo",
-  "version": "1.0",
+  "version": "1.2",
   "description": "__MSG_appDesc__",
   "default_locale": "en",
   "permissions": [
@@ -18,7 +18,6 @@
       "https://spreadsheets.google.com/feeds"
     ]
   },
-  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkJuVnNRLXMp2Dv4rD3FZiO082UGoBgk285e5bGMVfgAOpDa8yX32nNf8kv9U/byDrwwyGiMUNSxjI1zf9YzAZsLemE/DfG2nqYZk5qqexAMLBh6QWmHv92FAGIb60vYCjSmOzJUKFw0ROLETNWoM47+hzy3DiIwmAo9kyqm+Zw4c64chIRI1/tcrinNslm8O062rhDSCK1D0OydG/a+UK8bO2PDiWYxlMJRculZljxUgy5qoN0WSWltEl1DwbRbHX4ksfpK9ruTAxOG/32iDYbMSNcaHstZs3BGliQy4kfrr+hQNYIqnoOM8vRkyUywDos49Sfs2lVxOP7Q6ixlJXQIDAQAB",
   "browser_action": {
      "default_title": "óleo",
      "default_icon": {

@@ -1,82 +1,83 @@
 {
+  "appDesc": {
+    "message": "óleo es una App de gestión de tiempo para proyectos que puede comunicar con Hojas de cálculo Google dando seguimiento colaborativo."
+  },
+  "spreadsheetConnected": {
+    "message": "Conectado a la hoja de cálculo"
+  },
+  "spreadsheetProblem": {
+    "message": "Problema de conexión"
+  },
+  "spreadsheetNone": {
+    "message": "Ninguna hoja de cálculo"
+  },
+  "spreadsheetAttempting": {
+    "message": "Conectando..."
+  },
   "currency": {
-    "message": "$",
-    "description": ""
+    "message": "$"
   },
   "hour": {
-    "message": "/hr",
-    "description": ""
+    "message": "/hr"
+  },
+  "newProject": {
+    "message": "Nuevo Proyecto"
+  },
+  "newTask": {
+    "message": "Nueva Tarea"
   },
   "addProject": {
-    "message": "Add Project",
-    "description": ""
+    "message": "Adicionar Proyecto"
   },
   "addTask": {
-    "message": "Add Task",
-    "description": ""
+    "message": "Adicionar Tarea"
   },
   "addComment": {
-    "message": "Add Title",
-    "description": ""
+    "message": "Adiciona Título"
   },
   "myProjectsBtn": {
-    "message": "My Projects",
-    "description": ""
+    "message": "Mis Proyectos"
   },
   "searchProjects": {
-    "message": "Search for a project.",
-    "description": ""
+    "message": "Buscar Proyecto"
   },
   "namePlaceholder": {
-    "message": "Your Name",
-    "description": ""
+    "message": "Nombre Del Usuario"
   },
   "projectPlaceholder": {
-    "message": "Project Name",
-    "description": ""
+    "message": "Nombre Del Proyecto"
   },
   "spreadsheetPlaceholder": {
-    "message": "Spreadsheet URL",
-    "description": ""
+    "message": "URL Para La Hoja De Cálculo"
   },
   "noTasks": {
-    "message": "There are no tasks here.. yet.",
-    "description": ""
+    "message": "No hay tareas aqui... todavía."
   },
   "noProjects": {
-    "message": "No projects have been created.. yet.",
-    "description": ""
+    "message": "Ningún proyecto fue creado... todavía."
   },
   "deleteTaskConfirmDescription": {
-    "message": "Are you sure you want to delete this task?",
-    "description": ""
+    "message": "¿Está seguro que desea borrar esta tarea?"
   },
   "deleteTaskConfirmYes": {
-    "message": "I'm sure.",
-    "description": ""
+    "message": "Estoy Seguro."
   },
   "deleteTaskConfirmCancel": {
-    "message": "Nevermind!",
-    "description": ""
+    "message": "Olvídalo!"
   },
   "noProjectSelected": {
-    "message": "No project selected!",
-    "description": ""
+    "message": "¡Ningun Proyecto seleccionado!"
   },
   "deleteProjectConfirmDescription": {
-    "message": "Are you sure you want to remove this project and all of the tasks associated with it?",
-    "description": ""
+    "message": "¿Está seguro que desea borrar este proyecto y borrar todas las tareas asociadas?"
   },
   "deleteProjectConfirmYes": {
-    "message": "Yes, I'm sure.",
-    "description": ""
+    "message": "Si, estoy seguro."
   },
   "deleteProjectConfirmCancel": {
-    "message": "Actually, nevermind.",
-    "description": ""
+    "message": "De verdad, no."
   },
   "deleteProject": {
-    "message": "Delete Project",
-    "description": ""
+    "message": "Borrar Proyecto"
   }
 }
