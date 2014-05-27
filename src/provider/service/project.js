@@ -42,15 +42,19 @@
     // Select the next project in line.
     index = index > 0 ? --index : index; // Select the next project.
     if (this.collection[index]) {
-      return this.select(this.collection[index]);
+      this.select(this.collection[index]);
     } else {
-      return this.unselectAll();
+      this.unselectAll();
     }
 
     // Should remove associated tasks.
-    this.taskService.collection = this.taskService.collection.filter(function(task) {
-      return proj.id !== task.projectId;
-    });
+    var i = this.taskService.collection.length;
+    while(i--) {
+      if (proj.id === this.taskService.collection[i].projectId) {
+        this.taskService.collection.splice(i, 1);
+      }
+    }
+
     this.taskService.save();
   };
 
