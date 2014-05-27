@@ -23,7 +23,7 @@
     "description": ""
   },
   "addProject": {
-    "message": "Add Projeto",
+    "message": "Criar Projeto",
     "description": ""
   },
   "newProject": {
@@ -35,11 +35,11 @@
     "description": ""
   },
   "addTask": {
-    "message": "Add Tarefa",
+    "message": "Criar Tarefa",
     "description": ""
   },
   "addComment": {
-    "message": "Add Comentário",
+    "message": "Criar Comentário",
     "description": ""
   },
   "myProjectsBtn": {
@@ -55,7 +55,7 @@
     "description": ""
   },
   "projectPlaceholder": {
-    "message": "Nome do Projecto",
+    "message": "Nome do Projeto",
     "description": ""
   },
   "spreadsheetPlaceholder": {
