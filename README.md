@@ -5,7 +5,7 @@
 
 https://chrome.google.com/webstore/detail/%C3%B3leo/akofanfijlgbhokmhnmbnpdalokcjpga
 
-![comp](http://petesaia.com/work/oleo/spread.png)
+![comp](https://lh3.googleusercontent.com/1oSt2BMHm7O2v-Tk11JBA_GWWAIaPIWJyP7j-yP9fFMz4niwzdqWs1iHq2b4wQrhwX2fNCDHBQ=s640-h400-e365-rw)
 
 # Development
 
