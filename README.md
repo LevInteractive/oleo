@@ -5,8 +5,6 @@
 
 https://chrome.google.com/webstore/detail/%C3%B3leo/akofanfijlgbhokmhnmbnpdalokcjpga
 
-![comp](http://petesaia.com/work/oleo/spread.png)
-
 # Development
 
 1. `npm install`
