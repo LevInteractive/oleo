@@ -1,4 +1,5 @@
 (function() {
+  'use strict';
   function Service(storageService, $q, projectFactory, auth, spreadsheetService, taskService, $filter, $rootScope, $interval) {
     this.collection = [];
     this.storage = storageService;
@@ -18,8 +19,11 @@
         this.upsync(this.currentProject);
       }
     }.bind(this), 50000);
+
+    // Listen for ticks, update current project.
+    this.$rootScope.$on("taskTick", this.calculateTotalTime.bind(this));
   }
-  
+
   Service.prototype = Object.create(angular.injector(['oleo']).get("crudProto"));
   Service.prototype.constructor = Service;
 
@@ -127,6 +131,22 @@
     });
   };
 
+  // Calculates the total time of all tasks.
+  Service.prototype.calculateTotalTime = function() {
+    var total = 0;
+    var calc = function(task) {
+      if (task.projectId === this.currentProject.id) {
+        total += task.seconds;
+      }
+    }.bind(this);
+
+    if (null !== this.currentProject) {
+      this.taskService.collection.forEach(calc); // Perhaps change to reduce().
+      this.currentProject.totalTime = total;
+    }
+    return this.save();
+  };
+
   // Map tasks to spreadsheetService cells. Used for both
   // downsyncing and upsyncing.
   Service.prototype.createSpread = function(cells, project) {
@@ -192,11 +212,11 @@
   Service.prototype.downsync = function() {}; // Not implemented. This may not be desired.
 
   oleo.service('projectService', [
-    'storageService', 
+    'storageService',
     '$q',
     'projectFactory',
     'authService',
-    'spreadsheetService', 
+    'spreadsheetService',
     'taskService',
     '$filter',
     '$rootScope',

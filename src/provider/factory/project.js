@@ -1,4 +1,5 @@
 oleo.factory("projectFactory", ['i18n', function(i18n) {
+  'use strict';
   return function(props) {
     props = props || {};
     return {
@@ -7,6 +8,7 @@ oleo.factory("projectFactory", ['i18n', function(i18n) {
       weight: props.weight || 0,
       spreadsheet: props.spreadsheet || null,
       rate: props.rate || 0,
+      totalTime: props.totalTime || 0,
       current: props.current || false,
       creationDate: props.creationDate || Date.now()
     };

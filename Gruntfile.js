@@ -52,6 +52,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-useref');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.registerTask('default', ['copy', 'useref', 'concat', 'uglify', 'cssmin', 'clean']);
-  // grunt.registerTask('default', ['copy', 'useref', 'concat', 'cssmin', 'clean']);
+
+  grunt.registerTask('buildproduction', ['copy', 'useref', 'concat', 'uglify', 'cssmin', 'clean']);
+  grunt.registerTask('default', ['copy', 'useref', 'concat', 'cssmin', 'clean']);
 };

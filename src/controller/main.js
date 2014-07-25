@@ -1,7 +1,7 @@
 (function() {
+  "use strict";
   function controller($q, $scope, $rootScope, storageService, projectService, taskService, i18n, dynamicLocale) {
 
-    
     // Internationalization
     // -------------------------------------------------
     dynamicLocale.set(i18n.getMessage("@@ui_locale").toLowerCase().replace('_', '-'));

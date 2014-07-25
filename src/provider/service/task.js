@@ -1,6 +1,5 @@
 (function() {
-  
-  // The Angular service.
+  "use strict";
   function Service(storageService, $q, taskFactory, tickerFactory, browserAction) {
     this.collection = [];
     this.storage = storageService;
@@ -21,7 +20,6 @@
   Service.prototype._onLoad = function() {
     this.collection.forEach(function(task) {
       if (task.running) {
-        
         // If this was a running task the difference needs to be added
         // from the last epoch timestamp and now.
         task.seconds = task.seconds + Math.floor(Math.abs(task.secondsEpoch - Date.now()) / 1000); // Get total span.
@@ -77,7 +75,7 @@
       throw new Error("A task is needed to stop a timer.");
     }
     task.running = false;
-    
+
     // Stop the Ticker.
     this._tickerMap[task.id].stop();
 

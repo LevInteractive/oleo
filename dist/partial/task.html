@@ -19,8 +19,8 @@
         ng-keydown="enterBlur($event)" />
     </div>
     <div class="row">
-      <i class="icon-calendar2"></i>
-      <span class="lifespan">{{ task.initialStart | lifespan:task.secondsEpoch }}</span>
+      <i title="Date Span"  class="icon-calendar2"></i>
+      <span title="Date Span" class="lifespan">{{ task.initialStart | lifespan:task.secondsEpoch }}</span>
     </div>
     <div class="row" ng-show="$parent.currentProject.rate">
       <i class="dollar">$</i>

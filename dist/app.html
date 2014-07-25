@@ -11,8 +11,11 @@
   <header class="infobar">
     <button class="my-projects-btn" ng-click="displayProjects = true">{{ $root.i18n.getMessage('myProjectsBtn') }} <i class="icon-popout"></i></button>
     <input type="text" ng-model="user.name" ng-change="saveUser()" placeholder="{{ $root.i18n.getMessage('namePlaceholder') }}" />
-    <h3 ng-if="currentProject">{{ currentProject.name }}</h3>
-    <h3 ng-if="!currentProject">{{ $root.i18n.getMessage('noProjectSelected') }}</h3>
+    <h3 ng-if="currentProject" class='cur'>
+      <div class="name">Project: <strong>{{ currentProject.name }}</strong></div>
+      <div class="info"><i class="icon-time"></i>&nbsp;<strong>{{ currentProject.totalTime | timespan }}</strong>&nbsp;|&nbsp;<i class="dollar">$</i><strong>{{ currentProject.totalTime | rate:currentProject.rate | currency:$root.i18n.getMessage('currency') }}</strong></div>
+    </h3>
+    <!-- <h3 ng-if="!currentProject">{{ $root.i18n.getMessage('noProjectSelected') }}</h3> -->
   </header>
 
   <main class="task-list-container">

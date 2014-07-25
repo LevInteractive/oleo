@@ -1,10 +1,12 @@
 // A Ticker is created for every class. This handles the internal
 // progression of time.
-oleo.factory('tickerFactory', ['$interval', function($interval) {
+oleo.factory('tickerFactory', ['$interval', '$rootScope', function($interval, $rootScope) {
+  'use strict';
   function Ticker(task, save) {
     if (!task || !save) {
       throw new Error("Both a task and save method are required for Ticker!");
     }
+    this.$rootScope = $rootScope;
     this.task = task;
     this.save = save;
     this.promise = null; // Angular's interval promise.
@@ -28,6 +30,7 @@ oleo.factory('tickerFactory', ['$interval', function($interval) {
     this.task.seconds++;
     this.task.secondsEpoch = Date.now();
     this.save();
+    this.$rootScope.$broadcast("taskTick", this.task);
     return this;
   };
   return {

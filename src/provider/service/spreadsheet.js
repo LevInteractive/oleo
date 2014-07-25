@@ -1,5 +1,6 @@
 // https://developers.google.com/google-apps/spreadsheets/
 oleo.service('spreadsheetService', ['$http', '$q', 'identity', 'authService', function($http, $q, identity, auth) {
+  "use strict";
 
   // Basic XML templates for sending data to Google.
   var xml = this.xml = {

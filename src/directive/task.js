@@ -1,4 +1,5 @@
-oleo.directive("task", ['taskService', '$filter', function(taskService, $filter) {
+oleo.directive("task", ['taskService', '$filter', '$rootScope', function(taskService, $filter, $rootScope) {
+  'use strict';
 
   // Parses a user inputed time string and sets 
   // the task's seconds accordingly.
@@ -19,6 +20,7 @@ oleo.directive("task", ['taskService', '$filter', function(taskService, $filter)
     });
     task.seconds = adjustedSeconds;
     taskService.save();
+    $rootScope.$broadcast("taskTick", task); // Manually broadcast a tick.
   };
 
   function link(scope, el, attrs) {
@@ -46,7 +48,7 @@ oleo.directive("task", ['taskService', '$filter', function(taskService, $filter)
       }
       scope.save();
     };
-    
+
     // When time is clicked pause if running.
     scope.timeFocus = function(task) {
       if (task.running) {
@@ -81,7 +83,7 @@ oleo.directive("task", ['taskService', '$filter', function(taskService, $filter)
         }, 1);
       }
     };
-    
+
     // Pass in a save function.
     scope.save = taskService.save.bind(taskService);
   }

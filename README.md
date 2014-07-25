@@ -12,3 +12,9 @@ https://chrome.google.com/webstore/detail/%C3%B3leo/akofanfijlgbhokmhnmbnpdalokc
 1. `npm install`
 2. `bower install`
 3. `grunt`
+
+# TODO
+
+* Sorting for tasks & projects.
+* More keyboard shortcuts.
+* More user-friendly instructions.
