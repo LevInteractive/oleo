@@ -3,7 +3,13 @@
 
 óleo is a sleek project-based time management Chrome Application that can sync to Google Spreadsheets allowing for collaborative tracking.
 
+**Chrome store:**
+
 https://chrome.google.com/webstore/detail/%C3%B3leo/akofanfijlgbhokmhnmbnpdalokcjpga
+
+**More information:**  
+
+http://lev-interactive.com/made/oleo-time-tracking/
 
 # Development
 
