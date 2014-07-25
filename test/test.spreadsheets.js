@@ -2,25 +2,28 @@ var expect = chai.expect;
 var assert = chai.assert;
 
 // Basic ajax loader for dummy content.
-var load = function(url, cb) {
-    var httpRequest = new XMLHttpRequest();
-    httpRequest.onreadystatechange = loaded;
-    httpRequest.open('GET', url);
-    httpRequest.send();
-    function loaded() {
-      if (httpRequest.readyState === 4) {
-        if (httpRequest.status === 200) {
-          cb(httpRequest.responseText);
-        } else {
-          throw new Error("Problem loading content: "+JSON.stringify(httpRequest));
-        }
+var _load = function(url, cb) {
+  'use strict';
+  var httpRequest = new XMLHttpRequest();
+  httpRequest.onreadystatechange = loaded;
+  httpRequest.open('GET', url);
+  httpRequest.send();
+  function loaded() {
+    if (httpRequest.readyState === 4) {
+      if (httpRequest.status === 200) {
+        cb(httpRequest.responseText);
+      } else {
+        throw new Error("Problem loading content: "+JSON.stringify(httpRequest));
       }
     }
+  }
 };
 
 describe("spreadsheet service", function() {
+  'use strict';
   var spreadsheet;
   var withWorksheet;
+  var withWorksheet0;
   var noWorksheet;
   var $httpBackend;
   var $injector;
@@ -35,6 +38,7 @@ describe("spreadsheet service", function() {
     $httpBackend = $injector.get("$httpBackend");
     spreadsheet = spreadsheetService;
     withWorksheet = "https://docs.google.com/a/lev-interactive.com/spreadsheets/d/15lLlaf9DdGr-4SkwB-8Yvd7OcKQ4/edit#gid=123456";
+    withWorksheet0 = "https://docs.google.com/a/lev-interactive.com/spreadsheets/d/15lLlaf9DdGr-4SkwB-8Yvd7OcKQ4/edit#gid=0";
     noWorksheet = "https://docs.google.com/a/lev-interactive.com/spreadsheets/d/15lLlaaxkwB-8Yvd7OcKL5BFaY4/edit";
   }));
 
@@ -61,51 +65,27 @@ describe("spreadsheet service", function() {
     expect(coords.row).to.equal(6600);
   });
 
-  // it("should properly parse a google spreadsheet url", function() {
-  //   var badFunc = function() {
-  //     spreadsheet.parseUrl("http://blah.com");
-  //   };
-  //   var r = expect(badFunc).to.throw(Error, "Invalid url.");
-  //   r = expect(spreadsheet.parseUrl(withWorksheet)).to.deep.equal({
-  //     key: "15lLlaf9DdGr-4SkwB-8Yvd7OcKQ4",
-  //     worksheet: "123456"
-  //   }, "parsed out the worksheet gid");
-  //   r = expect(spreadsheet.parseUrl(noWorksheet)).to.deep.equal({
-  //     key: "15lLlaaxkwB-8Yvd7OcKL5BFaY4",
-  //     worksheet: "od6"
-  //   }, "worksheet defaults to od6.. the first.");
-  // });
+  it("should properly parse a google spreadsheet url", function() {
+    var badFunc = function() {
+      spreadsheet.parseUrl("http://blah.com");
+    };
+    var r = expect(badFunc).to.throw(Error, "Invalid url.");
 
-  // it("should properly parse data from google", function(done) {
-  //   var urlObj = { key: "abc", worksheet: "123" };
-  //   var url = spreadsheet.cellsendpoint(urlobj);
+    r = expect(spreadsheet.parseUrl(withWorksheet)).to.deep.equal({
+      key: "15lLlaf9DdGr-4SkwB-8Yvd7OcKQ4",
+      worksheet: "123456"
+    });
 
-  //   load("./dummy/cells.json", function(content) {
-  //     $httpbackend.whenjsonp(url).respond(200, json.parse(content));
-  //     spreadsheet.cells(urlobj).then(function(res) {
-  //       expect(res).to.have.length(3);
-  //       expect(res[0]).to.have.length(4);
-  //       done();
-  //     }, function(err) {
-  //       throw err;
-  //     });
-  //     $httpbackend.flush();
-  //   });
-  // });
+    r = expect(spreadsheet.parseUrl(noWorksheet)).to.deep.equal({
+      key: "15lLlaaxkwB-8Yvd7OcKL5BFaY4",
+      worksheet: "od6"
+    });
 
-  // it("should be able to write to a google spreadsheet", function(done) {
-  //   function onsuccess(xml) {
-  //     expect(xml).to.have.length.above(20);
-  //     done();
-  //   }
-  //   function onerror(err) {
-  //     throw err;
-  //   }
-  //   var url = spreadsheet.feedendpoint({key:sample_key});
-  //   $httpbackend.whenpost(url).respond(200);
-  //   spreadsheet.append({key:sample_key}, ["foo", "make", "me", "fun"])
-  //     .then(onsuccess, onerror);
-  //   $httpbackend.flush();
-  // });
-
+    // The gid=0 should also default to either 1 or od6. No longer does it work.
+    // http://stackoverflow.com/questions/24531351/retrieve-google-spreadsheet-worksheet-json
+    r = expect(spreadsheet.parseUrl(withWorksheet0)).to.deep.equal({
+      key: "15lLlaf9DdGr-4SkwB-8Yvd7OcKQ4",
+      worksheet: "od6"
+    });
+  });
 });

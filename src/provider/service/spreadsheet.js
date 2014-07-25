@@ -75,7 +75,7 @@ oleo.service('spreadsheetService', ['$http', '$q', 'identity', 'authService', fu
     }
     urlObj.key = matches[1];
     matches = url.match(/gid=([^/]+)/i);
-    if (matches && matches.length > 1) {
+    if (matches && matches.length > 1 && matches[1] !== "0") {
       urlObj.worksheet = matches[1];
     } else {
       urlObj.worksheet = "od6"; // First worksheet.

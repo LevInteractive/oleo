@@ -178,7 +178,7 @@
 
   // Sync to Google.
   Service.prototype.upsync = function(project) {
-    this.auth.authorize(false).then(
+    this.auth.authorize(true).then(
       function() {
         var bad = function() {
           this.$rootScope.connectionStatus = this.$rootScope.BAD_CONNECTION;
