@@ -7,12 +7,21 @@ https://chrome.google.com/webstore/detail/%C3%B3leo/akofanfijlgbhokmhnmbnpdalokc
 
 # Development
 
+This application was built in full with AngularJS and has no other dependencies.
+
 1. `npm install`
 2. `bower install`
 3. `grunt`
 
-# TODO
+Let `grunt watch` you do it.
 
-* Sorting for tasks & projects.
-* More keyboard shortcuts.
-* More user-friendly instructions.
+# Testing
+
+Tests are done with mocha in the browser via the test/index.html runner.
+
+# Ideas
+
+* Drag & drop sorting for tasks and projects.
+* Vim-style keyboard shortcuts.
+* More user-friendly instructions to get started.
+* Exporting/importing using a special backup spreadsheet or a clever way using `chrome.storage.sync`.
