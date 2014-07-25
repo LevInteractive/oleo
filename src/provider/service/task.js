@@ -69,17 +69,8 @@
     return this;
   };
 
-  // Stop a timer.
-  Service.prototype.stop = function(task) {
-    if (!task) {
-      throw new Error("A task is needed to stop a timer.");
-    }
-    task.running = false;
-
-    // Stop the Ticker.
-    this._tickerMap[task.id].stop();
-
-    // If no other timers are running, remove active icon.
+  // Undos the running icon if there are no tasks running.
+  Service.prototype.checkIcon = function() {
     var setToDefault = true;
     this.collection.forEach(function(task) {
       if (task.running) {
@@ -97,6 +88,21 @@
         path: 'style/img/icon19.png'
       });
     }
+    return this;
+  };
+
+  // Stop a timer.
+  Service.prototype.stop = function(task) {
+    if (!task) {
+      throw new Error("A task is needed to stop a timer.");
+    }
+    task.running = false;
+
+    // Stop the Ticker.
+    this._tickerMap[task.id].stop();
+
+    // If no other timers are running, remove active icon.
+    this.checkIcon();
   };
 
   oleo.service('taskService', [

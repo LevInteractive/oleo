@@ -58,8 +58,7 @@
         this.taskService.collection.splice(i, 1);
       }
     }
-
-    this.taskService.save();
+    this.taskService.checkIcon().save();
   };
 
   Service.prototype.select = function(proj) {
@@ -133,18 +132,24 @@
 
   // Calculates the total time of all tasks.
   Service.prototype.calculateTotalTime = function() {
-    var total = 0;
-    var calc = function(task) {
-      if (task.projectId === this.currentProject.id) {
-        total += task.seconds;
-      }
-    }.bind(this);
 
-    if (null !== this.currentProject) {
-      this.taskService.collection.forEach(calc); // Perhaps change to reduce().
-      this.currentProject.totalTime = total;
-    }
-    return this.save();
+    // This needs to be slightly delayed so it happens after
+    // all tick saves.
+    setTimeout(function() {
+      var total = 0;
+      var calc = function(task) {
+        if (task.projectId === this.currentProject.id) {
+          total += task.seconds;
+        }
+      }.bind(this);
+
+      if (null !== this.currentProject) {
+        this.taskService.collection.forEach(calc); // Perhaps change to reduce().
+        this.currentProject.totalTime = total;
+      }
+      this.save();
+      this.$rootScope.$apply();
+    }.bind(this), 5);
   };
 
   // Map tasks to spreadsheetService cells. Used for both

@@ -130,7 +130,7 @@ a:hover { color: #d2f5ec; }
   50% { background: #651c00; }
   100% { background: #222; }
 }
-.task-list-container { min-height: 350px; background: black; }
+.task-list-container { min-height: 400px; background: black; }
 .task-list-container .no-task-box { text-align: center; padding: 14% 0 0; }
 .task-list-container .no-task-box p { margin: 0; padding: 15px 0; }
 .task-list-container .no-task-box i { font-size: 40px; color: #136972; }

@@ -12,6 +12,7 @@
 //
 
 (function(CRUD) {
+  'use strict';
 
   // Load objects from storage.
   CRUD.load = function() {
