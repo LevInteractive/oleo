@@ -1,31 +1,48 @@
 (function() {
   "use strict";
-  function controller($q, $scope, $rootScope, $timeout, storageService, projectService, taskService, i18n, dynamicLocale) {
+  function controller($q, $scope, $rootScope, $filter, storageService, projectService, taskService, i18n, dynamicLocale) {
 
     // Internationalization
+    //
+    // This will automatically change the Angular locale for things like dates.
     // -------------------------------------------------
     dynamicLocale.set(i18n.getMessage("@@ui_locale").toLowerCase().replace('_', '-'));
 
     // Tasks
     // -------------------------------------------------
     $scope.tasks = taskService.collection;
-    $scope.noTasks = true;
+    $scope.status = 2;
 
     $scope.addTask = function() {
       taskService.add({
+        weight: $scope.tasks.length,
         projectId: projectService.currentProject.id
       });
-      $scope.checkIfTasks();
+      $scope.setTasks();
+      $scope.setStatus();
     };
 
-    // Determine if there any tasks for the noTasks flag.
-    $scope.checkIfTasks = function() {
-      $scope.noTasks = true;
-      taskService.collection.forEach(function(task) {
-        if ($scope.currentProject && task.projectId === $scope.currentProject.id) {
-          $scope.noTasks = false;
-        }
-      });
+    // Determine if there any tasks for the status flag.
+    $scope.setStatus = function() {
+      if (!$scope.tasks.length && !$scope.projects.length) {
+        $scope.status = 2;
+      } else if (!$scope.tasks.length) {
+        $scope.status = 1;
+      } else {
+        $scope.status = 0;
+      }
+    };
+
+    // Filter the tasks based on the current project.
+    $scope.setTasks = function() {
+      if ($scope.currentProject) {
+        $scope.tasks = $filter('orderBy')(
+          $filter("filter")(taskService.collection, {
+            projectId: $scope.currentProject.id
+          }), 'weight');
+      } else {
+        $scope.tasks = [];
+      }
     };
 
     // Projects
@@ -44,7 +61,8 @@
       },
       function() {
         $scope.currentProject = projectService.currentProject;
-        $scope.checkIfTasks();
+        $scope.setTasks();
+        $scope.setStatus();
       }
     );
 
@@ -113,7 +131,7 @@
     '$q',
     '$scope',
     '$rootScope',
-    '$timeout',
+    '$filter',
     'storageService',
     'projectService',
     'taskService',

@@ -2,6 +2,9 @@
   "appDesc": {
     "message": "óleo is project-based time management app that can sync to Google Spreadsheets allowing for collaborative tracking."
   },
+  "noTasksOrProjects": {
+    "message": "Create a project to get started."
+  },
   "spreadsheetConnected": {
     "message": "Connected to Spreadsheet"
   },

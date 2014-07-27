@@ -2,6 +2,9 @@
   "appDesc": {
     "message": "óleo, зто тайм-менеджмент Апп для проектов который может подключиться к Гоогл Спредшитс для совместной работы."
   },
+  "noTasksOrProjects": {
+    "message": "Create a project to get started."
+  },
   "spreadsheetConnected": {
     "message": "Подключeн к спредшиту"
   },

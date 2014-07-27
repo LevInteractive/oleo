@@ -85,11 +85,11 @@ a:hover { color: #d2f5ec; }
   z-index: 5;
   position: fixed;
   top: 0; bottom: 0; left: 0; right: 0;
-  background: rgba(24, 24, 24, .90);
+  background: rgba(24, 24, 24, .95);
   overflow: scroll;
 }
-.my-projects .projects-container { padding: 0 23px; }
-.my-projects header { padding: 16px 0; border-bottom: 1px solid #4c4f50; }
+.my-projects .projects-container { padding: 0; }
+.my-projects header { padding: 18px 0 10px; margin: 0 20px; border-bottom: 1px solid #4c4f50; }
 .my-projects header input { font-size: 24px; width: 79%; display: inline; }
 .my-projects header input::-webkit-input-placeholder { color: #999; }
 .my-projects header button { float: right; font-size: 31px; }
@@ -97,13 +97,14 @@ a:hover { color: #d2f5ec; }
 .my-projects .no-projects-box { padding: 15% 0; text-align: center; }
 .my-projects .no-projects-box i { font-size: 40px; color: #136972; }
 
-.my-projects .add-project-btn { text-align: center; padding: 10px 10px; margin: 10px 0; font-size: 20px; background: #121212; display:block; width: 100%; line-height: 30px; }
+.my-projects .btn-wrap { text-align: right; }
+.my-projects .add-project-btn { text-align: center; padding: 10px 30px; background: #111; color: white; margin: 10px auto; font-size: 14px; display:block; line-height: 30px; }
 .my-projects .add-project-btn:hover { background: black; }
-.my-projects .add-project-btn i { margin-right: 6px; font-size: 30px; position: relative; bottom: -4px; }
+.my-projects .add-project-btn i { font-size: 30px; position: relative; bottom: -4px; }
 .my-projects .add-project-btn span { position: relative; top: -3px }
 
 .my-projects .list { list-style: none; margin: 0; padding: 0; }
-.my-projects .inme { padding: 10px 0; position: relative; border-bottom: #4c4f50 1px solid; }
+.my-projects .inme { padding: 10px 20px; position: relative; border-bottom: #333 1px dashed; font-size: 13px; }
 .my-projects .ui-sortable-helper { background: #222; }
 
 .my-projects .project-title { width: 85%; font-size: 24px; font-family: 'latobold'; display: block; margin-bottom: 10px; }
@@ -111,7 +112,7 @@ a:hover { color: #d2f5ec; }
 
 .my-projects .info input::-webkit-input-placeholder { color: #67bfa7; font-style: italic; }
 .my-projects .info input { background: #0d4e55; padding: 4px; display: inline-block; }
-.my-projects .info .open-btn { font-size: 30px; position: absolute; right: 0; top: 45%; }
+.my-projects .info .open-btn { font-size: 30px; position: absolute; right: 18px; top: 45%; }
 .my-projects .info .open-btn:hover { }
 .my-projects .info .rate-wrap { margin-right: 15px; }
 .my-projects .info .rate-wrap .num { width: 28px; }
@@ -122,7 +123,8 @@ a:hover { color: #d2f5ec; }
 .my-projects .info .deleteBtn:hover { color: #f07444; }
 
 .my-projects .pane { margin-right: 39px; }
-.my-projects .pane button { margin-right: 20px; font-family: 'latobold'; }
+.my-projects .pane button { margin-right: 4px; font-family: 'latobold'; border-bottom: 1px solid transparent; }
+.my-projects .pane button:hover { border-bottom: 1px solid; border-color: auto; }
 
 /***************************************
  * Task List
@@ -133,11 +135,14 @@ a:hover { color: #d2f5ec; }
   100% { background: #222; }
 }
 .task-list-container { min-height: 300px; background: black; }
+.task-list-container .nada-box,
 .task-list-container .no-task-box { text-align: center; padding: 14% 0 0; }
+.task-list-container .nada-box p,
 .task-list-container .no-task-box p { margin: 0; padding: 15px 0; }
+.task-list-container .nada-box i,
 .task-list-container .no-task-box i { font-size: 40px; color: #136972; }
 .task-list { list-style: none; margin: 0; padding: 0; }
-.task-list li { margin: 0 0 2px; }
+.task-list li { margin: 0 0 2px; font-size: 13px; }
 .task-list .inme:before,
 .task-list .inme:after { content: " "; display: table; }
 .task-list .inme:after { clear: both; }
@@ -147,18 +152,18 @@ a:hover { color: #d2f5ec; }
 .task-list .inme.running .start-btn { color: #f3cf5b; }
 .task-list .slide { margin-left: 57px; padding: 5px 0; }
 .task-list .remove { position: absolute; top: 10px; right: 10px; }
-.task-list .row { white-space: nowrap; padding: 1px 0; font-size: 13px; }
+.task-list .row { white-space: nowrap; padding: 0; font-size: 13px; }
 .task-list .row:last-child { margin-bottom: 0; }
 .task-list .row i { display:inline-block; font-style: normal; width: 26px; text-align: center; }
-.task-list .row span { cursor: default; color: #777; }
+.task-list .row span { cursor: move; color: #777; }
 .task-list .row input[type='text'] { width: 72%; }
 .task-list .row input.timecode-input { width: 75px; }
 .task-list .row .dollar { }
-.task-list-container .add-task-btn { margin: auto; display: block; padding: 20px 0; font-size: 20px; }
-.task-list-container .add-task-btn i { font-size: 30px; }
+.task-list-container .add-task-btn { background: #111; color: white; margin: 15px auto 0; display: block; padding: 9px 20px; font-size: 15px; }
+.task-list-container .add-task-btn i { font-size: 25px; }
 .task-list-container .add-task-btn span { position: relative; top: -6px; }
-.task-list .pane { margin-left: 72px; padding: 20px 0 20px 0; border-top: dashed 1px #136972; }
-.task-list .pane .inner { padding: 0 20px; }
+.task-list .pane { margin-left: 72px; padding: 10px 0 10px 0; border-top: dashed 1px #136972; }
+.task-list .pane .inner { padding: 0 13px 0 0; }
 .task-list .pane p { margin: 0 0 10px; padding: 0; }
 .task-list .pane .remove-btn { margin-right: 8px; }
 

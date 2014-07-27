@@ -36,7 +36,8 @@ oleo.directive("task", ['taskService', '$filter', '$rootScope', function(taskSer
     scope.hideDelete = true;
     scope.remove = function(task) {
       taskService.remove(task);
-      scope.$parent.checkIfTasks();
+      scope.$parent.setTasks();
+      scope.$parent.setStatus();
     };
 
     // The click event for pause/play button.
