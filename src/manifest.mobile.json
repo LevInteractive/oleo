@@ -1,0 +1,12 @@
+{
+  "name": "oleo",
+  "packageId": "com.lev.oleo",
+  "versionCode": 1,
+  "CFBundleVersion": "1.1.1",
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  }
+}
+

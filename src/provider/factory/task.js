@@ -1,4 +1,5 @@
 oleo.factory("taskFactory", ['i18n', function(i18n) {
+  'use strict';
   return function(props) {
     if (!props || !props.projectId) {
       throw new Error("A projectId is required to create a task.");

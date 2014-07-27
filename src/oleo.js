@@ -1,2 +1,1 @@
-// The óleo module.
-var oleo = angular.module("oleo", ["tmh.dynamicLocale"]);
+var oleo = angular.module('oleo', ['tmh.dynamicLocale', 'ui.sortable']);

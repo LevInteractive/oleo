@@ -1,6 +1,5 @@
-oleo.value('browserAction', chrome.browserAction || {});
-
 if (!chrome.browserAction) {
-  console.warn("Chrome browserAction API was not found.");
+  console.log("Chrome browserAction API was not found.");
 }
 
+oleo.value('browserAction', chrome.browserAction || {});

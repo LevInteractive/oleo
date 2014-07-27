@@ -25,7 +25,6 @@
             this.factory(props) // Factory a fresh object.
           );
         }, this);
-        // console.info("loaded ", this.storageKey, this.collection);
         if (this._onLoad) {
           this._onLoad();
         }
@@ -40,7 +39,6 @@
     this.collection.push(
       this.factory(frag || {})
     );
-    // console.info("added ", this.storageKey, this.collection[this.collection.length-1]);
     if (this._onAdd) {
       this._onAdd(this.collection[this.collection.length-1]);
     }
@@ -90,4 +88,3 @@
 
   oleo.value('crudProto', CRUD);
 })({});
-

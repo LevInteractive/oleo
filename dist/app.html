@@ -23,9 +23,11 @@
       <i class="icon-star-half-empty"></i>
       <p class="no-tasks">{{ $root.i18n.getMessage('noTasks') }}</p>
     </div>
-    <ul class="task-list" ng-if="currentProject" ng-repeat="task in tasks | filter:{projectId:currentProject.id} | orderBy:creationDate">
-      <li task="task"></li>
-    </ul>
+    <div ui-sortable="sortableOptions" ng-model="tasks" ng-if="currentProject">
+      <ul class="task-list"  ng-if="currentProject" ng-repeat="task in tasks | filter:{projectId:currentProject.id} | orderBy:weight">
+        <li task="task"></li>
+      </ul>
+    </div>
     <button class="add-task-btn" ng-click="addTask()" ng-if="currentProject"><i class="icon-file2"></i> <span>{{ $root.i18n.getMessage("addTask") }}</span></button>
   </main>
 
@@ -50,9 +52,11 @@
         <i class="icon-star-half-empty"></i>
         <p class="no-projects">{{ $root.i18n.getMessage('noProjects') }}</p>
       </div>
-      <ul class="list" ng-repeat="proj in projects | orderBy:creationDate | filter:search">
-        <li project="proj"></li>
-      </ul>
+      <div ui-sortable="sortableOptions" ng-model="projects">
+        <ul class="list" ng-repeat="proj in projects | orderBy:creationDate | filter:search">
+          <li project="proj"></li>
+        </ul>
+      </div>
       <button class="add-project-btn" ng-click="addProject()"><i class="icon-file2"></i><span>{{ $root.i18n.getMessage("addProject") }}</span></button>
     </div>
   </aside>

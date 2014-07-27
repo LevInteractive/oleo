@@ -21,7 +21,7 @@ h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; }
 body {
   padding: 0;
   margin: 0;
-  width: 400px;
+  min-width: 320px;
   background: #101d29;
   color: #67bfa7;
   font-family: 'latolight';
@@ -49,11 +49,12 @@ a:hover { color: #d2f5ec; }
 
 .action-btn { font-family: 'latobold'; }
 
+.ui-sortable { cursor: move; }
+
 /***************************************
  * Info Bar
  */
 .infobar {
-  /* height: 117px; */
   background: black;
   padding: 10px 0 10px;
 }
@@ -65,7 +66,7 @@ a:hover { color: #d2f5ec; }
   float: left;
   font-size: 30px;
   font-family: 'latolight';
-  width: 65%;
+  width: 51%;
   margin-left: 13px;
 }
 .infobar .my-projects-btn { float: right; clear:both; display:block; font-size: 13px; padding: 0; margin: 14px 13px 10px 0; text-transform: uppercase; }
@@ -89,8 +90,8 @@ a:hover { color: #d2f5ec; }
 }
 .my-projects .projects-container { padding: 0 23px; }
 .my-projects header { padding: 16px 0; border-bottom: 1px solid #4c4f50; }
-.my-projects header input { font-size: 24px; display: inline; }
-.my-projects header input::-webkit-input-placeholder { color: #67bfa7; }
+.my-projects header input { font-size: 24px; width: 79%; display: inline; }
+.my-projects header input::-webkit-input-placeholder { color: #999; }
 .my-projects header button { float: right; font-size: 31px; }
 
 .my-projects .no-projects-box { padding: 15% 0; text-align: center; }
@@ -130,7 +131,7 @@ a:hover { color: #d2f5ec; }
   50% { background: #651c00; }
   100% { background: #222; }
 }
-.task-list-container { min-height: 400px; background: black; }
+.task-list-container { min-height: 300px; background: black; }
 .task-list-container .no-task-box { text-align: center; padding: 14% 0 0; }
 .task-list-container .no-task-box p { margin: 0; padding: 15px 0; }
 .task-list-container .no-task-box i { font-size: 40px; color: #136972; }
@@ -141,15 +142,16 @@ a:hover { color: #d2f5ec; }
 .task-list .inme:after { clear: both; }
 .task-list .inme { background: #222; position: relative; }
 .task-list .inme.running { -webkit-animation: pulsate 2s ease-in; -webkit-animation-iteration-count: infinite; }
-.task-list .start-btn { color: #f1f1f1; position:absolute; top: 0; bottom: 0; left: 0; width: 72px; background: black; font-size: 30px; }
+.task-list .start-btn { color: #f1f1f1; position:absolute; top: 0; bottom: 0; left: 0; width: 54px; background: black; font-size: 30px; }
 .task-list .inme.running .start-btn { color: #f3cf5b; }
-.task-list .slide { margin-left: 80px; padding: 5px 0; }
+.task-list .slide { margin-left: 57px; padding: 5px 0; }
 .task-list .remove { position: absolute; top: 10px; right: 10px; }
-.task-list .row { padding: 1px 0; font-size: 13px; }
+.task-list .row { white-space: nowrap; padding: 1px 0; font-size: 13px; }
 .task-list .row:last-child { margin-bottom: 0; }
 .task-list .row i { display:inline-block; font-style: normal; width: 26px; text-align: center; }
 .task-list .row span { cursor: default; color: #777; }
-.task-list .row input[type='text'] { width: 244px; }
+.task-list .row input[type='text'] { width: 72%; }
+.task-list .row input.timecode-input { width: 75px; }
 .task-list .row .dollar { }
 .task-list-container .add-task-btn { margin: auto; display: block; padding: 20px 0; font-size: 20px; }
 .task-list-container .add-task-btn i { font-size: 30px; }

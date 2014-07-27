@@ -1,6 +1,6 @@
 (function() {
   "use strict";
-  function controller($q, $scope, $rootScope, storageService, projectService, taskService, i18n, dynamicLocale) {
+  function controller($q, $scope, $rootScope, $timeout, storageService, projectService, taskService, i18n, dynamicLocale) {
 
     // Internationalization
     // -------------------------------------------------
@@ -64,8 +64,26 @@
 
     // Expose method for saving user data.
     $scope.saveUser = function() {
-      console.log("user saved");
       storageService.put("user", $rootScope.user);
+    };
+
+    // Sorting callback actions.
+    $scope.sortableOptions = {
+      stop: function(e, ui) {
+        var index = 0;
+        $scope.tasks.forEach(function(task) {
+          if (task.projectId === $scope.currentProject.id) {
+            task.weight = index++;
+          }
+        });
+        index = 0;
+        $scope.projects.forEach(function(project) {
+          project.weight = index++;
+        });
+        projectService.save().then(
+          taskService.save.bind(taskService)
+        );
+      }
     };
 
 
@@ -95,6 +113,7 @@
     '$q',
     '$scope',
     '$rootScope',
+    '$timeout',
     'storageService',
     'projectService',
     'taskService',

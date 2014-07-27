@@ -1,6 +1,6 @@
 (function() {
   "use strict";
-  function Service(storageService, $q, taskFactory, tickerFactory, browserAction) {
+  function Service(storageService, $q, taskFactory, tickerFactory, browserAction, crudObj) {
     this.collection = [];
     this.storage = storageService;
     this.storageKey = "tasks";
@@ -8,9 +8,10 @@
     this.tickerFactory = tickerFactory;
     this.browserAction = browserAction;
     this.$q = $q;
+
+    // extend the crud object.
+    angular.extend(this, crudObj);
   }
-  Service.prototype = Object.create(angular.injector(['oleo']).get("crudProto"));
-  Service.prototype.constructor = Service;
 
   // Instances of the Ticker will be cached here.
   Service.prototype._tickerMap = {};
@@ -45,15 +46,17 @@
     }
 
     // Set browser icon to active.
-    this.browserAction.setIcon({
-      path:'style/img/icon-active19.png'
-    });
-    this.browserAction.setTitle({
-      title: "óleo | There are tasks running."
-    });
-    this.browserAction.setBadgeText({
-      text: "ON"
-    });
+    if (this.browserAction.setIcon) {
+      this.browserAction.setIcon({
+        path:'style/img/icon-active19.png'
+      });
+      this.browserAction.setTitle({
+        title: "óleo | There are tasks running."
+      });
+      this.browserAction.setBadgeText({
+        text: "ON"
+      });
+    }
 
     if (!task.initialStart) {
       task.initialStart = Date.now(); // First time ever.
@@ -78,15 +81,17 @@
       }
     }, this);
     if (setToDefault) {
-      this.browserAction.setBadgeText({
-        text: ""
-      });
-      this.browserAction.setTitle({
-        title: "óleo | All tasks are paused."
-      });
-      this.browserAction.setIcon({
-        path: 'style/img/icon19.png'
-      });
+      if (this.browserAction.setIcon) {
+        this.browserAction.setBadgeText({
+          text: ""
+        });
+        this.browserAction.setTitle({
+          title: "óleo | All tasks are paused."
+        });
+        this.browserAction.setIcon({
+          path: 'style/img/icon19.png'
+        });
+      }
     }
     return this;
   };
@@ -111,6 +116,7 @@
     'taskFactory',
     'tickerFactory',
     'browserAction',
+    'crudProto',
     Service
   ]);
 })();

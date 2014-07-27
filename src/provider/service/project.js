@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  function Service(storageService, $q, projectFactory, auth, spreadsheetService, taskService, $filter, $rootScope, $interval) {
+  function Service(storageService, $q, projectFactory, auth, spreadsheetService, taskService, $filter, $rootScope, $interval, crudObj) {
     this.collection = [];
     this.storage = storageService;
     this.taskService = taskService;
@@ -22,10 +22,10 @@
 
     // Listen for ticks, update current project.
     this.$rootScope.$on("taskTick", this.calculateTotalTime.bind(this));
-  }
 
-  Service.prototype = Object.create(angular.injector(['oleo']).get("crudProto"));
-  Service.prototype.constructor = Service;
+    // extend the crud object.
+    angular.extend(this, crudObj);
+  }
 
   Service.prototype._onLoad = function() {
     this.collection.forEach(function(proj) {
@@ -226,6 +226,7 @@
     '$filter',
     '$rootScope',
     '$interval',
+    'crudProto',
     Service
   ]);
 })();

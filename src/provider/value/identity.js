@@ -1,5 +1,5 @@
-oleo.value('identity', chrome.identity || {});
-
 if (!chrome.identity) {
-  console.warn("Chrome Identity API was not found.");
+  console.log("Chrome Identity API was not found.");
 }
+
+oleo.value('identity', chrome.identity || {});
