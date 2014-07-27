@@ -23,9 +23,9 @@ Let `grunt watch` you do it.
 
 Tests are done with mocha in the browser via the test/index.html runner.
 
-# Ideas
+# What's ahead.
 
-* Drag & drop sorting for tasks and projects.
 * Vim-style keyboard shortcuts.
 * More user-friendly instructions to get started.
-* Exporting/importing using a special backup spreadsheet or a clever way using `chrome.storage.sync`.
+* Cloud syncing + mobile.
+* More UI enhancements.

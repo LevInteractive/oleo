@@ -103,9 +103,10 @@ a:hover { color: #d2f5ec; }
 .my-projects .add-project-btn span { position: relative; top: -3px }
 
 .my-projects .list { list-style: none; margin: 0; padding: 0; }
-.my-projects .inme { padding: 20px 0; position: relative; border-bottom: #4c4f50 1px solid; }
+.my-projects .inme { padding: 10px 0; position: relative; border-bottom: #4c4f50 1px solid; }
+.my-projects .ui-sortable-helper { background: #222; }
 
-.my-projects .project-title { width: 85%; font-size: 30px; font-family: 'latobold'; display: block; margin-bottom: 10px; }
+.my-projects .project-title { width: 85%; font-size: 24px; font-family: 'latobold'; display: block; margin-bottom: 10px; }
 .my-projects .project-title:hover { display: block; }
 
 .my-projects .info input::-webkit-input-placeholder { color: #67bfa7; font-style: italic; }
@@ -117,7 +118,7 @@ a:hover { color: #d2f5ec; }
 .my-projects .info .rate-wrap .num::-webkit-outer-spin-button,
 .my-projects .info .rate-wrap .num::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 .my-projects .info .spreadsheet { width: 140px; margin-right: 5px; }
-.my-projects .info .deleteBtn { font-size: 12px; }
+.my-projects .info .deleteBtn { font-size: 12px; display: block; margin: 13px 0 0; }
 .my-projects .info .deleteBtn:hover { color: #f07444; }
 
 .my-projects .pane { margin-right: 39px; }
