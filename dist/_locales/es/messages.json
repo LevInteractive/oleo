@@ -2,6 +2,9 @@
   "appDesc": {
     "message": "óleo es una App de gestión de tiempo para proyectos que puede comunicar con Hojas de cálculo Google dando seguimiento colaborativo."
   },
+  "noTasksOrProjects": {
+    "message": "Create a project to get started."
+  },
   "spreadsheetConnected": {
     "message": "Conectado a la hoja de cálculo"
   },

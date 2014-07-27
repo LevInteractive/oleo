@@ -1,4 +1,5 @@
 oleo.service('authService', ['$http', '$q', 'identity', function($http, $q, identity) {
+  'use strict';
   this.accessToken = null;
 
   this.authorize = function(interactive) {
@@ -28,7 +29,7 @@ oleo.service('authService', ['$http', '$q', 'identity', function($http, $q, iden
       xhr.open('GET', 'https://accounts.google.com/o/oauth2/revoke?token='+token);
       xhr.send();
       this.accessToken = null;
-      identity.removeCachedAuthToken({ 
+      identity.removeCachedAuthToken({
         token: token
       }, function() {
         deferred.resolve(token);
