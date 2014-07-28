@@ -4,7 +4,7 @@
 óleo is a sleek project-based time management Chrome Application that can sync to Google Spreadsheets allowing for collaborative tracking.
 
 **Chrome store:**  
-https://chrome.google.com/webstore/detail/%C3%B3leo/akofanfijlgbhokmhnmbnpdalokcjpga
+https://chrome.google.com/webstore/detail/%C3%B3leo/ldgkigaodgdimflmamidppilbgfofdcj
 
 **More information:**  
 http://lev-interactive.com/made/oleo-time-tracking/
@@ -17,7 +17,7 @@ This application was built in full with AngularJS and has no other dependencies.
 2. `bower install`
 3. `grunt`
 
-Let `grunt watch` you do it.
+Let `grunt watch` you do it. For releases do `grunt release`.
 
 # Testing
 

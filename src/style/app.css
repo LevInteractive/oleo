@@ -92,6 +92,7 @@ a:hover { color: #d2f5ec; }
   top: 0; bottom: 0; left: 0; right: 0;
   background: rgba(24, 24, 24, .95);
   overflow: scroll;
+  -webkit-app-region: no-drag;
 }
 .my-projects .projects-container { padding: 0; }
 .my-projects header { padding: 18px 0 10px; margin: 0 20px; border-bottom: 1px solid #4c4f50; }
