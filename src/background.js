@@ -1,6 +1,9 @@
 chrome.app.runtime.onLaunched.addListener(function() {
   'use strict';
   chrome.app.window.create('app.html', {
-    id: "oleoID"
+    id        : "oleoID",
+    minWidth  : 350,
+    minHeight : 500,
+    frame     : "none"
   });
 });

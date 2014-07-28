@@ -1,6 +1,8 @@
 /***************************************
  * Basic Resets
  */
+html { overflow-y: auto; }
+
 *:focus { outline: 0; }
 
 button,
@@ -57,6 +59,7 @@ a:hover { color: #d2f5ec; }
 .infobar {
   background: black;
   padding: 10px 0 10px;
+  -webkit-app-region: drag;
 }
 .infobar:before,
 .infobar:after { content: " "; display: table; }
@@ -77,6 +80,8 @@ a:hover { color: #d2f5ec; }
 .infobar .info strong { font-family: 'latolight'; }
 .infobar .info { font-size: 12px; }
 .infobar h3 i { font-style: normal; text-align: right; }
+.infobar .minimize-btn { position: absolute; right: 25px; font-size: 20px; top: 1px; }
+.infobar .quit-btn { position: absolute; right: 15px; font-size: 13px; top: 4px; }
 
 /***************************************
  * My Projects
@@ -134,9 +139,10 @@ a:hover { color: #d2f5ec; }
   50% { background: #651c00; }
   100% { background: #222; }
 }
-.task-list-container { min-height: 300px; background: black; }
+.task-list-container { min-height: 290px; background: black; }
 .task-list-container .nada-box,
-.task-list-container .no-task-box { text-align: center; padding: 14% 0 0; }
+.task-list-container .no-task-box { height: 255px; text-align: center; padding: 90px 0 0; }
+.task-list-container .no-task-box { height: auto; }
 .task-list-container .nada-box p,
 .task-list-container .no-task-box p { margin: 0; padding: 15px 0; }
 .task-list-container .nada-box i,
@@ -172,7 +178,7 @@ a:hover { color: #d2f5ec; }
 /***************************************
  * Footer
  */
-.footer { padding: 0 0 25px; text-align: center; color: #7f959f; }
+.footer { padding: 0 0 25px; text-align: center; color: #7f959f; -webkit-app-region: drag; }
 .footer .connection-status { background: #112c38; padding: 15px 0; margin: 0 0 10px; }
 .footer a { font-family: 'latobold'; }
 .footer .shout-out { font-size: 11px; letter-spacing: 1px; }
