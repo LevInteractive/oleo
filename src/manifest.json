@@ -1,6 +1,7 @@
 {
   "name": "óleo",
   "version": null,
+  "manifest_version": 2,
   "description": "__MSG_appDesc__",
   "default_locale": "en",
   "offline_enabled": true,
@@ -34,14 +35,11 @@
     "144" : "style/img/icon144.png",
     "152" : "style/img/icon152.png"
   },
-  "browser_action": {
-     "default_title": "óleo",
-     "default_icon": {
-       "19": "style/img/icon19.png",
-       "38": "style/img/icon38.png"
-     },
-     "default_popup": "app.html"
-  },
-  "manifest_version": 2
+  "app": {
+    "background": {
+      "scripts": ["background.js"],
+      "persistent": false
+    }
+  }
 }
 
