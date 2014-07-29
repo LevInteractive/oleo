@@ -16,12 +16,14 @@
     <button class="minimize-btn" ng-click="minimize()">&ndash;</button>
     <button class="quit-btn" ng-click="quit()">x</button>
     <button class="my-projects-btn" ng-click="displayProjects = true">{{ $root.i18n.getMessage('myProjectsBtn') }} <i class="icon-popout"></i></button>
-    <input type="text" ng-model="user.name" ng-change="saveUser()" placeholder="{{ $root.i18n.getMessage('namePlaceholder') }}" />
+    <input type="text" ng-model="user.name" class="name" ng-change="saveUser()" placeholder="{{ $root.i18n.getMessage('namePlaceholder') }}" />
     <h3 ng-if="currentProject" class='cur'>
-      <div class="name">Project: <strong>{{ currentProject.name }}</strong></div>
+      <div class="name"><strong>{{ currentProject.name }}</strong></div>
       <div class="info"><i class="icon-time"></i>&nbsp;<strong>{{ currentProject.totalTime | timespan }}</strong>&nbsp;|&nbsp;<i class="dollar">$</i><strong>{{ currentProject.totalTime | rate:currentProject.rate | currency:$root.i18n.getMessage('currency') }}</strong></div>
     </h3>
-    <!-- <h3 ng-if="!currentProject">{{ $root.i18n.getMessage('noProjectSelected') }}</h3> -->
+    <form class="new-task-form" ng-submit="addTask()">
+      <input type="text" placeholder="Start a new task." ng-model="newTaskName" class="new-task-input" />
+    </form>
   </header>
 
   <main class="task-list-container">
@@ -36,9 +38,6 @@
     <ul ui-sortable="sortableOptions" ng-model="tasks" class="task-list"  ng-if="currentProject">
       <li task="task" ng-repeat="task in tasks"></li>
     </ul>
-    <div class="btn-wrap">
-      <button class="add-task-btn" ng-click="addTask()" ng-if="currentProject"><i class="icon-file2"></i> <span>{{ $root.i18n.getMessage("addTask") }}</span></button>
-    </div>
   </main>
 
   <footer class="footer">

@@ -10,16 +10,19 @@
 
     // Tasks
     // -------------------------------------------------
-    $scope.tasks = taskService.collection;
-    $scope.status = 2;
+    $scope.tasks = []; // Current tasks for a project.
+    $scope.status = 2; // 2: no projects or tasks, 1: no tasks, 0: has tasks
 
+    // Add a new task.
     $scope.addTask = function() {
       taskService.add({
-        weight: $scope.tasks.length,
-        projectId: projectService.currentProject.id
+        name      : $scope.newTaskName,
+        weight    : $scope.tasks.length,
+        projectId : projectService.currentProject.id
       });
       $scope.setTasks();
       $scope.setStatus();
+      $scope.newTaskName = "";
     };
 
     // Determine if there any tasks for the status flag.
