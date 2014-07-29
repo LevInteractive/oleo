@@ -110,6 +110,15 @@
     this.checkIcon();
   };
 
+  // Stop all running tasks.
+  Service.prototype.stopAll = function() {
+    for (var id in this._tickerMap) {
+      if (this._tickerMap[id]) {
+        this._tickerMap[id].stop();
+      }
+    }
+  };
+
   oleo.service('taskService', [
     'storageService',
     '$q',

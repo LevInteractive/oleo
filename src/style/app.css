@@ -16,22 +16,6 @@ textarea {
 }
 h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; }
 
-::-webkit-scrollbar {
-  height: 10px;
-  width: 10px;
-  background-color: #FFF;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #222;
-  -webkit-border-radius: 5px;
-  height: 50px;
-}
-
-::-webkit-scrollbar-track {
-  background-color: inherit;
-}
-
 
 /***************************************
  * Univerial Flavor
@@ -44,18 +28,32 @@ body {
   color: #67bfa7;
   font-family: 'latolight';
 }
+html { background: #333; }
 input[type="text"], input[type="number"] {
   background: transparent;
   border: none;
 }
 
+::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+  background-color: #333;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #222;
+  -webkit-border-radius: 5px;
+  height: 50px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: inherit;
+}
 ::-webkit-input-placeholder { color: #777; }
 
-a { color: #67bfa7; text-decoration: none; }
-
+a { color: #67bfa7; text-decoration: none; transition: all 0.2s; }
 button { cursor: pointer; border: none; padding: 0; background: transparent; }
-
-input { color: #67bfa7; }
+input { color: #67bfa7; transition: all 0.2s; }
 input:focus { color: #f3cf5b !important; }
 
 button:hover,
@@ -64,52 +62,40 @@ a:hover { color: #d2f5ec; }
 
 .remove-btn { font-family: 'latobold'; color: #ee0000; }
 .remove-btn:hover { color: #e13d3d; }
-
 .action-btn { font-family: 'latobold'; }
-
 .ui-sortable { cursor: move; }
+
+
+/***************************************
+ * The slideout bit.
+ */
+.task-area, .my-projects { position: relative; transform: translateX(0); transition: transform 0.3s; }
+body.projects .task-area,
+body.projects .my-projects { transform: translateX(250px); }
 
 /***************************************
  * Info Bar
  */
-.infobar {
-  padding: 10px 0 10px;
-  -webkit-app-region: drag;
-  text-align: center;
-}
+.infobar { padding: 10px 0 10px; -webkit-app-region: drag; }
 .infobar:before,
 .infobar:after { content: " "; display: table; }
 .infobar:after { clear: both; }
-
-.infobar input[type="text"].name {
-  float: left;
-  font-size: 22px;
-  font-family: 'latolight';
-  width: 51%;
-  margin: 7px 0 0 13px;
-  -webkit-app-region: no-drag;
-}
-.infobar .my-projects-btn { float: right; clear:both; display:block; font-size: 13px; padding: 0; margin: 14px 13px 10px 0; text-transform: uppercase; }
-.infobar .my-projects-btn i { font-size: 15px; position: relative; bottom: -2px; }
-.infobar .name { margin: 0 0 7px; }
-.infobar h3 { margin: 0; font-family: 'latolight'; border-top: 1px dashed #1c3042; border-bottom: 1px dashed #1c3042; clear:both; padding: 10px; font-size: 13px; }
-.infobar h3 strong { font-family: 'latobold'; }
-.infobar h3 .name { font-size: 16px; }
-.infobar .info strong { font-family: 'latolight'; }
-.infobar .info { font-size: 12px; }
-.infobar h3 i { font-style: normal; text-align: right; }
-.infobar .minimize-btn { position: absolute; right: 25px; font-size: 20px; top: 1px; }
-.infobar .quit-btn { position: absolute; right: 15px; font-size: 13px; top: 4px; }
-.infobar .new-task-form { padding: 10px; margin: 15px; -webkit-app-region: no-drag; background: #222; border-bottom: 3px solid #111; }
+.infobar .name { position: absolute; top: 21px; left: 46px; white-space: nowrap; text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.6); }
+.infobar .menu { position: absolute; top: 14px; left: 13px; font-size: 30px; }
+.infobar .minimize-btn { position: absolute; right: 35px; font-size: 24px; top: 11px; }
+.infobar .quit-btn { position: absolute; right: 18px; font-size: 16px; top: 14px; }
+.infobar .new-task-form { padding: 10px; margin: 40px 15px 15px; -webkit-app-region: no-drag; background: #222; border-bottom: 3px solid #136972; }
 .infobar .new-task-form input { padding: 5px; font-size: 20px; font-family: 'latobold'; display: block; width: 100%; }
 
 /***************************************
  * My Projects
  */
 .my-projects {
-  z-index: 5;
+  width: 250px;
+  left: -250px;
+  top: 0;
+  height: 100%;
   position: fixed;
-  top: 0; bottom: 0; left: 0; right: 0;
   background: rgba(24, 24, 24, .95);
   overflow: scroll;
   -webkit-app-region: no-drag;
@@ -169,11 +155,11 @@ a:hover { color: #d2f5ec; }
 .task-list-container .nada-box i,
 .task-list-container .no-task-box i { font-size: 40px; color: #136972; }
 .task-list { list-style: none; margin: 0; padding: 0; }
-.task-list li { margin: 0 20px 2px; font-size: 13px; }
+.task-list li { margin: 0 20px 6px; font-size: 13px; }
 .task-list .inme:before,
 .task-list .inme:after { content: " "; display: table; }
 .task-list .inme:after { clear: both; }
-.task-list .inme { position: relative; background: #444; }
+.task-list .inme { position: relative; background: rgba(0,0,0,0.15); border-bottom: 2px solid #111; }
 .task-list .inme.running { -webkit-animation: pulsate 2s ease-in; -webkit-animation-iteration-count: infinite; }
 .task-list .start-btn { color: #CCC; line-height: 81px; background: #222; position:absolute; top: 0; bottom: 0; left: 0; width: 54px; font-size: 30px; }
 .task-list .inme.running .start-btn { color: #f3cf5b; }
@@ -182,8 +168,8 @@ a:hover { color: #d2f5ec; }
 .task-list .row { white-space: nowrap; padding: 0; font-size: 13px; }
 .task-list .row:last-child { margin-bottom: 0; }
 .task-list .row i { display:inline-block; font-style: normal; width: 26px; text-align: center; }
-.task-list .row span { cursor: move; color: #777; }
-.task-list .row input[type='text'] { width: 72%; }
+.task-list .row span { cursor: move; color: #777; padding: 3px 0; display: inline-block; }
+.task-list .row input[type='text'] { width: 72%; padding: 3px 0; display: inline-block; }
 .task-list .row input.timecode-input { width: 75px; }
 .task-list .row .dollar { }
 .task-list-container .add-task-btn { background: #111; color: white; margin: 15px auto 0; display: block; padding: 9px 20px; font-size: 15px; }
@@ -199,7 +185,9 @@ a:hover { color: #d2f5ec; }
 /***************************************
  * Footer
  */
-.footer { padding: 0 0 25px; text-align: center; color: #444; -webkit-app-region: drag; }
-.footer .connection-status { font-size: 15px; padding: 15px 0; margin: 0 0 10px; }
-.footer a { font-family: 'latobold'; }
-.footer .shout-out { font-size: 11px; letter-spacing: 1px; }
+.footer { padding: 0 0 25px; text-align: center; color: #999; -webkit-app-region: drag; }
+.footer h3 { font-size: 12px; margin: 13px 0; text-align: center; font-family: 'latolight'; text-shadow: 0px 1px 0px rgba(0,0,0, 0.9); }
+.footer h3 span { display: inline-block; padding: 5px; }
+.footer a { font-family: 'latobold'; color: #666; }
+.footer a:hover { color: #999; }
+.footer .shout-out { font-size: 11px; letter-spacing: 1px; color: #666; }

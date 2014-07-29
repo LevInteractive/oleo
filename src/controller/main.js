@@ -1,6 +1,6 @@
 (function() {
   "use strict";
-  function controller($q, $scope, $rootScope, $filter, storageService, projectService, taskService, i18n, dynamicLocale) {
+  function controller($q, $scope, $rootScope, $filter, storageService, projectService, taskService, i18n, dynamicLocale, idle) {
 
     // Internationalization
     //
@@ -55,9 +55,6 @@
     $scope.addProject      = projectService.add.bind(projectService);
     $scope.saveProjects    = projectService.save.bind(projectService);
     $scope.currentProject  = null;
-    $scope.hideProjects = function() {
-      $scope.displayProjects = false;
-    };
     $scope.$watch(
       function() {
         return projectService.currentProject;
@@ -88,6 +85,18 @@
       storageService.put("user", $rootScope.user);
     };
 
+
+    // Application
+    // -------------------------------------------------
+    $scope.minimize                  = chrome.app.window.current().minimize;
+    $scope.quit                      = chrome.app.window.current().close.bind(chrome.app.window.current());
+    $rootScope.GOOD_CONNECTION       = i18n.getMessage('spreadsheetConnected');
+    $rootScope.BAD_CONNECTION        = i18n.getMessage('spreadsheetProblem');
+    $rootScope.NO_SPREADSHEET        = i18n.getMessage('spreadsheetNone');
+    $rootScope.ATTEMPTING_TO_CONNECT = i18n.getMessage('spreadsheetAttempting');
+    $rootScope.connectionStatus      = $rootScope.NO_SPREADSHEET;
+    $rootScope.i18n                  = i18n;
+
     // Sorting callback actions.
     $scope.sortableOptions = {
       stop: function(e, ui) {
@@ -107,18 +116,15 @@
       }
     };
 
-
-    // Application
-    // -------------------------------------------------
-    $scope.minimize                  = chrome.app.window.current().minimize;
-    $scope.quit                      = chrome.app.window.current().close.bind(chrome.app.window.current());
-    $rootScope.GOOD_CONNECTION       = i18n.getMessage('spreadsheetConnected');
-    $rootScope.BAD_CONNECTION        = i18n.getMessage('spreadsheetProblem');
-    $rootScope.NO_SPREADSHEET        = i18n.getMessage('spreadsheetNone');
-    $rootScope.ATTEMPTING_TO_CONNECT = i18n.getMessage('spreadsheetAttempting');
-    $rootScope.connectionStatus      = $rootScope.NO_SPREADSHEET;
-    $rootScope.i18n                  = i18n;
-
+    if (idle) {
+      idle.onStateChanged.addListener(function(state) {
+        if (state !== "active") {
+          taskService.stopAll();
+          $scope.$apply();
+          console.log("All tickers stopped because the OS state is "+state);
+        }
+      });
+    }
 
     // Load in from storage
     // -------------------------------------------------
@@ -141,6 +147,7 @@
     'taskService',
     'i18n',
     'tmhDynamicLocale',
+    'idle',
     controller
   ]);
 })();

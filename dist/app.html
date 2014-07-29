@@ -5,49 +5,46 @@
   <title>óleo</title>
   <link rel="stylesheet" href="style/app.min.css"/>
 </head>
-<body ng-controller="MainController">
-  <input type="text" style="opacity:0;display:block;position:absolute;top:-100px;" /><!-- no-focus hack -->
+<body ng-controller="MainController" ng-class="{projects: displayProjects}">
 
-  <header class="infobar">
-    <button class="minimize-btn" ng-click="minimize()">&ndash;</button>
-    <button class="quit-btn" ng-click="quit()">x</button>
-    <button class="my-projects-btn" ng-click="displayProjects = true">{{ $root.i18n.getMessage('myProjectsBtn') }} <i class="icon-popout"></i></button>
+  <div class="task-area">
+    <header class="infobar">
+      <button class="minimize-btn" ng-click="minimize()">&ndash;</button>
+      <button class="quit-btn" ng-click="quit()">x</button>
+      <button class="menu" ng-click="displayProjects=true"><i class="icon-uniE61A"></i></button>
+      <span class="name" ng-if="currentProject">{{ currentProject.name }}</span>
+      <form class="new-task-form" ng-submit="addTask()">
+        <input type="text" placeholder="Start a new task." ng-model="newTaskName" class="new-task-input" />
+      </form>
+    </header>
+
+    <main class="task-list-container">
+      <div class="no-task-box" ng-show="status==1">
+        <i class="icon-star-half-empty"></i>
+        <p>{{ $root.i18n.getMessage('noTasks') }}</p>
+      </div>
+      <div class="nada-box" ng-show="status==2">
+        <i class="icon-star-half-empty"></i>
+        <p>{{ $root.i18n.getMessage('noTasksOrProjects') }}</p>
+      </div>
+      <ul ui-sortable="sortableOptions" ng-model="tasks" class="task-list"  ng-if="currentProject">
+        <li task="task" ng-repeat="task in tasks"></li>
+      </ul>
+    </main>
+
+    <footer class="footer">
+      <h3 ng-if="currentProject"><span class="time">
+        <i class="icon-time"></i>&nbsp;{{ currentProject.totalTime | timespan }}</span><span class="amount">
+        ${{ currentProject.totalTime | rate:currentProject.rate | currency:$root.i18n.getMessage('currency') }}</span><span class="drive">
+        <i class="icon-google-drive"></i>&nbsp;{{ $root.connectionStatus }}</span></h3>
+      <div class="shout-out">
+        <span>by <a href="http://lev-interactive.com/?r=oleo" target="_blank">Lev Interactive</a></span>
+      </div>
+    </footer>
+  </div>
+
+  <aside class="my-projects">
     <input type="text" ng-model="user.name" class="name" ng-change="saveUser()" placeholder="{{ $root.i18n.getMessage('namePlaceholder') }}" />
-    <h3 ng-if="currentProject" class='cur'>
-      <div class="name"><strong>{{ currentProject.name }}</strong></div>
-      <div class="info"><i class="icon-time"></i>&nbsp;<strong>{{ currentProject.totalTime | timespan }}</strong>&nbsp;|&nbsp;<i class="dollar">$</i><strong>{{ currentProject.totalTime | rate:currentProject.rate | currency:$root.i18n.getMessage('currency') }}</strong></div>
-    </h3>
-    <form class="new-task-form" ng-submit="addTask()">
-      <input type="text" placeholder="Start a new task." ng-model="newTaskName" class="new-task-input" />
-    </form>
-  </header>
-
-  <main class="task-list-container">
-    <div class="no-task-box" ng-show="status==1">
-      <i class="icon-star-half-empty"></i>
-      <p>{{ $root.i18n.getMessage('noTasks') }}</p>
-    </div>
-    <div class="nada-box" ng-show="status==2">
-      <i class="icon-star-half-empty"></i>
-      <p>{{ $root.i18n.getMessage('noTasksOrProjects') }}</p>
-    </div>
-    <ul ui-sortable="sortableOptions" ng-model="tasks" class="task-list"  ng-if="currentProject">
-      <li task="task" ng-repeat="task in tasks"></li>
-    </ul>
-  </main>
-
-  <footer class="footer">
-    <div class="connection-status">
-      <i class="icon-google-drive"></i>
-      &nbsp;
-      <span>{{ $root.connectionStatus }}</span>
-    </div>
-    <div class="shout-out">
-      <span>by <a href="http://lev-interactive.com/?r=oleo" target="_blank">Lev Interactive</a></span>
-    </div>
-  </footer>
-
-  <aside class="my-projects" ng-show="displayProjects">
     <div class="projects-container">
       <header>
         <input type="text" class="search-projects" ng-model="search" placeholder="{{ $root.i18n.getMessage('searchProjects') }}" />

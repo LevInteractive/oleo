@@ -9,6 +9,7 @@
   "permissions": [
     "identity",
     "storage",
+    "idle",
     "https://www.googleapis.com/",
     "https://accounts.google.com/",
     "https://ssl.gstatic.com/",
