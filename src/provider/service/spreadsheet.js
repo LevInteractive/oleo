@@ -21,7 +21,7 @@ oleo.service('spreadsheetService', ['$http', '$q', 'identity', 'authService', fu
       xml += '    <id>https://spreadsheets.google.com/feeds/cells/'+key+'/'+worksheet+'/private/full/R'+row+'C'+col+'</id>' + "\n";
       xml += '    <link rel="edit" type="application/atom+xml" ';
       xml += 'href="https://spreadsheets.google.com/feeds/cells/'+key+'/'+worksheet+'/private/full/R'+row+'C'+col+'"/>' + "\n";
-      xml += '    <gs:cell row="'+row+'" col="'+col+'" inputValue="'+data+'"/>' + "\n";
+      xml += '    <gs:cell row="'+row+'" col="'+col+'" inputValue="'+xmlVal(data)+'"/>' + "\n";
       xml += '  </entry>' + "\n";
       return xml;
     }
@@ -231,4 +231,14 @@ oleo.service('spreadsheetService', ['$http', '$q', 'identity', 'authService', fu
     };
     return deferred.promise;
   };
+
+  function xmlVal(val) {
+    if (!val) {
+      return '';
+    }
+    return String(val).replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
 }]);

@@ -180,6 +180,6 @@ a:hover { color: #d2f5ec; }
  * Footer
  */
 .footer { padding: 0 0 25px; text-align: center; color: #7f959f; -webkit-app-region: drag; }
-.footer .connection-status { background: #112c38; padding: 15px 0; margin: 0 0 10px; }
+.footer .connection-status { font-size: 15px; background: #112c38; padding: 15px 0; margin: 0 0 10px; }
 .footer a { font-family: 'latobold'; }
 .footer .shout-out { font-size: 11px; letter-spacing: 1px; }
