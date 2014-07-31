@@ -9,63 +9,58 @@
   <link rel="stylesheet" href="style/app.css"/>
   <!-- endbuild -->
 </head>
-<body ng-controller="MainController" ng-class="{projects: displayProjects}">
+<body ng-controller="MainController" ng-class="{projects: displayProjects, 'no-projects': status==2}">
 
-  <div class="task-area">
-    <header class="infobar">
-      <button class="minimize-btn" ng-click="minimize()">&ndash;</button>
-      <button class="quit-btn" ng-click="quit()">x</button>
-      <button class="menu" ng-click="displayProjects=true"><i class="icon-uniE61A"></i></button>
-      <span class="name" ng-if="currentProject">{{ currentProject.name }}</span>
-      <form class="new-task-form" ng-submit="addTask()">
-        <input type="text" placeholder="Start a new task." ng-model="newTaskName" class="new-task-input" />
-      </form>
-    </header>
+  <header class="infobar">
+    <button class="minimize-btn" ng-click="minimize()">&ndash;</button>
+    <button class="quit-btn" ng-click="quit()">x</button>
+    <button class="menu" ng-show="!displayProjects && status!=2" ng-click="displayProjects=true"><i class="icon-uniE61A"></i></button>
+    <button class="menu go-back" ng-show="displayProjects && status!=2" ng-click="displayProjects=false"><i class="icon-chevron-right"></i></button>
+    <button class="name" ng-click="displayProjects=false" ng-show="status!=2">
+      <span ng-if="displayProjects">Back to&nbsp;&nbsp;<strong>{{ currentProject.name }}</strong></span>
+    </button>
+    <button class="name" ng-click="displayProjects=true" ng-show="status!=2">
+      <span ng-if="!displayProjects">All Projects</span>
+    </button>
+    <form class="new-task-form new-form" ng-submit="addTask()" ng-show="!displayProjects">
+      <input type="text" placeholder="Start task for {{ currentProject.name }}." ng-model="newTaskName" class="new-input" />
+    </form>
+    <form class="new-project-form new-form" ng-submit="addProject()" ng-show="displayProjects">
+      <input type="text" placeholder="Start a new project." ng-model="newProjectName" class="new-input" />
+    </form>
+    <small>Press <strong>enter</strong> to submit.</small>
+  </header>
 
-    <main class="task-list-container">
+  <main class="content-slider">
+    <div class="task-list-container">
       <div class="no-task-box" ng-show="status==1">
         <i class="icon-star-half-empty"></i>
         <p>{{ $root.i18n.getMessage('noTasks') }}</p>
       </div>
-      <div class="nada-box" ng-show="status==2">
-        <i class="icon-star-half-empty"></i>
-        <p>{{ $root.i18n.getMessage('noTasksOrProjects') }}</p>
-      </div>
       <ul ui-sortable="sortableOptions" ng-model="tasks" class="task-list"  ng-if="currentProject">
         <li task="task" ng-repeat="task in tasks"></li>
       </ul>
-    </main>
-
-    <footer class="footer">
-      <h3 ng-if="currentProject"><span class="time">
-        <i class="icon-time"></i>&nbsp;{{ currentProject.totalTime | timespan }}</span><span class="amount">
-        ${{ currentProject.totalTime | rate:currentProject.rate | currency:$root.i18n.getMessage('currency') }}</span><span class="drive">
-        <i class="icon-google-drive"></i>&nbsp;{{ $root.connectionStatus }}</span></h3>
-      <div class="shout-out">
-        <span>by <a href="http://lev-interactive.com/?r=oleo" target="_blank">Lev Interactive</a></span>
-      </div>
-    </footer>
-  </div>
-
-  <aside class="my-projects">
-    <input type="text" ng-model="user.name" class="name" ng-change="saveUser()" placeholder="{{ $root.i18n.getMessage('namePlaceholder') }}" />
-    <div class="projects-container">
-      <header>
-        <input type="text" class="search-projects" ng-model="search" placeholder="{{ $root.i18n.getMessage('searchProjects') }}" />
-        <button class="close" ng-click="displayProjects = false"><i class="icon-error"></i></button>
-      </header>
+    </div>
+    <div class="project-list-container">
       <div class="no-projects-box" ng-hide="projects.length">
         <i class="icon-star-half-empty"></i>
-        <p class="no-projects">{{ $root.i18n.getMessage('noProjects') }}</p>
+        <p>{{ $root.i18n.getMessage('noTasksOrProjects') }}</p>
       </div>
       <ul class="list" ui-sortable="sortableOptions" ng-model="projects">
-        <li project="proj" ng-repeat="proj in projects | orderBy:creationDate | filter:search"></li>
+        <li project="proj" ng-repeat="proj in projects"></li>
       </ul>
-      <div class="btn-wrap">
-        <button class="add-project-btn" ng-click="addProject()" ng-attr-title="{{ $root.i18n.getMessage("addProject") }}"><i class="icon-file2"></i></button>
-      </div>
     </div>
-  </aside>
+  </main>
+
+  <footer class="footer">
+    <h3 ng-if="currentProject"><span class="time">
+      <i class="icon-time"></i>&nbsp;{{ currentProject.totalTime | timespan }}</span><span class="amount">
+      ${{ currentProject.totalTime | rate:currentProject.rate | currency:$root.i18n.getMessage('currency') }}</span><span class="drive">
+      <i class="icon-google-drive"></i>&nbsp;{{ $root.connectionStatus }}</span></h3>
+    <div class="shout-out">
+      <span>by <a href="http://lev-interactive.com/?r=oleo" target="_blank">Lev Interactive</a></span>
+    </div>
+  </footer>
 
   <!-- build:js app.min.js -->
   <script src="../bower_components/jquery/dist/jquery.js"></script>
@@ -99,4 +94,4 @@
   <script src="controller/main.js"></script>
   <!-- endbuild -->
 </body>
-</html> 
+</html>

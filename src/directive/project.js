@@ -1,4 +1,5 @@
 oleo.directive("project", ['projectService', '$rootScope', function(projectService, $rootScope) {
+  'use strict';
   function link(scope, el, attrs) {
 
     // When false confirmation box shows.

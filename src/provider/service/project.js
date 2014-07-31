@@ -132,7 +132,6 @@
 
   // Calculates the total time of all tasks.
   Service.prototype.calculateTotalTime = function() {
-
     // This needs to be slightly delayed so it happens after
     // all tick saves.
     setTimeout(function() {

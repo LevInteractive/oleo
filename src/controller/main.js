@@ -1,6 +1,6 @@
 (function() {
   "use strict";
-  function controller($q, $scope, $rootScope, $filter, storageService, projectService, taskService, i18n, dynamicLocale, idle) {
+  function controller($q, $scope, $rootScope, $filter, $timeout, storageService, projectService, taskService, i18n, dynamicLocale, idle, authService) {
 
     // Internationalization
     //
@@ -15,11 +15,15 @@
 
     // Add a new task.
     $scope.addTask = function() {
+      if (!$scope.newTaskName) {
+        return false;
+      }
       taskService.add({
         name      : $scope.newTaskName,
-        weight    : $scope.tasks.length,
+        weight    : 0,
         projectId : projectService.currentProject.id
       });
+      reIndexLists();
       $scope.setTasks();
       $scope.setStatus();
       $scope.newTaskName = "";
@@ -42,7 +46,9 @@
         $scope.tasks = $filter('orderBy')(
           $filter("filter")(taskService.collection, {
             projectId: $scope.currentProject.id
-          }), 'weight');
+          }),
+          'weight'
+        );
       } else {
         $scope.tasks = [];
       }
@@ -50,12 +56,12 @@
 
     // Projects
     // -------------------------------------------------
-    $scope.displayProjects = false;
+    $scope.displayProjects = true;
     $scope.projects        = projectService.collection;
-    $scope.addProject      = projectService.add.bind(projectService);
     $scope.saveProjects    = projectService.save.bind(projectService);
     $scope.currentProject  = null;
-    $scope.$watch(
+
+    $scope.$watch( // Watch the currentProject prop for a change.
       function() {
         return projectService.currentProject;
       },
@@ -66,6 +72,27 @@
       }
     );
 
+    $scope.addProject = function() {
+      if (!$scope.newProjectName) {
+        return false;
+      }
+      projectService.add({
+        weight: 0,
+        name: $scope.newProjectName
+      });
+      $scope.newProjectName = "";
+      reIndexLists();
+
+      $timeout(function() {
+        $scope.displayProjects = false;
+      }, 300);
+    };
+
+    $scope.hideProjects = function() {
+      $scope.displayProjects = false;
+    };
+
+
     // User
     // -------------------------------------------------
     $rootScope.user = { // Defaults.
@@ -74,9 +101,10 @@
     };
 
     // Populate basic user data.
-    storageService.get('user').then(function(result) {
-      if (result && result.user) {
-        $rootScope.user = result.user;
+    authService.setUserData().then(function(userData) {
+      if (userData) {
+        $rootScope.user = angular.extend($rootScope.user, userData);
+        console.log($rootScope.user);
       }
     });
 
@@ -97,22 +125,27 @@
     $rootScope.connectionStatus      = $rootScope.NO_SPREADSHEET;
     $rootScope.i18n                  = i18n;
 
+    // Set proper weights in both projects and task lists.
+    function reIndexLists() {
+      var index = 0;
+      $scope.tasks.forEach(function(task) {
+        if (task.projectId === $scope.currentProject.id) {
+          task.weight = ++index;
+        }
+      });
+      index = 0;
+      $scope.projects.forEach(function(project) {
+        project.weight = ++index;
+      });
+      projectService.save().then(
+        taskService.save.bind(taskService)
+      );
+    }
+
     // Sorting callback actions.
     $scope.sortableOptions = {
       stop: function(e, ui) {
-        var index = 0;
-        $scope.tasks.forEach(function(task) {
-          if (task.projectId === $scope.currentProject.id) {
-            task.weight = index++;
-          }
-        });
-        index = 0;
-        $scope.projects.forEach(function(project) {
-          project.weight = index++;
-        });
-        projectService.save().then(
-          taskService.save.bind(taskService)
-        );
+        reIndexLists();
       }
     };
 
@@ -128,11 +161,19 @@
 
     // Load in from storage
     // -------------------------------------------------
-    // Loading tasks first so they can watch the projects.
     taskService.load()
       .then(
         projectService.load.bind(projectService)
       )
+      .then(function() {
+        console.log(projectService.collection);
+        if (!$scope.projects.length) {
+          $scope.displayProjects = true;
+        } else {
+          $scope.displayProjects = false;
+          $scope.setTasks();
+        }
+      })
     ;
   }
 
@@ -142,12 +183,14 @@
     '$scope',
     '$rootScope',
     '$filter',
+    '$timeout',
     'storageService',
     'projectService',
     'taskService',
     'i18n',
     'tmhDynamicLocale',
     'idle',
+    'authService',
     controller
   ]);
 })();

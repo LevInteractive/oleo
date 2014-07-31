@@ -19,7 +19,8 @@
   "oauth2": {
     "client_id": "788739110271-0djpt8qbtq7f0prefrk8slmm87lnl6q9.apps.googleusercontent.com",
     "scopes": [
-      "https://spreadsheets.google.com/feeds"
+      "https://spreadsheets.google.com/feeds",
+      "profile"
     ]
   },
   "icons": {
