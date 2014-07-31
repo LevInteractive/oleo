@@ -36,11 +36,13 @@
 
   // Factory & add a project into the collection.
   CRUD.add = function(frag) {
-    this.collection.push(
-      this.factory(frag || {})
-    );
+    var factory = this.factory(frag || {});
+    this.collection.push(factory);
+    this.collection.sort(function(m1, m2) {
+      return m1.weight > m2.weight;
+    });
     if (this._onAdd) {
-      this._onAdd(this.collection[this.collection.length-1]);
+      this._onAdd(factory);
     }
     return this.save(); // return promise.
   };
