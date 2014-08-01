@@ -1,4 +1,4 @@
-oleo.directive("task", ['taskService', '$filter', '$rootScope', function(taskService, $filter, $rootScope) {
+oleo.directive("task", ['taskService', '$filter', '$rootScope', 'idle', function(taskService, $filter, $rootScope, idle) {
   'use strict';
 
   // Parses a user inputed time string and sets 
@@ -87,6 +87,16 @@ oleo.directive("task", ['taskService', '$filter', '$rootScope', function(taskSer
 
     // Pass in a save function.
     scope.save = taskService.save.bind(taskService);
+
+    if (idle) {
+      idle.onStateChanged.addListener(function(state) {
+        if ("idle" === state && scope.task.running) {
+          taskService.stop(scope.task);
+          scope.$apply();
+          console.log("Ticker stopped because the OS state is "+state);
+        }
+      });
+    }
   }
 
   return {

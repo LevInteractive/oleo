@@ -104,7 +104,6 @@
     authService.setUserData().then(function(userData) {
       if (userData) {
         $rootScope.user = angular.extend($rootScope.user, userData);
-        console.log($rootScope.user);
       }
     });
 
@@ -149,15 +148,6 @@
       }
     };
 
-    if (idle) {
-      idle.onStateChanged.addListener(function(state) {
-        if (state !== "active") {
-          taskService.stopAll();
-          $scope.$apply();
-          console.log("All tickers stopped because the OS state is "+state);
-        }
-      });
-    }
 
     // Load in from storage
     // -------------------------------------------------
@@ -166,7 +156,6 @@
         projectService.load.bind(projectService)
       )
       .then(function() {
-        console.log(projectService.collection);
         if (!$scope.projects.length) {
           $scope.displayProjects = true;
         } else {
