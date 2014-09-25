@@ -11,7 +11,7 @@
   "submitHelperText": {
     "message": "Press enter to submit."
   },
-  "statTaskPlaceholder": {
+  "startTaskPlaceholder": {
     "message": "Start a task for"
   },
   "spreadsheetConnected": {
