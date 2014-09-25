@@ -15,7 +15,7 @@
   ],
   "dependencies": {
     "angular": "~1.2.16",
-    "angular-dynamic-locale": "~0.1.9",
+    "angular-dynamic-locale": "~0.1.17",
     "angular-ui-sortable": "~0.12.8",
     "jquery": "~2.1.1",
     "jquery-ui": "~1.11.0"
