@@ -12,11 +12,11 @@
     <button class="quit-btn" ng-click="quit()">x</button>
     <button class="menu" ng-show="!displayProjects && status!=2" ng-click="displayProjects=true"><i class="icon-uniE61A"></i></button>
     <button class="menu go-back" ng-show="displayProjects && status!=2" ng-click="displayProjects=false"><i class="icon-chevron-right"></i></button>
-    <button class="name" ng-click="displayProjects=false" ng-show="status!=2">
-      <span ng-if="displayProjects">Back to&nbsp;&nbsp;<strong>{{ currentProject.name }}</strong></span>
+    <button class="name" ng-show="displayProjects" ng-click="displayProjects=false">
+      <span>Back to&nbsp;&nbsp;<strong>{{ currentProject.name }}</strong></span>
     </button>
-    <button class="name" ng-click="displayProjects=true" ng-show="status!=2">
-      <span ng-if="!displayProjects">{{ $root.i18n.getMessage('allProjects') }}</span>
+    <button ng-show="!displayProjects" class="name" ng-click="displayProjects=true">
+      <span>{{ $root.i18n.getMessage('allProjects') }}</span>
     </button>
     <form class="new-task-form new-form" ng-submit="addTask()" ng-show="!displayProjects">
       <input type="text" placeholder="{{ $root.i18n.getMessage('startTaskPlaceholder') }} {{ currentProject.name }}." ng-model="newTaskName" class="new-input" />
