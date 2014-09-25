@@ -1,6 +1,6 @@
 {
   "name": "óleo",
-  "version": "1.4",
+  "version": "1.5",
   "description": "óleo is a sleek project-based time tracking Chrome Application that can sync to Google Spreadsheets allowing for collaborative tracking.",
   "author": "Lev Interactive",
   "scripts": {

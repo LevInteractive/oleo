@@ -16,15 +16,15 @@
       <span ng-if="displayProjects">Back to&nbsp;&nbsp;<strong>{{ currentProject.name }}</strong></span>
     </button>
     <button class="name" ng-click="displayProjects=true" ng-show="status!=2">
-      <span ng-if="!displayProjects">All Projects</span>
+      <span ng-if="!displayProjects">{{ $root.i18n.getMessage('allProjects') }}</span>
     </button>
     <form class="new-task-form new-form" ng-submit="addTask()" ng-show="!displayProjects">
-      <input type="text" placeholder="Start task for {{ currentProject.name }}." ng-model="newTaskName" class="new-input" />
+      <input type="text" placeholder="{{ $root.i18n.getMessage('startTaskPlaceholder') }} {{ currentProject.name }}." ng-model="newTaskName" class="new-input" />
     </form>
     <form class="new-project-form new-form" ng-submit="addProject()" ng-show="displayProjects">
-      <input type="text" placeholder="Start a new project." ng-model="newProjectName" class="new-input" />
+      <input type="text" placeholder="{{ $root.i18n.getMessage('startProjectPlaceholder') }}" ng-model="newProjectName" class="new-input" />
     </form>
-    <small>Press <strong>enter</strong> to submit.</small>
+    <small>{{ $root.i18n.getMessage('submitHelperText') }}</small>
   </header>
 
   <main class="content-slider">

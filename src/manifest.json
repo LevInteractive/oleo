@@ -1,11 +1,11 @@
 {
-  "name": "óleo",
-  "version": null,
-  "manifest_version": 2,
-  "description": "__MSG_appDesc__",
-  "default_locale": "en",
-  "offline_enabled": true,
-  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAn8x9fxkNRY7ZP6evJAmM7haJg98hE1iioRMsM0Z6eKMihfYBrc1QUAsUfK4cQnbCW/S7sssl9GypeAB729/b8Ud1TXOoDfNG7yGS5FJYtMWyqHhryw1/wm38XgvIbc6ts9TYEIPAVKyYKFz9EQVk0zihNPUZLf+od3/MTZBGplv+/pVpDb6cOZ1EZUSruvkI7tiVR/6zSCQwtS7EMtvw7lS6zFrp2FM3QrC9pZk9CdayCuiEr4rDezWu7G/wxrKf4oP8YlQTVGNsMBPduYq9snUryNvJPVzhWoLrALGPq10tgx9+A6vt/maHqlNmSi+UW1yf9JqZP7a38ejWForV8QIDAQAB",
+  "name"             : "óleo",
+  "version"          : null,
+  "manifest_version" : 2,
+  "description"      : "__MSG_appDesc__",
+  "default_locale"   : "en",
+  "offline_enabled"  : true,
+  "key"              : "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAn8x9fxkNRY7ZP6evJAmM7haJg98hE1iioRMsM0Z6eKMihfYBrc1QUAsUfK4cQnbCW/S7sssl9GypeAB729/b8Ud1TXOoDfNG7yGS5FJYtMWyqHhryw1/wm38XgvIbc6ts9TYEIPAVKyYKFz9EQVk0zihNPUZLf+od3/MTZBGplv+/pVpDb6cOZ1EZUSruvkI7tiVR/6zSCQwtS7EMtvw7lS6zFrp2FM3QrC9pZk9CdayCuiEr4rDezWu7G/wxrKf4oP8YlQTVGNsMBPduYq9snUryNvJPVzhWoLrALGPq10tgx9+A6vt/maHqlNmSi+UW1yf9JqZP7a38ejWForV8QIDAQAB",
   "permissions": [
     "identity",
     "storage",
@@ -17,8 +17,8 @@
     "https://docs.google.com/feeds/"
   ],
   "oauth2": {
-    "client_id": "788739110271-0djpt8qbtq7f0prefrk8slmm87lnl6q9.apps.googleusercontent.com",
-    "scopes": [
+    "client_id" : "788739110271-0djpt8qbtq7f0prefrk8slmm87lnl6q9.apps.googleusercontent.com",
+    "scopes"    : [
       "https://spreadsheets.google.com/feeds",
       "profile"
     ]
@@ -39,8 +39,8 @@
   },
   "app": {
     "background": {
-      "scripts": ["background.js"],
-      "persistent": false
+      "scripts"    : ["background.js"],
+      "persistent" : false
     }
   }
 }
